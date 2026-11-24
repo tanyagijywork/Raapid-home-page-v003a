@@ -1,0 +1,613 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>RAAPID UI Kit</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* =========================================================
+   RAAPID TYPOGRAPHY TOKENS
+   Source: Figma "RAAPID-V002" → frame "Typo-scale" (node 1:1231)
+   Tracking in Figma % → em (e.g. -5% = -0.05em)
+   ========================================================= */
+:root {
+  --raapid-font: "Geist", ui-sans-serif, system-ui, sans-serif;
+
+  --fw-light: 300;
+  --fw-regular: 400;
+  --fw-medium: 500;
+  --fw-semibold: 600;
+  --fw-bold: 700;
+}
+
+/* Display */
+.t-display-l        { font: var(--fw-light)    140px/110px var(--raapid-font); letter-spacing: -0.05em; }
+.t-display-m        { font: var(--fw-light)     96px/96px  var(--raapid-font); letter-spacing: -0.03em; }
+/* Headings */
+.t-h1-light         { font: var(--fw-light)     64px/64px  var(--raapid-font); letter-spacing: -0.05em; }
+.t-h1-bold          { font: var(--fw-bold)      64px/64px  var(--raapid-font); letter-spacing: -0.05em; }
+.t-h2-light         { font: var(--fw-light)     48px/48px  var(--raapid-font); letter-spacing: -0.05em; }
+.t-h2-regular       { font: var(--fw-regular)   48px/48px  var(--raapid-font); letter-spacing: -0.05em; }
+.t-h2-bold          { font: var(--fw-bold)      48px/48px  var(--raapid-font); letter-spacing: -0.05em; }
+.t-h3-semibold      { font: var(--fw-semibold)  36px/36px  var(--raapid-font); letter-spacing: -0.03em; }
+.t-h4-bold-upper    { font: var(--fw-bold)      32px/32px  var(--raapid-font); letter-spacing: 0; text-transform: uppercase; }
+/* Body */
+.t-body-l-light     { font: var(--fw-light)     24px/34px  var(--raapid-font); letter-spacing: -0.03em; }
+.t-body-l-regular   { font: var(--fw-regular)   24px/34px  var(--raapid-font); letter-spacing: 0; }
+.t-body-l-bold      { font: var(--fw-bold)      24px/34px  var(--raapid-font); letter-spacing: 0; }
+.t-body-l-bold-upper{ font: var(--fw-bold)      24px/34px  var(--raapid-font); letter-spacing: 0; text-transform: uppercase; }
+.t-body-m-bold      { font: var(--fw-bold)      20px/28px  var(--raapid-font); letter-spacing: 0; }
+.t-body-s-regular   { font: var(--fw-regular)   18px/28px  var(--raapid-font); letter-spacing: 0; }
+.t-body-s-bold      { font: var(--fw-bold)      18px/28px  var(--raapid-font); letter-spacing: 0; }
+.t-body-xs-regular  { font: var(--fw-regular)   16px/20px  var(--raapid-font); letter-spacing: 0; }
+/* Links */
+.t-link-s-regular   { font: var(--fw-regular)   18px/23px  var(--raapid-font); letter-spacing: 0; }
+.t-link-s-medium    { font: var(--fw-medium)    18px/23px  var(--raapid-font); letter-spacing: 0; }
+.t-link-s-bold      { font: var(--fw-bold)      18px/23px  var(--raapid-font); letter-spacing: 0; }
+.t-link-xs-medium   { font: var(--fw-medium)    16px/21px  var(--raapid-font); letter-spacing: 0; }
+.t-link-xs-bold-upper{ font: var(--fw-bold)     16px/21px  var(--raapid-font); letter-spacing: 0.02em; text-transform: uppercase; }
+/* Eyebrow */
+.t-eyebrow          { font: var(--fw-regular)   14px/20px  var(--raapid-font); letter-spacing: 0; text-transform: uppercase; }
+
+/* =========================================================
+   KIT PAGE CHROME (not part of the tokens)
+   ========================================================= */
+:root {
+  --bg: #ffffff;
+  --surface: #f6f6f4;
+  --ink: #0b0b0c;
+  --ink-2: #5c5c62;
+  --ink-3: #8d8d93;
+  --rule: #e4e4e1;
+  --accent: #0b0b0c;
+  --mono: "Geist Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #0d0d0e; --surface: #161618; --ink: #f2f2f0; --ink-2: #a3a3a8; --ink-3: #6e6e74; --rule: #26262a; --accent: #f2f2f0;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #0d0d0e; --surface: #161618; --ink: #f2f2f0; --ink-2: #a3a3a8; --ink-3: #6e6e74; --rule: #26262a; --accent: #f2f2f0;
+}
+
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--raapid-font);
+  -webkit-font-smoothing: antialiased;
+}
+
+.topbar {
+  position: sticky; top: 0; z-index: 10;
+  display: flex; align-items: center; justify-content: space-between; gap: 16px;
+  padding: 14px 40px;
+  background: color-mix(in srgb, var(--bg) 88%, transparent);
+  backdrop-filter: blur(10px);
+  border-bottom: 1px solid var(--rule);
+}
+.brand { display: flex; align-items: baseline; gap: 12px; }
+.brand b { font-weight: 700; font-size: 16px; letter-spacing: -0.01em; }
+.brand span { font-family: var(--mono); font-size: 12px; color: var(--ink-3); }
+.controls { display: flex; gap: 8px; align-items: center; }
+.controls input {
+  font: 400 14px/20px var(--raapid-font); color: var(--ink);
+  width: 260px; padding: 7px 12px; border: 1px solid var(--rule); border-radius: 8px; background: var(--bg);
+}
+.btn {
+  font: 500 13px/18px var(--raapid-font); color: var(--ink);
+  padding: 7px 12px; border: 1px solid var(--rule); border-radius: 8px; background: var(--bg); cursor: pointer;
+  white-space: nowrap;
+}
+.btn:hover { background: var(--surface); }
+
+.layout { display: grid; grid-template-columns: 220px minmax(0, 1fr); }
+nav.toc {
+  position: sticky; top: 61px; align-self: start; height: calc(100vh - 61px); overflow: auto;
+  padding: 32px 24px 32px 40px; border-right: 1px solid var(--rule);
+}
+.toc h6 { margin: 20px 0 8px; font: 400 11px/16px var(--mono); text-transform: uppercase; letter-spacing: 0.06em; color: var(--ink-3); }
+.toc h6:first-child { margin-top: 0; }
+.toc a { display: block; padding: 3px 0; font-size: 14px; line-height: 20px; color: var(--ink-2); text-decoration: none; }
+.toc a:hover { color: var(--ink); }
+
+main { padding: 56px 40px 120px; min-width: 0; }
+.intro { max-width: 760px; margin-bottom: 56px; }
+.intro .t-eyebrow { color: var(--ink-3); margin: 0 0 16px; }
+.intro h1 { margin: 0 0 20px; }
+.intro p { margin: 0; color: var(--ink-2); }
+.facts { display: flex; flex-wrap: wrap; gap: 32px; margin-top: 32px; }
+.facts div { font: 400 12px/16px var(--mono); color: var(--ink-3); text-transform: uppercase; letter-spacing: 0.04em; }
+.facts strong { display: block; margin-top: 4px; font: 500 20px/28px var(--raapid-font); color: var(--ink); text-transform: none; letter-spacing: 0; }
+
+.group { margin-top: 72px; }
+.group-head { display: flex; align-items: baseline; justify-content: space-between; gap: 16px; padding-bottom: 12px; border-bottom: 1px solid var(--ink); }
+.group-head h2 { margin: 0; font: 600 14px/20px var(--raapid-font); text-transform: uppercase; letter-spacing: 0.06em; }
+.group-head span { font: 400 12px/16px var(--mono); color: var(--ink-3); }
+
+.row {
+  display: grid; grid-template-columns: 200px 210px minmax(0, 1fr);
+  gap: 32px; padding: 36px 0; border-bottom: 1px solid var(--rule);
+}
+.row.hidden { display: none; }
+.meta-name { font: 500 15px/22px var(--raapid-font); margin: 0 0 6px; }
+.meta-class {
+  display: inline-flex; align-items: center; gap: 6px;
+  font: 400 12px/16px var(--mono); color: var(--ink-2);
+  background: var(--surface); border: 1px solid var(--rule); border-radius: 6px; padding: 4px 8px; cursor: pointer;
+}
+.meta-class:hover { color: var(--ink); border-color: var(--ink-3); }
+.meta-figma { margin-top: 10px; font: 400 12px/16px var(--mono); color: var(--ink-3); }
+
+.spec { margin: 0; display: grid; grid-template-columns: auto 1fr; gap: 4px 14px; font: 400 12px/18px var(--mono); }
+.spec dt { color: var(--ink-3); }
+.spec dd { margin: 0; color: var(--ink); }
+
+.sample { min-width: 0; overflow-x: auto; overflow-y: hidden; padding-bottom: 4px; }
+.sample [contenteditable] { outline: none; margin: 0; max-width: 900px; overflow-wrap: anywhere; }
+.sample [contenteditable]:focus { box-shadow: 0 0 0 1px var(--rule); border-radius: 4px; }
+.sample .baseline {
+  background-image: linear-gradient(to bottom, transparent calc(100% - 1px), color-mix(in srgb, #e5484d 45%, transparent) 1px);
+}
+
+.code-block {
+  margin-top: 24px; position: relative;
+  background: var(--surface); border: 1px solid var(--rule); border-radius: 12px;
+}
+.code-block pre { margin: 0; padding: 20px 24px; overflow: auto; font: 400 12.5px/20px var(--mono); color: var(--ink); max-height: 520px; }
+.code-block .btn { position: absolute; top: 12px; right: 12px; }
+
+.toast {
+  position: fixed; left: 50%; bottom: 24px; transform: translate(-50%, 20px); opacity: 0;
+  background: var(--ink); color: var(--bg); font: 500 13px/18px var(--raapid-font);
+  padding: 10px 16px; border-radius: 8px; transition: all .2s ease; pointer-events: none;
+}
+.toast.show { opacity: 1; transform: translate(-50%, 0); }
+
+footer { margin-top: 96px; font: 400 12px/16px var(--mono); color: var(--ink-3); }
+
+/* =========================================================
+   RAAPID BUTTONS (component) — label uses .t-link-s-medium
+   Logic: the primary is a solid RAAPID violet fill. Where the surface is
+   already violet, the primary flips to white. Hover always deepens toward
+   navy (or lifts to white on navy). Secondary = outline, Text link = text,
+   both in the surface's accent colour.
+   ========================================================= */
+:root { --raapid-violet: #5553d6; --raapid-navy: #21154a; }
+.rb-white  { --surface-bg: #ffffff; --rb-ring: var(--raapid-navy);
+             --rb-pri-bg: var(--raapid-violet); --rb-pri-fg: #ffffff; --rb-pri-bg-h: var(--raapid-navy); --rb-pri-fg-h: #ffffff;
+             --rb-sec-fg: var(--raapid-violet); --rb-sec-bd: var(--raapid-violet); --rb-sec-bg-h: var(--raapid-violet); --rb-sec-fg-h: #ffffff;
+             --rb-link-fg: var(--raapid-violet); }
+.rb-violet { --surface-bg: var(--raapid-violet); --rb-ring: #ffffff;
+             --rb-pri-bg: #ffffff; --rb-pri-fg: var(--raapid-navy); --rb-pri-bg-h: var(--raapid-navy); --rb-pri-fg-h: #ffffff;
+             --rb-sec-fg: #ffffff; --rb-sec-bd: #ffffff; --rb-sec-bg-h: #ffffff; --rb-sec-fg-h: var(--raapid-navy);
+             --rb-link-fg: #ffffff; }
+.rb-navy   { --surface-bg: var(--raapid-navy); --rb-ring: #ffffff;
+             --rb-pri-bg: var(--raapid-violet); --rb-pri-fg: #ffffff; --rb-pri-bg-h: #ffffff; --rb-pri-fg-h: var(--raapid-navy);
+             --rb-sec-fg: #ffffff; --rb-sec-bd: #ffffff; --rb-sec-bg-h: #ffffff; --rb-sec-fg-h: var(--raapid-navy);
+             --rb-link-fg: #ffffff; }
+
+.rb {
+  display: inline-flex; align-items: center; gap: 16px;
+  padding: 20px 28px 20px 24px; border: 1px solid transparent; border-radius: 0;
+  text-decoration: none; cursor: pointer; white-space: nowrap;
+  transition: background-color .15s ease, color .15s ease, border-color .15s ease;
+}
+.rb svg { width: 24px; height: 24px; flex: none; }
+.rb .rb-arrow { width: 15px; height: 13px; transition: transform .15s ease; }
+
+.rb-primary   { background: var(--rb-pri-bg); color: var(--rb-pri-fg); }
+
+/* CTA icon: the four corner strokes move radially inwards on hover */
+.rb-cta path { transition: transform .3s cubic-bezier(.2, .8, .2, 1); }
+.rb:hover .rb-cta .cta-tl, .rb.is-hover .rb-cta .cta-tl { transform: translate(3px, 3px); }
+.rb:hover .rb-cta .cta-tr, .rb.is-hover .rb-cta .cta-tr { transform: translate(-3px, 3px); }
+.rb:hover .rb-cta .cta-bl, .rb.is-hover .rb-cta .cta-bl { transform: translate(3px, -3px); }
+.rb:hover .rb-cta .cta-br, .rb.is-hover .rb-cta .cta-br { transform: translate(-3px, -3px); }
+@media (prefers-reduced-motion: reduce) { .rb-cta path { transition: none; } }
+.rb-primary:hover, .rb-primary.is-hover { background: var(--rb-pri-bg-h); color: var(--rb-pri-fg-h); }
+
+.rb-secondary { background: transparent; color: var(--rb-sec-fg); border-color: var(--rb-sec-bd); padding: 20px 24px; }
+.rb-secondary:hover, .rb-secondary.is-hover { background: var(--rb-sec-bg-h); color: var(--rb-sec-fg-h); }
+
+.rb-link { background: none; color: var(--rb-link-fg); padding: 0; gap: 12px; border: 0; }
+.rb-link:hover .rb-arrow, .rb-link.is-hover .rb-arrow { transform: translateX(4px); }
+.rb-link:hover span, .rb-link.is-hover span { text-decoration: underline; text-underline-offset: 4px; }
+
+.rb-compact { padding: 12px 16px; gap: 8px; }
+.rb-compact svg { width: 20px; height: 20px; }
+
+.rb:focus-visible { outline: 2px solid var(--rb-ring); outline-offset: 4px; }   /* keyboard accessibility */
+
+/* ---------- Kit page: tabs + buttons tab ---------- */
+.tabs { display: flex; gap: 4px; padding: 4px; border: 1px solid var(--rule); border-radius: 10px; }
+.tabs button {
+  font: 500 13px/18px var(--raapid-font); color: var(--ink-2); background: none; border: 0;
+  padding: 6px 14px; border-radius: 7px; cursor: pointer;
+}
+.tabs button[aria-selected="true"] { background: var(--ink); color: var(--bg); }
+[role="tabpanel"][hidden] { display: none !important; }
+body.on-buttons #sampleInput, body.on-buttons #baselineBtn { display: none; }
+
+.btn-page { padding: 56px 40px 120px; max-width: 1400px; }
+.surface { margin-top: 56px; border-radius: 12px; overflow: hidden; border: 1px solid var(--rule); }
+.surface-head {
+  display: flex; align-items: baseline; justify-content: space-between; gap: 16px; flex-wrap: wrap;
+  padding: 20px 28px; background: var(--surface); border-bottom: 1px solid var(--rule);
+}
+.surface-head h2 { margin: 0; font: 600 14px/20px var(--raapid-font); text-transform: uppercase; letter-spacing: 0.06em; }
+.surface-head span { font: 400 12px/16px var(--mono); color: var(--ink-3); }
+.swatch { display: inline-block; width: 12px; height: 12px; border-radius: 3px; vertical-align: -1px; margin-right: 8px; border: 1px solid var(--rule); }
+.surface-body { background: var(--surface-bg); padding: 12px 28px 28px; overflow-x: auto; }
+.btn-grid { display: grid; grid-template-columns: 180px repeat(2, minmax(240px, 1fr)); min-width: 680px; max-width: 980px; }
+.btn-grid > div { padding: 20px 16px 20px 0; display: flex; align-items: center; min-height: 104px; }
+.btn-grid .col-h {
+  min-height: 0; padding: 16px 16px 8px 0; font: 400 11px/16px var(--mono); text-transform: uppercase; letter-spacing: .06em;
+  color: var(--rb-link-fg); opacity: .6;
+}
+.btn-grid .row-h { flex-direction: column; align-items: flex-start; justify-content: center; gap: 4px; color: var(--rb-link-fg); }
+.btn-grid .row-h b { font: 600 14px/20px var(--raapid-font); }
+.btn-grid .row-h code { font: 400 11px/16px var(--mono); opacity: .7; cursor: pointer; }
+.btn-grid .row-h code:hover { opacity: 1; text-decoration: underline; }
+.contrast { margin-top: 4px; font: 400 11px/16px var(--mono); opacity: .7; }
+
+.anatomy { margin-top: 72px; }
+.anatomy-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 0; border: 1px solid var(--rule); border-radius: 12px; overflow: hidden; margin-top: 16px; }
+.anatomy-grid div { padding: 20px 24px; border-right: 1px solid var(--rule); border-bottom: 1px solid var(--rule); }
+.anatomy-grid dt { font: 400 11px/16px var(--mono); text-transform: uppercase; letter-spacing: .06em; color: var(--ink-3); }
+.anatomy-grid dd { margin: 6px 0 0; font: 500 15px/22px var(--raapid-font); }
+.anatomy-grid dl { margin: 0; }
+.rules-list { margin: 16px 0 0; padding-left: 20px; color: var(--ink-2); font: 400 15px/24px var(--raapid-font); max-width: 820px; }
+.rules-list li + li { margin-top: 6px; }
+
+@media (max-width: 860px) {
+  .btn-page { padding: 40px 16px 96px; }
+  .surface-body { padding: 12px 16px 20px; }
+  .tabs { order: 3; }
+}
+
+@media (max-width: 1100px) {
+  .row { grid-template-columns: 200px minmax(0, 1fr); }
+  .row .sample { grid-column: 1 / -1; }
+}
+@media (max-width: 860px) {
+  .layout { grid-template-columns: 1fr; }
+  nav.toc { display: none; }
+  .topbar { padding: 12px 16px; flex-wrap: wrap; }
+  .controls { width: 100%; }
+  .controls input { flex: 1; width: auto; min-width: 0; }
+  main { padding: 40px 16px 96px; }
+  .row { grid-template-columns: 1fr; gap: 16px; }
+  .intro h1.t-h1-light { font-size: 44px; line-height: 44px; }
+}
+</style>
+</head>
+<body>
+
+<header class="topbar">
+  <div class="brand"><b>RAAPID UI Kit</b><span>v0.2</span></div>
+  <div class="tabs" role="tablist" aria-label="Kit sections">
+    <button type="button" role="tab" id="tab-type" aria-controls="panel-type" aria-selected="true">Typography</button>
+    <button type="button" role="tab" id="tab-buttons" aria-controls="panel-buttons" aria-selected="false">Buttons</button>
+  </div>
+  <div class="controls">
+    <input id="sampleInput" type="text" placeholder="Type to preview across all styles…" aria-label="Preview text">
+    <button class="btn" id="baselineBtn" type="button">Show line boxes</button>
+    <button class="btn" id="themeBtn" type="button">Theme</button>
+  </div>
+</header>
+
+<div class="layout" id="panel-type" role="tabpanel" aria-labelledby="tab-type">
+  <nav class="toc" id="toc" aria-label="Styles"></nav>
+
+  <main>
+    <section class="intro">
+      <p class="t-eyebrow">Foundations / Typography</p>
+      <h1 class="t-h1-light">Typography scale</h1>
+      <p class="t-body-s-regular">Every text style in RAAPID, set in Geist. Click a class name to copy it, click any sample to edit it, or type in the box above to preview your own copy in every style at once.</p>
+      <div class="facts">
+        <div>Typeface<strong>Geist</strong></div>
+        <div>Weights<strong>300 · 400 · 500 · 600 · 700</strong></div>
+        <div>Styles<strong id="styleCount">—</strong></div>
+        <div>Source<strong>Figma · Typo-scale</strong></div>
+      </div>
+    </section>
+
+    <div id="groups"></div>
+
+    <section class="group" id="css">
+      <div class="group-head"><h2>CSS</h2><span>Paste into your stylesheet</span></div>
+      <div class="code-block">
+        <button class="btn" id="copyAll" type="button">Copy CSS</button>
+        <pre id="cssOut"></pre>
+      </div>
+    </section>
+
+    <footer>RAAPID-V002 · Figma node 1:1231 · Desktop scale only (no mobile sizes defined yet)</footer>
+  </main>
+</div>
+
+<!-- ================= BUTTONS TAB ================= -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <symbol id="i-cta" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M2 2L6 6"/><path d="M22 2L18 6"/><path d="M2 22L6 18"/><path d="M22 22L18 18"/></g></symbol>
+  <symbol id="i-arrow" viewBox="0 0 14.6165 12.7273"><path fill="currentColor" d="M8.25284 12.7273L7.15909 11.6477L11.6619 7.14489H0V5.58239H11.6619L7.15909 1.09375L8.25284 0L14.6165 6.36364L8.25284 12.7273Z"/></symbol>
+</svg>
+
+<div id="panel-buttons" role="tabpanel" aria-labelledby="tab-buttons" hidden>
+  <main class="btn-page">
+    <section class="intro">
+      <p class="t-eyebrow">Components / Buttons</p>
+      <h1 class="t-h1-light">Buttons</h1>
+      <p class="t-body-s-regular">The RAAPID button set, as used on the home page, shown on each brand surface. Labels use <b>Link S Medium</b>. Each button is shown in its Default and Hover states; you can also hover any button to try it live. Click a class name to copy it.</p>
+      <div class="facts">
+        <div>Variants<strong>Primary · Secondary · Text link · Compact</strong></div>
+        <div>Surfaces<strong>White · Violet · Navy</strong></div>
+        <div>Label<strong>Link S Medium</strong></div>
+        <div>Primary fill<strong>RAAPID violet #5553D6</strong></div>
+      </div>
+    </section>
+
+    <div id="surfaces"></div>
+
+    <section class="anatomy">
+      <div class="group-head"><h2>Anatomy</h2><span>All values on the 4px grid</span></div>
+      <div class="anatomy-grid">
+        <div><dl><dt>Label</dt><dd>Link S Medium · 18/23</dd></dl></div>
+        <div><dl><dt>Padding (primary)</dt><dd>20 · 28 · 20 · 24</dd></dl></div>
+        <div><dl><dt>Padding (secondary)</dt><dd>20 · 24</dd></dl></div>
+        <div><dl><dt>Padding (compact)</dt><dd>12 · 16</dd></dl></div>
+        <div><dl><dt>Icon → label gap</dt><dd>16 (compact 8)</dd></dl></div>
+        <div><dl><dt>Icon size</dt><dd>24 (compact 20)</dd></dl></div>
+        <div><dl><dt>Text link gap</dt><dd>12 · arrow 15×13</dd></dl></div>
+        <div><dl><dt>Icon hover</dt><dd>Strokes move 3px inwards · 0.3s</dd></dl></div>
+      </div>
+      <ul class="rules-list">
+        <li><b>One primary per view.</b> Use Primary for the main action (Request a demo); Secondary for “Explore…” actions; Text link for “Read more” style follow-ons.</li>
+        <li><b>Primary is RAAPID violet</b> with white text on white and navy surfaces. On a violet surface it flips to <b>white with navy text</b>, so it never blends into its background.</li>
+        <li><b>Hover deepens</b>: violet → navy on white; white → navy on violet; violet → white on navy.</li>
+        <li><b>Secondary and Text link</b> take the surface's accent: violet on white, white on violet and navy.</li>
+        <li><b>Compact</b> is for tight spaces such as the phone header, where the label can be hidden and the icon kept (with an accessible label).</li>
+      </ul>
+    </section>
+
+    <section class="group" id="btn-css">
+      <div class="group-head"><h2>CSS</h2><span>Paste into your stylesheet</span></div>
+      <div class="code-block">
+        <button class="btn" id="copyBtnCss" type="button">Copy CSS</button>
+        <pre id="btnCssOut"></pre>
+      </div>
+    </section>
+
+    <footer>RAAPID-V002 · Buttons match RAAPID-Website-HomePage-V003 · Violet #5553D6 · Navy #21154A</footer>
+  </main>
+</div>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+const HEAD = "Clinical Intelligence that drives your financial outcomes.";
+const BODY = "Explore our impact center in advanced AI research, benchmark performance studies and specialized model development, in collaboration with global Healthcare AI research institutions and communities.";
+const SHORT = "Lorem Ipsum";
+
+const W = { 300: "Light", 400: "Regular", 500: "Medium", 600: "Semi Bold", 700: "Bold" };
+
+const GROUPS = [
+  { name: "Display", note: "Hero numbers & statements", styles: [
+    { name: "Display L Light", cls: "t-display-l", figma: "Display/Dis L (Light)", w: 300, size: 140, lh: 110, ls: -5, sample: "Display L" },
+    { name: "Display M Light", cls: "t-display-m", figma: "Display/Dis M (Light)", w: 300, size: 96, lh: 96, ls: -3, sample: "1M+" },
+  ]},
+  { name: "Headings", note: "Page & section titles", styles: [
+    { name: "H1 Light", cls: "t-h1-light", figma: "Heading/H1/H1 (Light)", w: 300, size: 64, lh: 64, ls: -5, sample: HEAD },
+    { name: "H1 Bold", cls: "t-h1-bold", figma: "Heading/H1/H1 (Bold)", w: 700, size: 64, lh: 64, ls: -5, sample: HEAD },
+    { name: "H2 Light", cls: "t-h2-light", figma: "Heading/H2/H2 (Light)", w: 300, size: 48, lh: 48, ls: -5, sample: HEAD },
+    { name: "H2 Regular", cls: "t-h2-regular", figma: "Heading/H2/H2 (Reg)", w: 400, size: 48, lh: 48, ls: -5, sample: HEAD },
+    { name: "H2 Bold", cls: "t-h2-bold", figma: "Heading/H2/H2 (Bold)", w: 700, size: 48, lh: 48, ls: -5, sample: HEAD },
+    { name: "H3 Semi Bold", cls: "t-h3-semibold", figma: "Heading/H3/H3 (Semi Bold)", w: 600, size: 36, lh: 36, ls: -3, sample: HEAD },
+    { name: "H4 Bold Uppercase", cls: "t-h4-bold-upper", figma: "Heading/H4/H4 (Bold UPPER)", w: 700, size: 32, lh: 32, ls: 0, upper: true, sample: SHORT },
+  ]},
+  { name: "Body", note: "Paragraphs & supporting copy", styles: [
+    { name: "Body L Light", cls: "t-body-l-light", figma: "Body/Body L/Body L (Light)", w: 300, size: 24, lh: 34, ls: -3, sample: BODY },
+    { name: "Body L Regular", cls: "t-body-l-regular", figma: "Body/Body L/Body L (Reg)", w: 400, size: 24, lh: 34, ls: 0, sample: BODY },
+    { name: "Body L Bold", cls: "t-body-l-bold", figma: "Body/Body L/Body L (Bold)", w: 700, size: 24, lh: 34, ls: 0, sample: BODY },
+    { name: "Body L Bold Uppercase", cls: "t-body-l-bold-upper", figma: "Body/Body L/Body L (Bold UPPER)", w: 700, size: 24, lh: 34, ls: 0, upper: true, sample: SHORT },
+    { name: "Body M Bold", cls: "t-body-m-bold", figma: "Body/Body M/Body M (Bold)", w: 700, size: 20, lh: 28, ls: 0, sample: BODY },
+    { name: "Body S Regular", cls: "t-body-s-regular", figma: "Body/Body S/Body S (Reg)", w: 400, size: 18, lh: 28, ls: 0, sample: BODY },
+    { name: "Body S Bold", cls: "t-body-s-bold", figma: "Body/Body S/Body S (Bold)", w: 700, size: 18, lh: 28, ls: 0, sample: BODY },
+    { name: "Body XS Regular", cls: "t-body-xs-regular", figma: "Body/Body XS/Body XS (Reg)", w: 400, size: 16, lh: 20, ls: 0, sample: BODY },
+  ]},
+  { name: "Links", note: "Inline & standalone links", styles: [
+    { name: "Link S Regular", cls: "t-link-s-regular", figma: "Link/Link S/Link S (Reg)", w: 400, size: 18, lh: 23, ls: 0, sample: SHORT },
+    { name: "Link S Medium", cls: "t-link-s-medium", figma: "Link/Link S/Link S (Med)", w: 500, size: 18, lh: 23, ls: 0, sample: SHORT },
+    { name: "Link S Bold", cls: "t-link-s-bold", figma: "Link/Link S/Link S (Bold)", w: 700, size: 18, lh: 23, ls: 0, sample: SHORT },
+    { name: "Link XS Medium", cls: "t-link-xs-medium", figma: "Link/Link XS/Link XS (Med)", w: 500, size: 16, lh: 21, ls: 0, sample: SHORT },
+    { name: "Link XS Bold Uppercase", cls: "t-link-xs-bold-upper", figma: "Link/Link XS/Link XS (Bold UPPER)", w: 700, size: 16, lh: 21, ls: 2, upper: true, sample: SHORT },
+  ]},
+  { name: "Eyebrow", note: "Labels above headings", styles: [
+    { name: "Eyebrow Uppercase Regular", cls: "t-eyebrow", figma: "Eyebrow/Eyebrow", w: 400, size: 14, lh: 20, ls: 0, upper: true, sample: SHORT },
+  ]},
+];
+
+const slug = s => s.toLowerCase().replace(/[^a-z0-9]+/g, "-");
+const esc = s => s.replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+const em = ls => ls === 0 ? "0" : `${(ls / 100).toFixed(2).replace(/0$/, "")}em`;
+
+const groupsEl = document.getElementById("groups");
+const tocEl = document.getElementById("toc");
+let count = 0;
+
+GROUPS.forEach(g => {
+  const gid = slug(g.name);
+  tocEl.insertAdjacentHTML("beforeend", `<h6>${g.name}</h6>` + g.styles.map(s => `<a href="#${s.cls}">${s.name}</a>`).join(""));
+  const rows = g.styles.map(s => {
+    count++;
+    const tag = s.sample === BODY ? "p" : "div";
+    return `
+    <article class="row" id="${s.cls}" data-default="${esc(s.sample)}">
+      <div>
+        <h3 class="meta-name">${s.name}</h3>
+        <button class="meta-class" type="button" data-copy=".${s.cls}" title="Copy class name">.${s.cls}</button>
+        <div class="meta-figma">${esc(s.figma)}</div>
+      </div>
+      <dl class="spec">
+        <dt>Font</dt><dd>Geist ${W[s.w]}</dd>
+        <dt>Weight</dt><dd>${s.w}</dd>
+        <dt>Size</dt><dd>${s.size}px</dd>
+        <dt>Leading</dt><dd>${s.lh}px</dd>
+        <dt>Tracking</dt><dd>${s.ls}% · ${em(s.ls)}</dd>
+        <dt>Case</dt><dd>${s.upper ? "Uppercase" : "As typed"}</dd>
+      </dl>
+      <div class="sample"><${tag} class="${s.cls}" contenteditable="true" spellcheck="false">${esc(s.sample)}</${tag}></div>
+    </article>`;
+  }).join("");
+  groupsEl.insertAdjacentHTML("beforeend", `
+    <section class="group" id="${gid}">
+      <div class="group-head"><h2>${g.name}</h2><span>${g.note} · ${g.styles.length}</span></div>
+      ${rows}
+    </section>`);
+});
+tocEl.insertAdjacentHTML("beforeend", `<h6>Code</h6><a href="#css">CSS</a>`);
+document.getElementById("styleCount").textContent = count;
+
+// CSS output
+const css = [
+  ":root {",
+  '  --raapid-font: "Geist", ui-sans-serif, system-ui, sans-serif;',
+  "}",
+  "",
+  ...GROUPS.flatMap(g => [
+    `/* ${g.name} */`,
+    ...g.styles.map(s =>
+      `.${s.cls} { font-family: var(--raapid-font); font-weight: ${s.w}; font-size: ${s.size}px; line-height: ${s.lh}px; letter-spacing: ${em(s.ls)};${s.upper ? " text-transform: uppercase;" : ""} }`),
+    ""
+  ])
+].join("\n");
+document.getElementById("cssOut").textContent = css;
+
+// Toast + copy
+const toast = document.getElementById("toast");
+let tt;
+function notify(msg) {
+  toast.textContent = msg; toast.classList.add("show");
+  clearTimeout(tt); tt = setTimeout(() => toast.classList.remove("show"), 1400);
+}
+async function copy(text, msg) {
+  try { await navigator.clipboard.writeText(text); notify(msg); }
+  catch { notify("Copy failed — select the text manually"); }
+}
+document.addEventListener("click", e => {
+  const b = e.target.closest("[data-copy]");
+  if (b) copy(b.dataset.copy.replace(/^\./, ""), `Copied ${b.dataset.copy}`);
+});
+document.getElementById("copyAll").addEventListener("click", () => copy(css, "CSS copied"));
+
+// Live preview text
+document.getElementById("sampleInput").addEventListener("input", e => {
+  const v = e.target.value;
+  document.querySelectorAll(".row").forEach(r => {
+    r.querySelector("[contenteditable]").textContent = v || r.dataset.default;
+  });
+});
+
+// Line boxes toggle
+const blBtn = document.getElementById("baselineBtn");
+blBtn.addEventListener("click", () => {
+  const on = document.body.classList.toggle("show-lines");
+  document.querySelectorAll(".sample [contenteditable]").forEach(el => el.classList.toggle("baseline", on));
+  if (on) {
+    document.querySelectorAll(".sample [contenteditable]").forEach(el => {
+      const lh = getComputedStyle(el).lineHeight;
+      el.style.backgroundSize = `100% ${lh}`;
+    });
+  }
+  blBtn.textContent = on ? "Hide line boxes" : "Show line boxes";
+});
+
+// Theme toggle (remembered per browser)
+const root = document.documentElement;
+try { const t = localStorage.getItem("raapid-kit-theme"); if (t) root.dataset.theme = t; } catch {}
+document.getElementById("themeBtn").addEventListener("click", () => {
+  const dark = root.dataset.theme ? root.dataset.theme === "dark" : matchMedia("(prefers-color-scheme: dark)").matches;
+  root.dataset.theme = dark ? "light" : "dark";
+  try { localStorage.setItem("raapid-kit-theme", root.dataset.theme); } catch {}
+});
+// ================= Buttons tab =================
+const SURFACES = [
+  { key: "white",  name: "On white",          hex: "#FFFFFF", note: "Default page background" },
+  { key: "violet", name: "On RAAPID violet",  hex: "#5553D6", note: "Labs band, feature callouts" },
+  { key: "navy",   name: "On navy",           hex: "#21154A", note: "Footer, dark sections" },
+];
+const VARIANTS = [
+  { name: "Primary",   cls: "rb rb-primary",            html: '<svg class="rb-cta" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path class="cta-tl" d="M2 2L6 6"/><path class="cta-tr" d="M22 2L18 6"/><path class="cta-bl" d="M2 22L6 18"/><path class="cta-br" d="M22 22L18 18"/></svg><span class="t-link-s-medium">Request a demo</span>' },
+  { name: "Secondary", cls: "rb rb-secondary",          html: '<span class="t-link-s-medium">Explore Health Plans</span><svg class="rb-arrow" aria-hidden="true"><use href="#i-arrow"/></svg>' },
+  { name: "Text link", cls: "rb rb-link",               html: '<span class="t-link-s-medium">Explore success story</span><svg class="rb-arrow" aria-hidden="true"><use href="#i-arrow"/></svg>' },
+  { name: "Compact",   cls: "rb rb-primary rb-compact", html: '<svg class="rb-cta" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path class="cta-tl" d="M2 2L6 6"/><path class="cta-tr" d="M22 2L18 6"/><path class="cta-bl" d="M2 22L6 18"/><path class="cta-br" d="M22 22L18 18"/></svg><span class="t-link-s-medium">Request a demo</span>' },
+];
+const STATES = [["Default", ""], ["Hover", "is-hover"]];
+
+document.getElementById("surfaces").innerHTML = SURFACES.map(sf => `
+  <section class="surface rb-${sf.key}" id="surface-${sf.key}">
+    <div class="surface-head">
+      <h2><span class="swatch" style="background:${sf.hex}"></span>${sf.name}</h2>
+      <span>${sf.hex} · ${sf.note} · add <code>.rb-${sf.key}</code> to the section</span>
+    </div>
+    <div class="surface-body">
+      <div class="btn-grid">
+        <div class="col-h">Variant</div>${STATES.map(s => `<div class="col-h">${s[0]}</div>`).join("")}
+        ${VARIANTS.map(v => `
+          <div class="row-h"><b>${v.name}</b><code data-copy="${v.cls}" title="Copy classes">.${v.cls.split(" ").join(".")}</code><span class="contrast" data-contrast="${v.name}"></span></div>
+          ${STATES.map(s => `<div><a href="#" class="${v.cls} ${s[1]}" onclick="return false">${v.html}</a></div>`).join("")}
+        `).join("")}
+      </div>
+    </div>
+  </section>`).join("");
+
+// Contrast ratio of each variant's label against its own background (WCAG)
+(function contrast() {
+  const lum = rgb => { const m = rgb.match(/[\d.]+/g).map(Number).slice(0, 3).map(v => { v /= 255; return v <= .03928 ? v / 12.92 : ((v + .055) / 1.055) ** 2.4; }); return .2126 * m[0] + .7152 * m[1] + .0722 * m[2]; };
+  const ratio = (a, b) => { const x = lum(a), y = lum(b); return (Math.max(x, y) + .05) / (Math.min(x, y) + .05); };
+  document.querySelectorAll(".surface").forEach(sf => {
+    const surfaceBg = getComputedStyle(sf.querySelector(".surface-body")).backgroundColor;
+    sf.querySelectorAll(".row-h").forEach(row => {
+      const btn = row.nextElementSibling.querySelector(".rb");
+      const cs = getComputedStyle(btn);
+      const bg = cs.backgroundColor === "rgba(0, 0, 0, 0)" ? surfaceBg : cs.backgroundColor;
+      const r = ratio(cs.color, bg);
+      row.querySelector(".contrast").textContent = `Text ${r.toFixed(1)}:1 ${r >= 4.5 ? "· AA" : "· below AA"}`;
+    });
+  });
+})();
+
+// Copy class names (data-copy handler above copies text without leading dot)
+const btnCss = document.querySelector("style").textContent.split("RAAPID BUTTONS (component)")[1].split("/* ---------- Kit page")[0];
+document.getElementById("btnCssOut").textContent = "/* RAAPID BUTTONS (component)" + btnCss.trimEnd();
+document.getElementById("copyBtnCss").addEventListener("click", () => copy(document.getElementById("btnCssOut").textContent, "Button CSS copied"));
+
+// ================= Tabs =================
+const tabBtns = [...document.querySelectorAll('.tabs [role="tab"]')];
+function showTab(id, push) {
+  tabBtns.forEach(t => {
+    const on = t.id === id;
+    t.setAttribute("aria-selected", String(on));
+    t.tabIndex = on ? 0 : -1;
+    document.getElementById(t.getAttribute("aria-controls")).hidden = !on;
+  });
+  document.body.classList.toggle("on-buttons", id === "tab-buttons");
+  if (push) history.replaceState(null, "", id === "tab-buttons" ? "#buttons" : "#typography");
+  window.scrollTo(0, 0);
+}
+tabBtns.forEach(t => t.addEventListener("click", () => showTab(t.id, true)));
+document.querySelector(".tabs").addEventListener("keydown", e => {
+  if (!["ArrowLeft", "ArrowRight"].includes(e.key)) return;
+  const i = tabBtns.findIndex(t => t.getAttribute("aria-selected") === "true");
+  const n = tabBtns[(i + 1) % tabBtns.length]; showTab(n.id, true); n.focus();
+});
+if (location.hash === "#buttons") showTab("tab-buttons", false);
+</script>
+</body>
+</html>

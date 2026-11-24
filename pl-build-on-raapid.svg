@@ -1,0 +1,48 @@
+<svg width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+
+<g id="Section 1">
+<g id="Menu-Icons-1606">
+<g id="icon-platform-Build-on-RAAPID">
+<g id="Group 43348">
+<g id="Group 43332">
+<path id="Vector 139" d="M3.57729 15.9442L17.3625 11.2404C17.5721 11.1689 17.7995 11.169 18.0091 11.2407L32.4072 16.1658C33.2964 16.47 33.313 17.7216 32.4322 18.0493L17.9542 23.4351C17.7189 23.5226 17.4592 23.5184 17.2269 23.4233L3.52157 17.8162C2.66621 17.4662 2.70263 16.2427 3.57729 15.9442Z" fill="#5E58E0"/>
+<g id="Group 43331">
+<path id="Vector 141" d="M11.9995 19V25.0858C11.9995 25.351 11.8942 25.6054 11.7066 25.7929L10.7924 26.7071C10.6049 26.8946 10.4995 27.149 10.4995 27.4142V31" stroke-linecap="round" stroke="#5E58E0"/>
+<path id="Vector 143" d="M22.9995 19V25.0858C22.9995 25.351 23.1049 25.6054 23.2924 25.7929L24.2066 26.7071C24.3942 26.8946 24.4995 27.149 24.4995 27.4142V31" stroke-linecap="round" stroke="#5E58E0"/>
+<path id="Vector 142" d="M17.4995 19V31.5" stroke-linecap="round" stroke="#5E58E0"/>
+</g>
+<circle id="Ellipse 52" cx="10.5" cy="32" r="2" fill="#5E58E0"/>
+<circle id="Ellipse 53" cx="17.5" cy="32" r="2" fill="#5E58E0"/>
+<circle id="Ellipse 54" cx="24.5" cy="32" r="2" fill="#5E58E0"/>
+</g>
+<g id="Group 43343">
+<foreignObject x="-3.33646" y="-3.54984" width="42.6563" height="24.7842"><div xmlns="http://www.w3.org/1999/xhtml" style="backdrop-filter:blur(3.09px);clip-path:url(#bgblur_0_0_1_clip_path);height:100%;width:100%"></div></foreignObject><g id="Vector 140" data-figma-bg-blur-radius="6.18655">
+<path d="M3.57729 7.44421L17.3625 2.74042C17.5721 2.6689 17.7995 2.66898 18.0091 2.74067L32.4072 7.66584C33.2964 7.97 33.313 9.2216 32.4322 9.54926L17.9542 14.9351C17.7189 15.0226 17.4592 15.0184 17.2269 14.9233L3.52157 9.31616C2.66621 8.96621 2.70263 7.74266 3.57729 7.44421Z" fill="url(#paint0_linear_0_1)" fill-opacity="0.3"/>
+<use xlink:href="#stroke0_0_1" stroke="url(#paint1_linear_0_1)"/>
+<use xlink:href="#stroke0_0_1" stroke="url(#paint2_radial_0_1)"/>
+</g>
+<path id="Vector 144" d="M16.5067 8.09375L15.9599 7L17.7828 7.54688L19.788 7L18.6219 8.09375L19.5 9.5L17.4948 8.78611L15.5899 9.32802L16.5067 8.09375Z" fill="#F6F4F4"/>
+</g>
+</g>
+</g>
+</g>
+</g>
+<defs>
+<clipPath id="bgblur_0_0_1_clip_path" transform="translate(3.33646 3.54984)"><path d="M3.57729 7.44421L17.3625 2.74042C17.5721 2.6689 17.7995 2.66898 18.0091 2.74067L32.4072 7.66584C33.2964 7.97 33.313 9.2216 32.4322 9.54926L17.9542 14.9351C17.7189 15.0226 17.4592 15.0184 17.2269 14.9233L3.52157 9.31616C2.66621 8.96621 2.70263 7.74266 3.57729 7.44421Z"/>
+</clipPath><linearGradient id="paint0_linear_0_1" x1="4.72764" y1="3.67638" x2="20.055" y2="25.734" gradientUnits="userSpaceOnUse">
+<stop stop-color="#5A81FF" stop-opacity="0.9"/>
+<stop offset="0.447036" stop-color="#567DFF" stop-opacity="0.955296"/>
+<stop offset="1" stop-color="#4E78FF" stop-opacity="0.9"/>
+</linearGradient>
+<linearGradient id="paint1_linear_0_1" x1="5.99495" y1="2.09405" x2="17.8943" y2="21.4194" gradientUnits="userSpaceOnUse">
+<stop offset="0.188941" stop-color="#E7F0FF" stop-opacity="0.523483"/>
+<stop offset="0.526042" stop-color="#88A4FF"/>
+<stop offset="1" stop-color="#B4D2FF" stop-opacity="0.1"/>
+</linearGradient>
+<radialGradient id="paint2_radial_0_1" cx="0" cy="0" r="1" gradientTransform="matrix(16.8741 -7.45869 20.622 16.1699 6.08531 14.5737)" gradientUnits="userSpaceOnUse">
+<stop stop-color="white"/>
+<stop offset="1" stop-color="white" stop-opacity="0"/>
+</radialGradient>
+<path id="stroke0_0_1" d="M17.3625 2.74042L3.57729 7.44421C2.70263 7.74266 2.66621 8.96621 3.52157 9.31616L17.2269 14.9233C17.4592 15.0184 17.7189 15.0226 17.9542 14.9351L32.4322 9.54926C33.313 9.2216 33.2964 7.97 32.4072 7.66584L18.0091 2.74067C17.7995 2.66898 17.5721 2.6689 17.3625 2.74042Z" stroke-width="0.1" stroke-linecap="round"/>
+</defs>
+</svg>

@@ -1,0 +1,45 @@
+<svg width="36" height="36" viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+
+<g id="Section 1">
+<g id="Menu-Icons-1606">
+<g id="icon--health-plan-Payment-Integrity">
+<g id="Group 43344">
+<path id="Solid Fill" d="M27 17H5C3.89543 17 3 17.8954 3 19V31C3 32.1046 3.89543 33 5 33H19.25H27C28.1046 33 29 32.1046 29 31V19C29 17.8954 28.1046 17 27 17Z" fill="#5E58E0"/>
+<g id="Group 43341">
+<foreignObject x="0.925888" y="-3.07411" width="38.1482" height="30.1482"><div xmlns="http://www.w3.org/1999/xhtml" style="backdrop-filter:blur(3.04px);clip-path:url(#bgblur_0_0_1_clip_path);height:100%;width:100%"></div></foreignObject><g id="Solid Fill_2" data-figma-bg-blur-radius="6.07411">
+<path d="M31 3H9C7.89543 3 7 3.89543 7 5V19C7 20.1046 7.89543 21 9 21H23.25H31C32.1046 21 33 20.1046 33 19V5C33 3.89543 32.1046 3 31 3Z" fill="url(#paint0_linear_0_1)" fill-opacity="0.3"/>
+<mask id="stroke0_0_1" fill="white">
+<path d="M31 3H9C7.89543 3 7 3.89543 7 5V19C7 20.1046 7.89543 21 9 21H23.25H31C32.1046 21 33 20.1046 33 19V5C33 3.89543 32.1046 3 31 3Z"/>
+</mask>
+<path d="M9 3H31C32.1046 3 33 3.89543 33 5V19C33 20.1046 32.1046 21 31 21H23.25H9C7.89543 21 7 20.1046 7 19V5C7 3.89543 7.89543 3 9 3Z" stroke-width="0.2" stroke="url(#paint1_linear_0_1)" mask="url(#stroke0_0_1)"/>
+<path d="M9 3H31C32.1046 3 33 3.89543 33 5V19C33 20.1046 32.1046 21 31 21H23.25H9C7.89543 21 7 20.1046 7 19V5C7 3.89543 7.89543 3 9 3Z" stroke-width="0.2" stroke="url(#paint2_radial_0_1)" mask="url(#stroke0_0_1)"/>
+</g>
+<g id="Group 43342">
+<path id="Vector 149" d="M7 8L33 8" stroke="#F6F4F4"/>
+<path id="Vector 152" d="M18 13L23 13" stroke="#F6F4F4"/>
+<path id="Vector 153" d="M18 15.5L26 15.5" stroke="#F6F4F4"/>
+<path id="Vector 151" d="M10 13.5L12 15.5L15.5 12.5" stroke="#F6F4F4"/>
+</g>
+</g>
+</g>
+</g>
+</g>
+</g>
+<defs>
+<clipPath id="bgblur_0_0_1_clip_path" transform="translate(-0.925888 3.07411)"><path d="M9 3.0498H31C32.077 3.0498 32.9502 3.92304 32.9502 5V19C32.9502 20.077 32.077 20.9502 31 20.9502H9C7.92304 20.9502 7.0498 20.077 7.0498 19V5C7.0498 3.92304 7.92304 3.0498 9 3.0498Z"/>
+</clipPath><linearGradient id="paint0_linear_0_1" x1="9.78229" y1="4.66072" x2="32.6039" y2="21.7294" gradientUnits="userSpaceOnUse">
+<stop stop-color="#5A81FF" stop-opacity="0.9"/>
+<stop offset="0.447036" stop-color="#567DFF" stop-opacity="0.955296"/>
+<stop offset="1" stop-color="#4E78FF" stop-opacity="0.9"/>
+</linearGradient>
+<linearGradient id="paint1_linear_0_1" x1="10.7417" y1="2.35714" x2="29.8379" y2="18.4621" gradientUnits="userSpaceOnUse">
+<stop offset="0.188941" stop-color="#E7F0FF" stop-opacity="0.523483"/>
+<stop offset="0.526042" stop-color="#88A4FF"/>
+<stop offset="1" stop-color="#B4D2FF" stop-opacity="0.1"/>
+</linearGradient>
+<radialGradient id="paint2_radial_0_1" cx="0" cy="0" r="1" gradientTransform="matrix(12.8561 -10.9821 15.8631 23.1594 10.8856 20.4107)" gradientUnits="userSpaceOnUse">
+<stop stop-color="white"/>
+<stop offset="1" stop-color="white" stop-opacity="0"/>
+</radialGradient>
+</defs>
+</svg>
