@@ -6,7 +6,7 @@
 <title>RAAPID — Clinical AI for Healthcare Revenue Integrity</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&family=JetBrains+Mono:wght@700&display=swap" rel="stylesheet">
 <style>
 /* =========================================================
    RAAPID TYPOGRAPHY TOKENS — copied unchanged from RAAPID-UI-KIT.html
@@ -72,7 +72,7 @@ h1, p { margin: 0; }
 .container { max-width: var(--max); margin: 0 auto; padding: 0 var(--page-x); }
 
 /* Grey placeholder for images & icons — replace with real assets later */
-.ph { display: inline-block; flex: none; background: var(--placeholder); border-radius: 2px; }
+.ph { display: inline-block; flex: none; background: var(--placeholder); border-radius: 0; }
 .ph-light { background: var(--placeholder-2); }
 
 /* ---------- Header ---------- */
@@ -182,7 +182,7 @@ h1, p { margin: 0; }
 }
 .nav-trigger::after {                            /* active underline */
   content: ""; position: absolute; left: 0; right: 0; bottom: -1px; height: 2px;
-  background: var(--ink); transform: scaleX(0); transform-origin: left; transition: transform .2s ease;
+  background: var(--raapid-violet); transform: scaleX(0); transform-origin: left; transition: transform .2s ease;
 }
 .nav-trigger:hover::after, .nav-trigger[aria-expanded="true"]::after { transform: scaleX(1); }
 .primary-nav a.nav-trigger:hover { text-decoration: none; }
@@ -226,7 +226,7 @@ h1, p { margin: 0; }
 /* ---------- Heading emphasis colour ---------- */
 :root { --brand-navy: #21154a; }   /* RAAPID logo navy */
 h1, h2, h3 { color: var(--brand-navy); }   /* all headings (light and bold words) */
-.labs h2, .labs h2 .t-h1-bold { color: #ffffff; }   /* Labs heading stays white on the purple band */
+.labs h2, .labs h2 .t-h2-bold { color: #ffffff; }   /* Labs heading stays white on the violet band */
 
 /* ---------- Section rhythm (applies to every section) ---------- */
 main > section.container { padding-top: var(--section-y); padding-bottom: var(--section-y); }
@@ -244,7 +244,7 @@ main > section.container:first-child { padding-top: calc(var(--section-y) * 2); 
 .tagline { margin-top: var(--space-group); }
 .lede { margin-top: var(--space-close); max-width: 760px; color: var(--ink-2); }
 .hero .rb { margin-top: var(--space-group); }
-.hero-visual { width: 100%; aspect-ratio: 1 / 1; max-width: 680px; justify-self: end; border-radius: 4px; }
+.hero-visual { width: 100%; aspect-ratio: 1 / 1; max-width: 680px; justify-self: end; border-radius: 0; }
 
 /* ---------- Stats ---------- */
 .stats {
@@ -326,59 +326,139 @@ main > section.ticker-wrap { max-width: none; padding-left: 0; padding-right: 0;
 .platform-head h2 { margin: 0; }
 .platform-lede { max-width: 920px; margin: var(--space-item) auto 0; color: var(--ink); }
 
-.platform-map {
-  --side: 320px;     /* width of the Workflows / Intelligence columns */
-  --reach: 152px;    /* how far connector lines reach towards the illustration */
-  display: grid; grid-template-columns: var(--side) minmax(0, 1fr) var(--side);
-  gap: 96px; align-items: start;
-  margin: var(--head-gap) 0 0;
+/* ---------- Platform infographic (Figma: infographic-101) ----------
+   Diagram text uses the diagram's own styles from Figma (not the page tokens).
+   Desktop: 1090 × 720 canvas, positions taken from the Figma frame.
+   Tiles are flat squares drawn in isometric view with matrix(); layers rise in on scroll. */
+.ig {
+  --ig-ink: #1e1e1e; --ig-ink-2: #6e6e6e; --ig-rule: #8c8c8c;
+  --ig-head: var(--brand-navy);                            /* headings + item titles: navy, like the rest of the page */
+  --iso: matrix(0.866025, -0.5, 0.866025, 0.5, 0, 0);       /* top face, edges at ±30° */
+  --iso-r: matrix(0.866025, 0.5, -0.866025, 0.5, 0, 0);     /* ticks + left dot */
+  position: relative; width: 1090px; margin: var(--head-gap) auto 0;   /* height follows the foundation row */
+  color: var(--ig-ink);
 }
-.map-col h3 { margin: 0; }
-.map-right h3 { text-align: right; }
-.map-list { list-style: none; margin: 0; padding: 0; }
-.map-list li { padding: 24px 0; border-bottom: 1px solid var(--rule); }
-.map-list li:last-child { border-bottom: 0; }
-.map-left .map-list { max-width: 300px; }
-.map-sub { margin-top: 4px; color: var(--ink-3); }
+.ig p { margin: 0; }
+.ig-col, .ig-stack, .ig-link, .ig-dot, .ig-fline { position: absolute; }
 
-/* Connector lines (decorative) */
-.map-rule { position: relative; height: 0; margin-top: var(--space-close); border-top: 2px solid var(--ink); }
-.map-rule::after {
-  content: ""; position: absolute; top: -2px; width: 18px;
-  border-top: 2px solid var(--ink);
+/* Side columns */
+.ig-workflows { left: 1px; top: 0; width: 225px; }
+.ig-intel { left: 866px; top: 2px; width: 224px; }
+.ig-h {
+  margin: 0; padding-bottom: 24px; border-bottom: 2px solid var(--ig-ink);
+  font: 700 32px/23px var(--raapid-font); text-transform: uppercase; color: var(--ig-head); white-space: nowrap;
 }
-.map-left .map-rule { margin-right: calc(var(--reach) * -1); }
-.map-left .map-rule::after {
-  right: 0; height: 128px; border-right: 2px solid var(--ink); border-top-right-radius: 18px;
-}
-.map-right .map-rule { margin-left: calc(var(--reach) * -1); }
-.map-right .map-rule::after {
-  left: 0; height: 398px; border-left: 2px solid var(--ink); border-top-left-radius: 18px;
-}
-.map-rule .dot {
-  position: absolute; width: 12px; height: 12px; border-radius: 50%; background: var(--ink);
-}
-.map-left .map-rule .dot { right: -5px; top: 124px; }
-.map-right .map-rule .dot { left: -96px; }
-.map-right .map-rule .dot::before {        /* short branch from the vertical line to each dot */
-  content: ""; position: absolute; top: 5px; left: 8px; width: 88px; height: 2px; background: var(--ink);
-}
-.map-right .map-rule .d1 { top: 232px; }
-.map-right .map-rule .d2 { top: 312px; }
-.map-right .map-rule .d3 { top: 392px; }
+.ig-list { list-style: none; margin: 27px 0 0; padding: 0; display: flex; flex-direction: column; gap: 20px; }
+.ig-list li { display: flex; flex-direction: column; gap: 5px; padding-bottom: 10px; border-bottom: 1px solid var(--ig-rule); }
+.ig-list li:last-child { border-bottom: 0; }
+.ig-workflows .ig-list li { width: 217px; }
+.ig-t { font: 700 20px/20px var(--raapid-font); color: var(--ig-head); }
+.ig-s { font: 400 16px/20px var(--raapid-font); color: var(--ig-ink-2); }
 
-.map-visual { display: flex; justify-content: center; }
-.platform-image { display: block; width: 100%; max-width: 690px; aspect-ratio: 690 / 800; border-radius: 4px; }
+/* Enterprise foundation */
+.ig-foundation { position: relative; padding-top: 552px; }   /* in flow, so the section closes up when descriptions are hidden */
+.ig-foundation { pointer-events: none; }                 /* its top padding overlaps the stack: let hovers through */
+.ig-foundation > * { pointer-events: auto; }
+.ig-fh { margin: 9.5px 0 0; font: 700 24px/23px var(--raapid-font); text-transform: uppercase; color: var(--ig-head); }
+.ig-fgrid { display: flex; gap: 52px; margin: 46px 0 0 2px; }
+.ig-fgrid > div { display: flex; flex-direction: column; gap: 5px; }
+.ig-fgrid > div:nth-child(1) { width: 284px; }
+.ig-fgrid > div:nth-child(2) { width: 217px; }
+.ig-fgrid > div:nth-child(3) { width: 245px; }
+.ig-fgrid > div:nth-child(4) { width: 187px; }
+.ig-fline { left: 0; top: 552px; width: 1089.5px; height: 57.5px; display: flex; align-items: center; justify-content: center; }
+.ig-fline > span { position: relative; flex: none; width: 57.5px; height: 1089.5px; transform: rotate(-90deg); }
+.ig-fline img { position: absolute; left: -1px; top: 0; }
 
-.foundation { position: relative; margin: var(--space-group) 0 0; }
-.foundation h3 { margin: 0 0 24px; }
-.foundation::before {        /* stem from the illustration down to the foundation rule */
-  content: ""; position: absolute; left: 50%; bottom: calc(100% - 58px); width: 2px; height: 140px;
-  background: var(--ink);
+/* Connectors + dots (Figma vectors) */
+.ig-link img { position: absolute; left: 0; top: -1px; }
+.ig-link-w  { left: 226px; top: 48px;  width: 109px; height: 93px; }
+.ig-link-i1 { left: 748px; top: 50px;  width: 120px; height: 170px; transform: scaleY(-1); }
+.ig-link-i2 { left: 748px; top: 74px;  width: 86px;  height: 206px; transform: scaleY(-1); }
+.ig-link-i3 { left: 748px; top: 120px; width: 86px;  height: 216px; transform: scaleY(-1); }
+.ig-dot { width: 17.321px; height: 10px; display: grid; place-items: center; }
+.ig-dot img { transform: var(--iso); }
+.ig-dot-l { left: 326px; top: 135px; }
+.ig-dot-l img { transform: var(--iso-r); }
+.ig-dot-1 { left: 741px; top: 215px; }
+.ig-dot-2 { left: 741px; top: 275px; }
+.ig-dot-3 { left: 741px; top: 331px; }
+
+/* The layered stack */
+.ig-stack { left: 285px; top: 0; width: 522px; height: 611px; }
+.ig-box { position: absolute; display: grid; place-items: center; }
+.ig-box > * { flex: none; }
+.ig-face { border-radius: 30px; }
+.ig-shadow .ig-face { width: 145.276px; height: 145.276px; transform: matrix(0.898, -0.44, 0.898, 0.439, 0, 0);
+  background: rgba(64, 64, 64, .3); filter: blur(15px); }
+.ig-base .ig-face { width: 150.882px; height: 150.882px; transform: matrix(0.8648, -0.5021, 0.8663, 0.5031, 0, 0);
+  background: linear-gradient(247.74deg, rgba(82, 82, 82, .5) 16.08%, rgba(170, 170, 170, .5) 105.99%);
+  box-shadow: inset 0 -6px 1px 0 #404040, inset 0 -7px 1px 0 #f8ffe3, inset 0 4px 3px 2px #444; }
+.ig-core .ig-face { width: 301.338px; height: 301.338px; transform: var(--iso);
+  background: rgba(94, 88, 224, .3); -webkit-backdrop-filter: blur(15px); backdrop-filter: blur(15px);
+  box-shadow: inset 0 -11px 1px 0 rgba(255, 255, 255, .26), inset 0 -8px 0 1px #0700a5, inset 0 7px 4px 2px #373385; }
+.ig-flow .ig-face { width: 150.548px; height: 150.548px; transform: matrix(0.8667, -0.4988, 0.862, 0.4962, 0, 0);
+  background: linear-gradient(252.18deg, rgba(206, 222, 0, .6) 16.76%, rgba(111, 120, 0, .6) 108%);
+  -webkit-backdrop-filter: blur(9.4px); backdrop-filter: blur(9.4px);
+  box-shadow: inset 0 -6px 1px 0 #cede00, inset 0 -7px 1px 0 #f8ffe3, inset 0 4px 3px 2px #687000; }
+.ig-label > span {
+  transform: var(--iso); white-space: nowrap; color: #ffffff; text-transform: uppercase;
+  font-family: "JetBrains Mono", ui-monospace, monospace; font-weight: 700; line-height: 15px;
 }
-.foundation-grid {
-  display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 40px;
-  padding-top: var(--space-item); border-top: 2px solid var(--ink);
+.ig-core.ig-label > span { font-size: 18px; }
+.ig-flow.ig-label > span { font-size: 15px; }
+.ig-tick img { transform: var(--iso-r); }
+
+/* Top-down entrance: workflow tiles → three intelligence layers → base drop into place, then connectors */
+.ig.ig-anim [data-layer] {
+  opacity: 0; translate: 0 -48px;                          /* start above, settle downwards */
+  transition: opacity .6s ease, translate .8s cubic-bezier(.2, .8, .2, 1);
+  transition-delay: calc((4 - var(--l)) * 160ms);         /* layer 4 (top) first, base last */
+}
+.ig.ig-anim .ig-link, .ig.ig-anim .ig-dot, .ig.ig-anim .ig-fline { opacity: 0; transition: opacity .6s ease 1.3s; }
+.ig.ig-anim.is-in [data-layer] { opacity: 1; translate: 0 0; }
+.ig.ig-anim.is-in .ig-link, .ig.ig-anim.is-in .ig-dot, .ig.ig-anim.is-in .ig-fline { opacity: 1; }
+[data-layer="0"] { --l: 0; } [data-layer="1"] { --l: 1; } [data-layer="2"] { --l: 2; }
+[data-layer="3"] { --l: 3; } [data-layer="4"] { --l: 4; }
+@media (prefers-reduced-motion: reduce) {
+  .ig.ig-anim [data-layer], .ig.ig-anim .ig-link, .ig.ig-anim .ig-dot, .ig.ig-anim .ig-fline { opacity: 1; translate: none; transition: none; }
+}
+
+/* Hover a layer → its description opens beside it (desktop with a mouse only; touch / smaller screens show all) */
+@media (min-width: 1190px) and (hover: hover) {
+  .ig-stack .ig-box { pointer-events: none; }
+  .ig-stack .ig-face { pointer-events: auto; }                 /* hit area = the tile shape, not its bounding box */
+  .ig-shadow .ig-face { pointer-events: none; }
+  .ig-s {
+    max-height: 0; margin-top: -5px; opacity: 0; overflow: hidden;   /* collapsed; still read by screen readers */
+    transition: max-height .4s cubic-bezier(.2, .8, .2, 1), margin-top .4s cubic-bezier(.2, .8, .2, 1), opacity .25s ease;
+  }
+  .ig [data-key].is-active .ig-s { max-height: 160px; margin-top: 0; opacity: 1; transition-delay: 0s, 0s, .1s; }
+  .ig-t { transition: color .2s ease; }
+  .ig [data-key].is-active .ig-t { color: var(--raapid-violet); }
+  .ig.ig-done .ig-stack [data-layer] { transition: transform .3s cubic-bezier(.2, .8, .2, 1); }
+  .ig .ig-stack .ig-box.is-active { transform: translateY(-8px); }   /* hovered layer lifts */
+  .ig-col li, .ig-fgrid > div { cursor: default; }
+}
+
+/* Below 1190px the canvas no longer fits: stack first, then the lists; connectors hidden */
+@media (max-width: 1189px) {
+  .ig { width: auto; height: auto; display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-group) var(--grid-gap); }
+  .ig-col, .ig-stack { position: relative; left: auto; top: auto; }
+  .ig-foundation { padding-top: 0; }
+  .ig-workflows, .ig-intel { width: auto; }
+  .ig-workflows .ig-list li { width: auto; }
+  .ig-stack { grid-column: 1 / -1; grid-row: 1; justify-self: center; }
+  .ig-foundation { grid-column: 1 / -1; }
+  .ig-fh { margin: 0; padding-bottom: 24px; border-bottom: 2px solid var(--ig-ink); }
+  .ig-fgrid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-item) var(--grid-gap); margin: 27px 0 0; }
+  .ig-fgrid > div:nth-child(n) { width: auto; }
+  .ig-link, .ig-dot, .ig-fline { display: none; }
+}
+@media (max-width: 640px) {
+  .ig { grid-template-columns: 1fr; }
+  .ig-stack { zoom: .62; }
+  .ig-fgrid { grid-template-columns: 1fr; }
 }
 
 /* ---------- Who RAAPID Serves ---------- */
@@ -401,16 +481,21 @@ main > section.ticker-wrap { max-width: none; padding-left: 0; padding-right: 0;
   transition: transform .6s cubic-bezier(.2, .8, .2, 1);
 }
 .serve-card:hover .serve-photo, .serve-card.open .serve-photo { transform: scale(1.04); }
-.serve-card::before {                       /* soft lavender veil keeps the text area calm and readable */
+:root { --serve-hover: #f4f4f6; }            /* light grey (same grey as the partners strip) */
+.serve-card::before {                       /* resting state: soft lavender veil behind the headline */
   content: ""; position: absolute; inset: 0; z-index: -1;
   background: linear-gradient(180deg, rgba(241, 238, 252, 0) 40%, rgba(241, 238, 252, .85) 100%);
-  transition: background .3s ease;
 }
-.serve-card:hover::before, .serve-card:focus-within::before, .serve-card.open::before {
-  background: linear-gradient(180deg, rgba(241, 238, 252, .2) 0%, rgba(241, 238, 252, .92) 55%);
+.serve-card::after {                        /* hover / open: solid light grey fills the card */
+  content: ""; position: absolute; inset: 0; z-index: -1;
+  background: var(--serve-hover); opacity: 0;
+  transition: opacity .35s ease;
 }
+.serve-card:hover::after, .serve-card:focus-within::after, .serve-card.open::after { opacity: 1; }
 .serve-content { padding: 48px; }
-.serve-label { margin: 0 0 var(--space-pair); color: var(--raapid-violet); }
+.serve-label {                              /* eyebrow tag pinned to the top-left of the card */
+  position: absolute; top: 48px; left: 48px; right: 48px; margin: 0; color: var(--raapid-violet);
+}
 .serve-content h3 { margin: 0; max-width: 560px; }
 .serve-hint { margin-top: var(--space-item); color: var(--ink-2); }
 .serve-card:hover .serve-hint, .serve-card:focus-within .serve-hint, .serve-card.open .serve-hint { display: none; }
@@ -454,75 +539,79 @@ main > section.ticker-wrap { max-width: none; padding-left: 0; padding-right: 0;
 .trust-desc { margin-top: var(--space-close) !important; max-width: 560px; color: var(--ink-3); }
 .story-link {
   display: flex;
-  margin-top: var(--space-item); padding-top: var(--space-close); border-top: 1px solid var(--ink);
+  margin-top: var(--space-item); padding-top: var(--space-close); border-top: 1px solid var(--rule);
 }
 
-/* ---------- RAAPID Labs ---------- */
-:root { --labs-bg: #5553d6; }   /* sampled from screenshot */
+/* ---------- RAAPID Labs: sleek violet band ----------
+   plain RAAPID violet · heading left (6 cols) · copy + CTA right (5 cols) · top-aligned */
+:root { --labs-bg: var(--raapid-violet); }
 .labs {
-  position: relative; overflow: hidden; isolation: isolate;
-  background-color: var(--labs-bg); color: #ffffff;
-  padding: 160px 128px;
+  display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--grid-gap); align-items: start;   /* heading and copy share the same top line */
+  background: var(--labs-bg); color: #ffffff;
+  padding: 80px 64px;
 }
-.labs::before {                 /* fine film grain, as in the screenshot */
-  content: ""; position: absolute; inset: 0; z-index: -1; opacity: .22; mix-blend-mode: soft-light;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-}
-.labs-content { position: relative; max-width: 880px; }
-.labs-content h2 { margin: 0; }
-.labs-content .t-h1-bold { display: block; }
-.labs-text { margin-top: var(--space-item); max-width: 780px; color: rgba(255,255,255,.92); }
-.labs .rb { margin-top: var(--space-group); }
+.labs-title { grid-column: 1 / span 6; margin: 0; text-wrap: balance; }
+.labs-side { grid-column: 8 / -1; }
+.labs-text { margin: 0; color: rgba(255, 255, 255, .88); max-width: 520px; }
+.labs .rb { margin-top: var(--space-item); }
 
 /* ---------- Building the next (news) ---------- */
 .news h2 { margin: 0; }
+/* Lead story (left, 7 cols): text on top, image below.
+   Side stories (right, 5 cols): text left, image right, divided by hairline rules. No card fills.
+   The lead image sets the height; the two side stories share it equally, so both columns end together. */
 .news-grid {
   display: grid; margin-top: var(--head-gap);
-  grid-template-columns: 697fr 336fr 336fr;   /* proportions from screenshot */
-  grid-template-areas:
-    "main  textA imgA"
-    "main  imgB  textB"
-    "mtext .     .";
-  column-gap: var(--grid-gap); row-gap: 0;
+  grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+  column-gap: var(--grid-gap); align-items: stretch;
 }
-.n-img-main { grid-area: main; }
-.n-text-main { grid-area: mtext; padding-top: var(--space-item); }
-.n-text-a { grid-area: textA; padding-bottom: 48px; }
-.n-img-a { grid-area: imgA; }
-.n-img-b { grid-area: imgB; margin-top: 0; }
-.n-text-b { grid-area: textB; align-self: end; padding-top: 48px; }
+.news-card { cursor: pointer; }
+.news-card--lead { display: flex; flex-direction: column; border-top: 1px solid var(--rule); padding-top: var(--space-item); }
+.news-card--lead .news-body { padding-bottom: var(--space-item); }
+.news-card--lead .news-media { aspect-ratio: 16 / 10; }
+.news-media { overflow: hidden; }
 
-.news-media { overflow: hidden; cursor: pointer; }
+.news-side { display: flex; flex-direction: column; border-top: 1px solid var(--rule); }
+.news-side .news-card {
+  flex: 1; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); column-gap: var(--grid-gap);
+  padding: var(--space-item) 0; border-bottom: 1px solid var(--rule);
+}
+.news-side .news-body { display: flex; flex-direction: column; justify-content: space-between; }   /* headline top, link bottom */
+.news-side .news-media { height: 100%; min-height: 160px; }
 .news-img {
   display: block; width: 100%; height: 100%; object-fit: cover; border-radius: 0;
   transition: transform .6s cubic-bezier(.2, .8, .2, 1);
 }
-/* Hovering anywhere on a story (image or text) zooms its image and puts its CTA in hover state */
-.news-media.is-hover .news-img { transform: scale(1.06); }
-.news-card[data-story] { cursor: pointer; }
+/* Hovering anywhere on a card zooms its image and puts its CTA in hover state */
+.news-card.is-hover .news-img { transform: scale(1.06); }
 @media (prefers-reduced-motion: reduce) { .news-img { transition: none; } }
-.n-img-a, .n-img-b { aspect-ratio: 336 / 260; }
-.n-img-main { height: 100%; min-height: 420px; }
 
 .news-card p { margin: 0; color: var(--ink); }
 .news-lead { color: var(--ink-3); }
-.n-text-main p { max-width: 640px; }
+.news-card--lead p { max-width: 640px; }
 .news-link {
-  display: flex;
-  margin-top: var(--space-item); padding-top: var(--space-close); border-top: 1px solid var(--ink-3);
+  display: inline-flex; align-self: flex-start;     /* no rule above the link */
+  margin-top: var(--space-item);
 }
 
 /* ---------- Footer: navy with RAAPID violet glow · heading + CTA left, links right ---------- */
 :root {
   --footer-accent: var(--brand-navy);          /* menu panel titles (light background) */
   --footer-bg: var(--brand-navy);
-  --footer-text: #ffffff;                       /* headings on navy */
-  --footer-text-2: rgba(255, 255, 255, .72);    /* links / body on navy */
-  --footer-text-3: rgba(255, 255, 255, .6);     /* meta (copyright, legal) */
+  /* Solid lavender tints of the navy (not pure white / alpha white) so the footer stays calm.
+     Contrast: on #1a0649 / on the brightest violet glow at the base (#3a3097). All pass WCAG AA. */
+  --footer-text-strong: #ffffff;                /* hover only: 18 / 10.2 */
+  --footer-text: #e7e4f7;                       /* footer heading: 14.4 / 8.2 */
+  --footer-text-head: #f6f4f4;                  /* column heads (True White): 16.4 / 9.4 */
+  --footer-text-2: #b3ade0;                     /* links, contact, icons: 8.5 / 4.9 */
+  --footer-text-3: #b3ade0;                     /* meta (copyright, legal): 8.5 / 4.9 */
   --footer-rule: rgba(255, 255, 255, .16);
 }
 .site-footer {
   position: relative; overflow: hidden; isolation: isolate; color: var(--footer-text-2);
+  /* contained box on the white page: aligned to the page margins, rounded corners */
+  width: calc(100% - 2 * var(--page-x)); max-width: calc(var(--max) - 160px);
+  margin: var(--section-y) auto 0; border-radius: 0;   /* top margin + section padding above = same gap as between sections; flush on the bottom edge */
   --art-w: min(56%, 960px);                      /* artwork size: top-right corner only */
   background:
     radial-gradient(120% 60% at 50% 115%, rgba(85, 83, 214, .75) 0%, rgba(85, 83, 214, 0) 70%),   /* violet glow at the base of the footer */
@@ -538,7 +627,7 @@ main > section.ticker-wrap { max-width: none; padding-left: 0; padding-right: 0;
           mask-image: linear-gradient(to left, #000 55%, transparent 100%), linear-gradient(to bottom, #000 30%, transparent 78%);
           mask-composite: intersect;
 }
-.site-footer > .container { padding-top: calc(var(--section-y) * 2); padding-bottom: var(--space-group); }
+.site-footer > .container { max-width: none; padding: calc(var(--section-y) * 2) 64px var(--space-group); }   /* inner padding of the box */
 
 .footer-top {
   display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--grid-gap);
@@ -553,6 +642,10 @@ main > section.ticker-wrap { max-width: none; padding-left: 0; padding-right: 0;
 .footer-logo img { display: block; height: 40px; width: auto; }
 .footer-title { grid-column: 1 / span 8; margin: var(--space-group) 0 0; color: var(--footer-text); text-wrap: balance; }
 .footer-cta { grid-column: 10 / -1; justify-self: end; }
+.site-footer .footer-cta {                      /* white fill on navy for maximum contrast (16.5 : 1) */
+  --rb-pri-bg: #ffffff; --rb-pri-fg: var(--brand-navy);
+  --rb-pri-bg-h: var(--raapid-violet); --rb-pri-fg-h: #ffffff;
+}
 
 .footer-links {
   grid-column: 1 / -1;                          /* page links spread across all 12 columns */
@@ -561,19 +654,19 @@ main > section.ticker-wrap { max-width: none; padding-left: 0; padding-right: 0;
   margin-top: var(--head-gap); padding-top: var(--space-group); border-top: 1px solid var(--footer-rule);
 }
 .footer-col ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: var(--space-close); }
-.footer-head { margin: 0 0 var(--space-item); color: var(--footer-text); }
+.footer-head { margin: 0 0 var(--space-item); color: var(--footer-text-head); }
 .footer-col a { color: var(--footer-text-2); transition: color .15s ease; }
-.footer-col a:hover { color: var(--footer-text); text-decoration: underline; text-underline-offset: 4px; }
-.footer-col-pages a { color: var(--footer-text); }   /* top-level pages read like headings */
+.footer-col a:hover { color: var(--footer-text-strong); text-decoration: underline; text-underline-offset: 4px; }
+.footer-col-pages a { color: var(--footer-text-head); }   /* top-level pages: full header treatment */
 .footer-contact a { white-space: nowrap; }
 :root { --signal-green: #cede00; }
 .social-list { flex-direction: row !important; flex-wrap: wrap; gap: var(--space-close) !important; margin-top: var(--space-item) !important; }
-.footer-col .social-btn {                       /* icon only: no circle, signal green */
+.footer-col .social-btn {                       /* icon only: no circle, lavender; white on hover */
   display: grid; place-items: center; width: 24px; height: 24px;
-  color: var(--signal-green); transition: color .15s ease, transform .15s ease;
+  color: var(--footer-text-2); transition: color .15s ease, transform .15s ease;
 }
 .social-btn svg { width: 24px; height: 24px; }
-.footer-col .social-btn:hover { color: #ffffff; transform: translateY(-2px); text-decoration: none; }
+.footer-col .social-btn:hover { color: var(--footer-text-strong); transform: translateY(-2px); text-decoration: none; }
 
 .footer-bottom {
   display: flex; justify-content: space-between; align-items: center; gap: var(--space-item); flex-wrap: wrap;
@@ -583,14 +676,12 @@ main > section.ticker-wrap { max-width: none; padding-left: 0; padding-right: 0;
 .footer-bottom p { margin: 0; }
 .footer-legal { display: flex; gap: var(--space-item); }
 .footer-legal a { color: var(--footer-text-2); transition: color .15s ease; }
-.footer-legal a:hover { color: var(--footer-text); }
+.footer-legal a:hover { color: var(--footer-text-strong); text-decoration: underline; text-underline-offset: 4px; }
 
 /* ---------- Sub-heading colour (light backgrounds only) ----------
    Headings + sub-headings = navy; body copy stays neutral (--ink / --ink-2 / --ink-3). */
 .eyebrow,
 .tagline,
-.map-list .t-body-l-bold,
-.foundation-grid .t-body-l-bold,
 .trust-stat .t-h2-bold,
 .news-card .t-body-l-bold,
 .news-card .t-body-s-bold,
@@ -602,7 +693,6 @@ main > section.ticker-wrap { max-width: none; padding-left: 0; padding-right: 0;
   .utility { gap: 28px; }
   .primary-nav { gap: 32px; }
   .mega { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .platform-map { --side: 280px; gap: 56px; --reach: 100px; }
   .footer-links { grid-template-columns: repeat(3, minmax(0, 1fr)); }
   .footer-contact { grid-column: 1 / -1; }
 }
@@ -610,15 +700,6 @@ main > section.ticker-wrap { max-width: none; padding-left: 0; padding-right: 0;
   .footer-title { grid-column: 1 / -1; }
   .footer-cta { grid-column: 1 / -1; justify-self: start; margin-top: var(--space-group); }
   :root { --head-gap: 56px; }
-  .platform-map { grid-template-columns: 1fr 1fr; gap: 56px; }
-  .map-visual { grid-column: 1 / -1; grid-row: 1; }
-  .platform-image { max-width: 560px; }
-  .map-right h3 { text-align: left; }
-  .map-left .map-list { max-width: none; }
-  .map-rule { margin-left: 0 !important; margin-right: 0 !important; }
-  .map-rule::after, .map-rule .dot, .foundation::before { display: none; }
-  .foundation { margin-top: var(--head-gap); }
-  .foundation-grid { grid-template-columns: 1fr 1fr; row-gap: 32px; }
   .serve-cards { grid-template-columns: 1fr; }
   .serve-card { min-height: 560px; }
   .trust-grid { grid-template-columns: 1fr; grid-template-rows: none; gap: 48px; }
@@ -626,20 +707,15 @@ main > section.ticker-wrap { max-width: none; padding-left: 0; padding-right: 0;
   .trust-head { padding-top: 0; }
   .trust-image { aspect-ratio: 4 / 3; }
   .trust-stats { gap: 56px; }
-  .labs { padding: 96px 48px; }
-  .news-grid {
-    grid-template-columns: 1fr 1fr; row-gap: 0;
-    grid-template-areas:
-      "main  main"
-      "mtext mtext"
-      "imgA  imgB"
-      "textA textB";
-  }
-  .n-img-main { min-height: 0; aspect-ratio: 697 / 520; height: auto; }
-  .n-text-main { padding-bottom: 56px; }
-  .n-text-a, .n-text-b { align-self: start; padding: 24px 0 0; }
+  .labs { padding: 64px 48px; }
+  .labs-title, .labs-side { grid-column: 1 / -1; }
+  .labs-side { margin-top: var(--space-item); }
+  .news-grid { grid-template-columns: 1fr; row-gap: var(--space-group); }
+  .news-card--lead .news-media { aspect-ratio: 4 / 3; }
+  .news-side .news-media { height: auto; min-height: 0; aspect-ratio: 4 / 3; }
 }
 @media (max-width: 960px) {
+  .site-footer > .container { padding-left: 40px; padding-right: 40px; }
   .site-footer { --art-w: 90%; }
   :root { --section-y: 48px; --head-gap: 48px; --grid-gap: 24px; --page-x: 32px; --space-group: 40px; }
   .hero { grid-template-columns: 1fr; gap: 56px; }
@@ -648,34 +724,28 @@ main > section.ticker-wrap { max-width: none; padding-left: 0; padding-right: 0;
   .stats { grid-template-columns: 1fr; gap: 48px; }
   .br-desktop { display: none; }
   .platform-head br { display: none; }
-  .platform-map { grid-template-columns: 1fr; gap: 48px; }
-  .foundation-grid { grid-template-columns: 1fr; }
   .mega, .mega-about { grid-template-columns: 1fr; gap: 24px; padding: 24px; max-height: 70vh; overflow-y: auto; }
   .mega-desc { max-width: none; }
   .pillars { grid-template-columns: 1fr; gap: 56px; }
   .pillar-icon { width: 148px; height: 124px; }
 }
 @media (max-width: 640px) {
+  .site-footer > .container { padding-left: 20px; padding-right: 20px; }
   :root { --section-y: 40px; --head-gap: 40px; --page-x: 16px; --space-close: 12px; --space-item: 16px; }
   .serve-card { min-height: 0; padding-top: 160px; }
   .serve-content { padding: 28px 20px; }
-  /* Phones: card headline steps down to the UI kit's H3 Semi Bold (36/36, -3%) so "reimbursement." fits */
-  .serve-content h3 { font-weight: var(--fw-semibold); font-size: 36px; line-height: 36px; letter-spacing: -0.03em; }
+  .serve-label { top: 28px; left: 20px; right: 20px; }
+  /* Phones: card headline steps down to 36/36 (H3 size) so "reimbursement." fits */
+  .serve-content h3, .serve-content h3 .t-h2-bold { font-size: 36px; line-height: 36px; letter-spacing: -0.03em; }   /* keeps Light + Bold, steps size down to H3 (36/36) */
   /* Phones have no hover: always show the details */
   .serve-reveal { grid-template-rows: 1fr; opacity: 1; }
   .serve-hint { display: none; }
   .serve-card::before { background: linear-gradient(180deg, rgba(241, 238, 252, .1) 0%, rgba(241, 238, 252, .92) 35%); }
   .serve-card .rb { white-space: normal; }
-  .labs { padding: 56px 16px; }
-  /* Phones: step this headline down to the UI kit's H2 size (48/48, -5%) so "breakthroughs" fits */
-  .labs-content h2, .labs-content h2 .t-h1-bold { font-size: 48px; line-height: 48px; }
-  .labs-content h2 { hyphens: auto; -webkit-hyphens: auto; }
-  .news-grid {
-    grid-template-columns: 1fr;
-    grid-template-areas: "main" "mtext" "imgA" "textA" "imgB" "textB";
-  }
-  .n-text-main, .n-text-a { padding-bottom: 48px; }
-  .n-text-main { padding-top: 24px; }
+  .labs { padding: 48px 20px; }
+  .labs-title { hyphens: manual; -webkit-hyphens: manual; }   /* only "break-throughs" may split, via a soft hyphen */
+  .news-side .news-card { grid-template-columns: 1fr; row-gap: var(--space-item); }
+  .news-side .news-media { order: -1; }                 /* phones: image above its text */
   .footer-links { grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 20px; }
   .footer-bottom { flex-direction: column; align-items: flex-start; }
   .header-top { height: 80px; }
@@ -716,7 +786,7 @@ main > section.ticker-wrap { max-width: none; padding-left: 0; padding-right: 0;
 
         <!-- HEALTH PLANS -->
         <div class="nav-item">
-          <button class="nav-trigger t-link-s-regular" type="button" aria-expanded="false" aria-controls="mega-hp">HEALTH PLANS<i class="chev" aria-hidden="true"></i></button>
+          <button class="nav-trigger t-link-s-regular" type="button" aria-expanded="false" aria-controls="mega-hp">Health Plans<i class="chev" aria-hidden="true"></i></button>
           <div class="mega" id="mega-hp" hidden>
             <div class="mega-intro">
               <p class="mega-title t-link-xs-bold-upper">Health Plans</p>
@@ -746,7 +816,7 @@ main > section.ticker-wrap { max-width: none; padding-left: 0; padding-right: 0;
 
         <!-- PROVIDERS & HEALTH SYSTEMS -->
         <div class="nav-item">
-          <button class="nav-trigger t-link-s-regular" type="button" aria-expanded="false" aria-controls="mega-pr">PROVIDERS &amp; HEALTH SYSTEMS<i class="chev" aria-hidden="true"></i></button>
+          <button class="nav-trigger t-link-s-regular" type="button" aria-expanded="false" aria-controls="mega-pr">Providers &amp; Health Systems<i class="chev" aria-hidden="true"></i></button>
           <div class="mega" id="mega-pr" hidden>
             <div class="mega-intro">
               <p class="mega-title t-link-xs-bold-upper">Providers &amp; Health Systems</p>
@@ -776,7 +846,7 @@ main > section.ticker-wrap { max-width: none; padding-left: 0; padding-right: 0;
 
         <!-- PLATFORM -->
         <div class="nav-item">
-          <button class="nav-trigger t-link-s-regular" type="button" aria-expanded="false" aria-controls="mega-pl">PLATFORM<i class="chev" aria-hidden="true"></i></button>
+          <button class="nav-trigger t-link-s-regular" type="button" aria-expanded="false" aria-controls="mega-pl">Platform<i class="chev" aria-hidden="true"></i></button>
           <div class="mega" id="mega-pl" hidden>
             <div class="mega-intro">
               <p class="mega-title t-link-xs-bold-upper">Platform</p>
@@ -804,12 +874,12 @@ main > section.ticker-wrap { max-width: none; padding-left: 0; padding-right: 0;
         </div>
 
         <!-- INSIGHTS / RAAPID LABS (plain links) -->
-        <div class="nav-item"><a href="#" class="nav-trigger t-link-s-regular">INSIGHTS</a></div>
-        <div class="nav-item"><a href="#labs-title" class="nav-trigger t-link-s-regular">RAAPID LABS</a></div>
+        <div class="nav-item"><a href="#" class="nav-trigger t-link-s-regular">Insights</a></div>
+        <div class="nav-item"><a href="#labs-title" class="nav-trigger t-link-s-regular">RAAPID Labs</a></div>
 
         <!-- ABOUT -->
         <div class="nav-item">
-          <button class="nav-trigger t-link-s-regular" type="button" aria-expanded="false" aria-controls="mega-ab">ABOUT<i class="chev" aria-hidden="true"></i></button>
+          <button class="nav-trigger t-link-s-regular" type="button" aria-expanded="false" aria-controls="mega-ab">About<i class="chev" aria-hidden="true"></i></button>
           <div class="mega mega-about" id="mega-ab" hidden>
             <div class="mega-news">
               <p class="mega-label t-eyebrow">Latest News</p>
@@ -830,7 +900,7 @@ main > section.ticker-wrap { max-width: none; padding-left: 0; padding-right: 0;
           </div>
         </div>
       </nav>
-      <a href="#" class="contact t-link-s-regular">CONTACT <svg class="icon-arrow" viewBox="0 0 14.6165 12.7273" aria-hidden="true"><path fill="currentColor" d="M8.25284 12.7273L7.15909 11.6477L11.6619 7.14489H0V5.58239H11.6619L7.15909 1.09375L8.25284 0L14.6165 6.36364L8.25284 12.7273Z"/></svg></a>
+      <a href="#" class="contact t-link-s-regular">Contact <svg class="icon-arrow" viewBox="0 0 14.6165 12.7273" aria-hidden="true"><path fill="currentColor" d="M8.25284 12.7273L7.15909 11.6477L11.6619 7.14489H0V5.58239H11.6619L7.15909 1.09375L8.25284 0L14.6165 6.36364L8.25284 12.7273Z"/></svg></a>
     </div>
   </div>
 </header>
@@ -945,44 +1015,80 @@ main > section.ticker-wrap { max-width: none; padding-left: 0; padding-right: 0;
       <p class="platform-lede t-body-s-regular">RAAPID’s AI-native decision intelligence platform brings together healthcare workflows, clinical evidence, and enterprise capabilities your organization needs.</p>
     </header>
 
-    <div class="platform-map">
+    <div class="ig" role="group" aria-label="RAAPID platform: workflows on top of the intelligence layers, built on an enterprise foundation">
       <!-- Workflows -->
-      <div class="map-col map-left">
-        <h3 class="t-h4-bold-upper">Workflows</h3>
-        <div class="map-rule" aria-hidden="true"><i class="dot"></i></div>
-        <ul class="map-list">
-          <li><p class="t-body-l-bold">Risk adjustment</p><p class="map-sub t-body-s-regular">Retrospective • Prospective • RADV</p></li>
-          <li><p class="t-body-l-bold">Medical coding</p><p class="map-sub t-body-s-regular">Inpatient • Outpatient</p></li>
-          <li><p class="t-body-l-bold">Clinical documentation improvement</p></li>
-          <li><p class="t-body-l-bold">Payment integrity</p><p class="map-sub t-body-s-regular">Pre-payment validation</p></li>
+      <div class="ig-col ig-workflows">
+        <h3 class="ig-h">Workflows</h3>
+        <ul class="ig-list">
+          <li data-key="risk"><p class="ig-t">Risk adjustment</p><p class="ig-s">Retrospective • Prospective • RADV</p></li>
+          <li data-key="coding"><p class="ig-t">Medical coding</p><p class="ig-s">Inpatient • Outpatient</p></li>
+          <li data-key="cdi"><p class="ig-t">Clinical documentation improvement</p></li>
+          <li data-key="payment"><p class="ig-t">Payment integrity</p><p class="ig-s">Pre-payment validation</p></li>
         </ul>
       </div>
 
-      <!-- Platform illustration -->
-      <div class="map-visual">
-        <div class="ph ph-light platform-image" role="img" aria-label="RAAPID platform layers illustration placeholder"></div>
+      <!-- Layered platform illustration (decorative; the lists carry the content) -->
+      <div class="ig-stack" aria-hidden="true">
+        <div class="ig-box ig-shadow" data-key="foundation" data-layer="0" style="left:130.28px;top:363px;width:260.966px;height:127.738px"><span class="ig-face"></span></div>
+        <div class="ig-box ig-shadow" data-key="foundation" data-layer="0" style="left:0px;top:421.13px;width:260.966px;height:127.738px"><span class="ig-face"></span></div>
+        <div class="ig-box ig-shadow" data-key="foundation" data-layer="0" style="left:260.79px;top:421.03px;width:260.966px;height:127.738px"><span class="ig-face"></span></div>
+        <div class="ig-box ig-shadow" data-key="foundation" data-layer="0" style="left:130.64px;top:482.27px;width:260.966px;height:127.738px"><span class="ig-face"></span></div>
+        <div class="ig-box ig-base" data-key="foundation" data-layer="0" style="left:130.28px;top:298px;width:260.966px;height:151.521px"><span class="ig-face"></span></div>
+        <div class="ig-box ig-base" data-key="foundation" data-layer="0" style="left:0px;top:366.96px;width:260.966px;height:151.521px"><span class="ig-face"></span></div>
+        <div class="ig-box ig-base" data-key="foundation" data-layer="0" style="left:260.79px;top:366.83px;width:260.966px;height:151.521px"><span class="ig-face"></span></div>
+        <div class="ig-box ig-base" data-key="foundation" data-layer="0" style="left:130.64px;top:439.48px;width:260.966px;height:151.521px"><span class="ig-face"></span></div>
+        <div class="ig-box ig-core" data-key="doc-ai" data-layer="1" style="left:0.2px;top:185.33px;width:521.932px;height:301.338px"><span class="ig-face"></span></div>
+        <div class="ig-box ig-core" data-key="neuro" data-layer="2" style="left:0.2px;top:128.9px;width:521.932px;height:301.338px"><span class="ig-face"></span></div>
+        <div class="ig-box ig-core" data-key="automation" data-layer="3" style="left:0.2px;top:71.93px;width:521.932px;height:301.338px"><span class="ig-face"></span></div>
+        <div class="ig-box ig-tick" data-key="doc-ai" data-layer="1" style="left:59px;top:339px;width:78.808px;height:45.5px"><img src="ig-ticks-b.svg" alt="" width="79" height="13"></div>
+        <div class="ig-box ig-tick" data-key="doc-ai" data-layer="1" style="left:155px;top:396px;width:78.808px;height:45.5px"><img src="ig-ticks-a.svg" alt="" width="79" height="13"></div>
+        <div class="ig-box ig-tick" data-key="neuro" data-layer="2" style="left:59px;top:279px;width:78.808px;height:45.5px"><img src="ig-ticks-b.svg" alt="" width="79" height="13"></div>
+        <div class="ig-box ig-tick" data-key="neuro" data-layer="2" style="left:155px;top:336px;width:78.808px;height:45.5px"><img src="ig-ticks-a.svg" alt="" width="79" height="13"></div>
+        <div class="ig-box ig-tick" data-key="automation" data-layer="3" style="left:59px;top:220px;width:78.808px;height:45.5px"><img src="ig-ticks-b.svg" alt="" width="79" height="13"></div>
+        <div class="ig-box ig-tick" data-key="automation" data-layer="3" style="left:155px;top:277px;width:78.808px;height:45.5px"><img src="ig-ticks-a.svg" alt="" width="79" height="13"></div>
+        <div class="ig-box ig-core ig-label" data-key="doc-ai" data-layer="1" style="left:281.99px;top:374.5px;width:116.047px;height:67px"><span>Document AI</span></div>
+        <div class="ig-box ig-core ig-label" data-key="neuro" data-layer="2" style="left:273.0px;top:291.0px;width:172.339px;height:99.5px"><span>Neuro-Symbolic AI</span></div>
+        <div class="ig-box ig-core ig-label" data-key="automation" data-layer="3" style="left:265.0px;top:216.0px;width:191.392px;height:110.5px"><span>Workflow automation</span></div>
+        <div class="ig-box ig-flow" data-key="risk" data-layer="4" style="left:130.28px;top:0px;width:260.966px;height:150.186px"><span class="ig-face"></span></div>
+        <div class="ig-box ig-flow" data-key="coding" data-layer="4" style="left:0px;top:71px;width:260.966px;height:150.186px"><span class="ig-face"></span></div>
+        <div class="ig-box ig-flow" data-key="payment" data-layer="4" style="left:260.79px;top:70.8px;width:260.966px;height:150.186px"><span class="ig-face"></span></div>
+        <div class="ig-box ig-flow" data-key="cdi" data-layer="4" style="left:130.64px;top:142.81px;width:260.966px;height:150.186px"><span class="ig-face"></span></div>
+        <div class="ig-box ig-flow ig-label" data-key="risk" data-layer="4" style="left:224px;top:62px;width:103.923px;height:60px"><span>Risk<br>adjustment</span></div>
+        <div class="ig-box ig-flow ig-label" data-key="coding" data-layer="4" style="left:97px;top:146.5px;width:80.54px;height:46.5px"><span>Medical<br>coding</span></div>
+        <div class="ig-box ig-flow ig-label" data-key="cdi" data-layer="4" style="left:216px;top:188.5px;width:140.296px;height:81px"><span>Clinical<br>documentation<br>improvement</span></div>
+        <div class="ig-box ig-flow ig-label" data-key="payment" data-layer="4" style="left:359px;top:139px;width:96.129px;height:55.5px"><span>Payment<br>integrity</span></div>
       </div>
 
       <!-- Intelligence -->
-      <div class="map-col map-right">
-        <h3 class="t-h4-bold-upper">Intelligence</h3>
-        <div class="map-rule" aria-hidden="true"><i class="dot d1"></i><i class="dot d2"></i><i class="dot d3"></i></div>
-        <ul class="map-list">
-          <li><p class="t-body-l-bold">Workflow automation</p><p class="map-sub t-body-s-regular">Routes evidence-backed recommendations into review and coding workflows.</p></li>
-          <li><p class="t-body-l-bold">Neuro-Symbolic AI</p><p class="map-sub t-body-s-regular">Combines clinical pattern recognition with rule-based reasoning to evaluate supporting evidence and make recommendations traceable.</p></li>
-          <li><p class="t-body-l-bold">Document AI</p><p class="map-sub t-body-s-regular">Extracts and structures relevant clinical information from unstructured records while preserving context and relationships. The RAAPID Platform combines this intelligence with structured data from supported sources.</p></li>
+      <div class="ig-col ig-intel">
+        <h3 class="ig-h">Intelligence</h3>
+        <ul class="ig-list">
+          <li data-key="automation"><p class="ig-t">Workflow automation</p><p class="ig-s">Routes evidence-backed recommendations into review and coding workflows.</p></li>
+          <li data-key="neuro"><p class="ig-t">Neuro-Symbolic AI</p><p class="ig-s">Combines clinical pattern recognition with rule-based reasoning to evaluate supporting evidence and make recommendations traceable.</p></li>
+          <li data-key="doc-ai"><p class="ig-t">Document AI</p><p class="ig-s">Extracts and structures relevant clinical information from unstructured records while preserving context and relationships. The RAAPID Platform combines this intelligence with structured data from supported sources.</p></li>
         </ul>
       </div>
-    </div>
 
-    <!-- Enterprise foundation -->
-    <div class="foundation">
-      <h3 class="t-body-l-bold-upper">Enterprise Foundation</h3>
-      <div class="foundation-grid">
-        <div><p class="t-body-l-bold">Security and compliance</p><p class="map-sub t-body-s-regular">HITRUST r2 certified • SOC 2 Type II • HIPAA safeguards</p></div>
-        <div><p class="t-body-l-bold">Integration</p><p class="map-sub t-body-s-regular">EHR embedding • APIs • cloud-native</p></div>
-        <div><p class="t-body-l-bold">Analytics and reporting</p><p class="map-sub t-body-s-regular">Program and enterprise performance</p></div>
-        <div><p class="t-body-l-bold">Enterprise ready</p><p class="map-sub t-body-s-regular">Single-tenant. No training on your data</p></div>
+      <!-- Connectors (Figma vectors) -->
+      <span class="ig-link ig-link-w" aria-hidden="true"><img src="ig-line-workflows.svg" alt="" width="110" height="94"></span>
+      <span class="ig-link ig-link-i1" aria-hidden="true"><img src="ig-line-intel-1.svg" alt="" width="120" height="172"></span>
+      <span class="ig-link ig-link-i2" aria-hidden="true"><img src="ig-line-intel-2.svg" alt="" width="87" height="207"></span>
+      <span class="ig-link ig-link-i3" aria-hidden="true"><img src="ig-line-intel-3.svg" alt="" width="87" height="217"></span>
+      <span class="ig-dot ig-dot-l" aria-hidden="true"><img src="ig-dot-left.svg" alt="" width="10" height="10"></span>
+      <span class="ig-dot ig-dot-1" aria-hidden="true"><img src="ig-dot-right.svg" alt="" width="10" height="10"></span>
+      <span class="ig-dot ig-dot-2" aria-hidden="true"><img src="ig-dot-right.svg" alt="" width="10" height="10"></span>
+      <span class="ig-dot ig-dot-3" aria-hidden="true"><img src="ig-dot-right.svg" alt="" width="10" height="10"></span>
+      <span class="ig-fline" aria-hidden="true"><span><img src="ig-foundation-line.svg" alt="" width="58.4999" height="1089.5"></span></span>
+
+      <!-- Enterprise foundation -->
+      <div class="ig-foundation">
+        <h3 class="ig-fh">Enterprise Foundation</h3>
+        <div class="ig-fgrid">
+          <div data-key="foundation"><p class="ig-t">Security and compliance</p><p class="ig-s">HITRUST r2 certified • SOC 2<br>Type II • HIPAA safeguards</p></div>
+          <div data-key="foundation"><p class="ig-t">Integration</p><p class="ig-s">EHR embedding • APIs • cloud-native</p></div>
+          <div data-key="foundation"><p class="ig-t">Analytics and reporting</p><p class="ig-s">Program and enterprise performance</p></div>
+          <div data-key="foundation"><p class="ig-t">Enterprise ready</p><p class="ig-s">Single-tenant. No training on your data</p></div>
+        </div>
       </div>
     </div>
   </section>
@@ -994,10 +1100,10 @@ main > section.ticker-wrap { max-width: none; padding-left: 0; padding-right: 0;
 
     <div class="serve-cards">
       <article class="serve-card rb-white" tabindex="0" aria-labelledby="aud-plans">
-        <img class="serve-photo" src="img-buyer-v002.png" alt="" width="1151" height="1367">
+        <img class="serve-photo" src="img-health-plan-402.jpg" alt="" width="1657" height="2201">
         <div class="serve-content">
           <p id="aud-plans" class="serve-label t-body-l-bold-upper">Health Plans</p>
-          <h3 class="t-h2-bold">Capture risk accurately. Protect appropriate reimbursement.</h3>
+          <h3 class="t-h2-light"><span class="t-h2-bold">Capture risk accurately.</span> Protect appropriate reimbursement.</h3>
           <p class="serve-hint t-eyebrow" aria-hidden="true">Hover to explore</p>
           <div class="serve-reveal"><div>
             <p class="serve-text t-body-s-regular">Capture supported conditions for risk adjustment, prepare for RADV audits, and protect payment integrity with coding decisions backed by clinical evidence.</p>
@@ -1012,10 +1118,10 @@ main > section.ticker-wrap { max-width: none; padding-left: 0; padding-right: 0;
         </div>
       </article>
       <article class="serve-card rb-white" tabindex="0" aria-labelledby="aud-providers">
-        <img class="serve-photo" src="img-buyer-v002.png" alt="" width="1151" height="1367">
+        <img class="serve-photo" src="img-health-system-provider-402.jpg" alt="" width="6249" height="9325">
         <div class="serve-content">
           <p id="aud-providers" class="serve-label t-body-l-bold-upper">Providers &amp; Health Systems</p>
-          <h3 class="t-h2-bold">Strengthen documentation. Support accurate reimbursement.</h3>
+          <h3 class="t-h2-light"><span class="t-h2-bold">Strengthen documentation.</span> Support accurate reimbursement.</h3>
           <p class="serve-hint t-eyebrow" aria-hidden="true">Hover to explore</p>
           <div class="serve-reveal"><div>
             <p class="serve-text t-body-s-regular">Identify suspected conditions for clinician review, strengthen clinical documentation and improve coding accuracy.</p>
@@ -1066,9 +1172,9 @@ main > section.ticker-wrap { max-width: none; padding-left: 0; padding-right: 0;
   <!-- ---------- RAAPID Labs ---------- -->
   <section class="container labs-wrap" aria-labelledby="labs-title">
     <div class="labs rb-violet">
-      <div class="labs-content">
-        <h2 id="labs-title" class="t-h1-light"><span class="t-h1-bold">Translating AI breakthroughs</span> into better healthcare decisions.</h2>
-        <p class="labs-text t-body-l-light">Explore our impact center in advanced AI research, benchmark performance studies and specialized model development, in collaboration with global Healthcare AI research institutions and communities.</p>
+      <h2 id="labs-title" class="labs-title t-h2-light"><span class="t-h2-bold">Translating AI break&shy;throughs</span> into better healthcare decisions.</h2>
+      <div class="labs-side">
+        <p class="labs-text t-body-s-regular">Explore our impact center in advanced AI research, benchmark performance studies and specialized model development, in collaboration with global Healthcare AI research institutions and communities.</p>
         <a href="#" class="rb rb-primary">
           <svg class="rb-cta" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path class="cta-tl" d="M2 2L6 6"/><path class="cta-tr" d="M22 2L18 6"/><path class="cta-bl" d="M2 22L6 18"/><path class="cta-br" d="M22 22L18 18"/></svg>
           <span class="t-link-s-medium">Enter RAAPID Labs</span>
@@ -1082,26 +1188,32 @@ main > section.ticker-wrap { max-width: none; padding-left: 0; padding-right: 0;
     <h2 id="news-title" class="t-h1-light">Building the <span class="t-h1-bold">next in healthcare.</span></h2>
 
     <div class="news-grid">
-      <!-- Story 1: innovators (large) -->
-      <div class="news-media n-img-main" data-story="1"><img class="news-img" src="img-case-study-1.png" alt="RAAPID team reviewing analytics dashboards in a meeting room" width="643" height="481"></div>
-      <article class="news-card n-text-main" data-story="1">
-        <p><span class="news-lead t-body-l-regular">RAAPID recognized among the </span><span class="t-body-l-bold">leading innovators in Healthcare AI</span></p>
-        <a href="#" class="rb rb-link news-link"><span class="t-link-s-medium">View achievement</span><svg class="rb-arrow" viewBox="0 0 14.6165 12.7273" aria-hidden="true"><path fill="currentColor" d="M8.25284 12.7273L7.15909 11.6477L11.6619 7.14489H0V5.58239H11.6619L7.15909 1.09375L8.25284 0L14.6165 6.36364L8.25284 12.7273Z"/></svg></a>
+      <!-- Lead story -->
+      <article class="news-card news-card--lead" data-story="1">
+        <div class="news-body">
+          <p><span class="news-lead t-body-l-regular">RAAPID recognized among the </span><span class="t-body-l-bold">leading innovators in Healthcare AI</span></p>
+          <a href="#" class="rb rb-link news-link"><span class="t-link-s-medium">View achievement</span><svg class="rb-arrow" viewBox="0 0 14.6165 12.7273" aria-hidden="true"><path fill="currentColor" d="M8.25284 12.7273L7.15909 11.6477L11.6619 7.14489H0V5.58239H11.6619L7.15909 1.09375L8.25284 0L14.6165 6.36364L8.25284 12.7273Z"/></svg></a>
+        </div>
+        <div class="news-media"><img class="news-img" src="img-case-study-1.png" alt="RAAPID team reviewing analytics dashboards in a meeting room" width="643" height="481"></div>
       </article>
 
-      <!-- Story 2: Series A -->
-      <article class="news-card n-text-a" data-story="2">
-        <p><span class="news-lead t-body-s-regular">RAAPID raises Series A funding with a </span><span class="t-body-s-bold">Strategic “Industry Trifecta”</span></p>
-        <a href="#" class="rb rb-link news-link"><span class="t-link-s-medium">Read the news</span><svg class="rb-arrow" viewBox="0 0 14.6165 12.7273" aria-hidden="true"><path fill="currentColor" d="M8.25284 12.7273L7.15909 11.6477L11.6619 7.14489H0V5.58239H11.6619L7.15909 1.09375L8.25284 0L14.6165 6.36364L8.25284 12.7273Z"/></svg></a>
+      <!-- Two secondary stories, stacked -->
+      <div class="news-side">
+        <article class="news-card" data-story="2">
+        <div class="news-body">
+          <p><span class="news-lead t-body-s-regular">RAAPID raises Series A funding with a </span><span class="t-body-s-bold">Strategic “Industry Trifecta”</span></p>
+          <a href="#" class="rb rb-link news-link"><span class="t-link-s-medium">Read the news</span><svg class="rb-arrow" viewBox="0 0 14.6165 12.7273" aria-hidden="true"><path fill="currentColor" d="M8.25284 12.7273L7.15909 11.6477L11.6619 7.14489H0V5.58239H11.6619L7.15909 1.09375L8.25284 0L14.6165 6.36364L8.25284 12.7273Z"/></svg></a>
+        </div>
+        <div class="news-media"><img class="news-img" src="img-case-study-3.png" alt="Colleagues discussing around a conference table with laptops" width="310" height="240"></div>
       </article>
-      <div class="news-media n-img-a" data-story="2"><img class="news-img" src="img-case-study-3.png" alt="Colleagues discussing around a conference table with laptops" width="310" height="240"></div>
-
-      <!-- Story 3: analyst recognition -->
-      <div class="news-media n-img-b" data-story="3"><img class="news-img" src="img-case-study-2.png" alt="Person holding a Modern Healthcare Best in Business award" width="310" height="240"></div>
-      <article class="news-card n-text-b" data-story="3">
-        <p><span class="news-lead t-body-s-regular">RAAPID named a leader in the XYZ </span><span class="t-body-s-bold">Healthcare AI Excellence Index</span></p>
-        <a href="#" class="rb rb-link news-link"><span class="t-link-s-medium">See analyst recognition</span><svg class="rb-arrow" viewBox="0 0 14.6165 12.7273" aria-hidden="true"><path fill="currentColor" d="M8.25284 12.7273L7.15909 11.6477L11.6619 7.14489H0V5.58239H11.6619L7.15909 1.09375L8.25284 0L14.6165 6.36364L8.25284 12.7273Z"/></svg></a>
+        <article class="news-card" data-story="3">
+        <div class="news-body">
+          <p><span class="news-lead t-body-s-regular">RAAPID named a leader in the XYZ </span><span class="t-body-s-bold">Healthcare AI Excellence Index</span></p>
+          <a href="#" class="rb rb-link news-link"><span class="t-link-s-medium">See analyst recognition</span><svg class="rb-arrow" viewBox="0 0 14.6165 12.7273" aria-hidden="true"><path fill="currentColor" d="M8.25284 12.7273L7.15909 11.6477L11.6619 7.14489H0V5.58239H11.6619L7.15909 1.09375L8.25284 0L14.6165 6.36364L8.25284 12.7273Z"/></svg></a>
+        </div>
+        <div class="news-media"><img class="news-img" src="img-case-study-2.png" alt="Person holding a Modern Healthcare Best in Business award" width="310" height="240"></div>
       </article>
+      </div>
     </div>
   </section>
 
@@ -1305,6 +1417,39 @@ main > section.ticker-wrap { max-width: none; padding-left: 0; padding-right: 0;
     if (entries.some(e => e.isIntersecting)) { start(); io.disconnect(); }
   }, { threshold: 0.35 });
   io.observe(stats);
+})();
+
+/* Platform infographic: layers drop into place, top first, when the diagram scrolls into view */
+(function () {
+  const ig = document.querySelector('.ig');
+  if (!ig || !('IntersectionObserver' in window) || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  ig.classList.add('ig-anim');
+  const io = new IntersectionObserver(entries => {
+    if (entries.some(e => e.isIntersecting)) {
+      ig.classList.add('is-in'); io.disconnect();
+      setTimeout(() => ig.classList.add('ig-done'), 2200);    /* entrance finished: hover transitions take over */
+    }
+  }, { threshold: 0.3 });
+  io.observe(ig);
+})();
+
+/* Platform infographic: hovering a layer (or its list item) opens that item's description */
+(function () {
+  const ig = document.querySelector('.ig');
+  if (!ig) return;
+  if (!ig.classList.contains('ig-anim')) ig.classList.add('ig-done');
+  let current = null;
+  const set = key => {
+    if (key === current) return;
+    current = key;
+    ig.querySelectorAll('[data-key].is-active').forEach(el => el.classList.remove('is-active'));
+    if (key) ig.querySelectorAll(`[data-key="${key}"]`).forEach(el => el.classList.add('is-active'));
+  };
+  ig.addEventListener('pointerover', e => {
+    const el = e.target.closest('.ig-face, .ig-col li, .ig-fgrid > div');
+    set(el ? el.closest('[data-key]').dataset.key : null);
+  });
+  ig.addEventListener('pointerleave', () => set(null));
 })();
 
 /* Who RAAPID Serves: tap / click a card to reveal its details (hover and keyboard focus also reveal) */

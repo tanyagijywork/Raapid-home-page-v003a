@@ -233,7 +233,54 @@ footer { margin-top: 96px; font: 400 12px/16px var(--mono); color: var(--ink-3);
 }
 .tabs button[aria-selected="true"] { background: var(--ink); color: var(--bg); }
 [role="tabpanel"][hidden] { display: none !important; }
-body.on-buttons #sampleInput, body.on-buttons #baselineBtn { display: none; }
+body.on-other #sampleInput, body.on-other #baselineBtn { display: none; }
+
+/* ---------- Kit page: colours tab ---------- */
+:root {
+  --c-violet: #5e58e0;   /* Primary · RAAPID Violet · Pantone 2366 C */
+  --c-white:  #f6f4f4;   /* Light base · True White */
+  --c-green:  #cede00;   /* Accent · Signal Green · Pantone 381 C */
+  --c-indigo: #21154a;   /* Dark base · Midnight Indigo · Pantone 2765 C */
+}
+.swatch-grid {
+  display: grid; grid-template-columns: 2fr 1fr 1fr; grid-template-rows: 1fr 1fr; gap: 16px;
+  margin-top: 56px; min-height: 560px;
+}
+.sw {
+  position: relative; display: flex; flex-direction: column; justify-content: space-between; gap: 24px;
+  padding: 28px; border-radius: 12px; border: 1px solid transparent;
+}
+.sw-primary { grid-row: 1 / 3; }
+.sw-white   { border-color: var(--rule); }
+.sw-indigo  { grid-column: 2; grid-row: 2; }
+.sw-role { font: 400 12px/16px var(--mono); text-transform: uppercase; letter-spacing: .06em; opacity: .75; }
+.sw-name { margin-top: 8px; }
+.sw-values { display: grid; gap: 6px; }
+.sw-value {
+  display: flex; justify-content: space-between; gap: 16px; align-items: baseline;
+  font: 400 13px/20px var(--mono); background: none; border: 0; padding: 4px 0; color: inherit; cursor: pointer; text-align: left;
+  border-bottom: 1px solid currentColor; border-bottom-color: color-mix(in srgb, currentColor 20%, transparent);
+}
+.sw-value span:first-child { opacity: .7; }
+.sw-value:hover span:last-child { text-decoration: underline; text-underline-offset: 3px; }
+.pairs { margin-top: 72px; }
+.pair-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(280px, 100%), 1fr)); gap: 16px; margin-top: 16px; }
+.pair { border-radius: 12px; padding: 20px 24px; border: 1px solid var(--rule); }
+.pair-sample { font: 600 28px/32px var(--raapid-font); letter-spacing: -0.02em; }
+.pair-meta { margin-top: 16px; display: flex; justify-content: space-between; gap: 12px; font: 400 12px/16px var(--mono); }
+.pair-badge { flex: none; align-self: flex-start; white-space: nowrap; padding: 2px 8px; border-radius: 999px; background: rgba(255,255,255,.85); color: #111; }
+.pair-badge.fail { background: #ffe1e1; color: #8a1111; }
+.note-box { margin-top: 24px; padding: 16px 20px; border-radius: 12px; background: var(--surface); border: 1px solid var(--rule); color: var(--ink-2); font: 400 14px/22px var(--raapid-font); max-width: 900px; }
+@media (max-width: 860px) {
+  .swatch-grid { grid-template-columns: 1fr 1fr; grid-template-rows: auto; min-height: 0; }
+  .sw-primary { grid-column: 1 / -1; grid-row: auto; min-height: 280px; }
+  .sw-indigo { grid-column: auto; grid-row: auto; }
+}
+@media (max-width: 640px) {
+  .swatch-grid { grid-template-columns: 1fr; }
+  .sw-value { flex-wrap: wrap; }
+  .sw-value span:last-child { overflow-wrap: anywhere; }
+}
 
 .btn-page { padding: 56px 40px 120px; max-width: 1400px; }
 .surface { margin-top: 56px; border-radius: 12px; overflow: hidden; border: 1px solid var(--rule); }
@@ -291,9 +338,10 @@ body.on-buttons #sampleInput, body.on-buttons #baselineBtn { display: none; }
 <body>
 
 <header class="topbar">
-  <div class="brand"><b>RAAPID UI Kit</b><span>v0.2</span></div>
+  <div class="brand"><b>RAAPID UI Kit</b><span>v0.3</span></div>
   <div class="tabs" role="tablist" aria-label="Kit sections">
     <button type="button" role="tab" id="tab-type" aria-controls="panel-type" aria-selected="true">Typography</button>
+    <button type="button" role="tab" id="tab-colours" aria-controls="panel-colours" aria-selected="false">Colours</button>
     <button type="button" role="tab" id="tab-buttons" aria-controls="panel-buttons" aria-selected="false">Buttons</button>
   </div>
   <div class="controls">
@@ -330,6 +378,40 @@ body.on-buttons #sampleInput, body.on-buttons #baselineBtn { display: none; }
     </section>
 
     <footer>RAAPID-V002 · Figma node 1:1231 · Desktop scale only (no mobile sizes defined yet)</footer>
+  </main>
+</div>
+
+<!-- ================= COLOURS TAB ================= -->
+<div id="panel-colours" role="tabpanel" aria-labelledby="tab-colours" hidden>
+  <main class="btn-page">
+    <section class="intro">
+      <p class="t-eyebrow">Foundations / Colour</p>
+      <h1 class="t-h1-light">Colours</h1>
+      <p class="t-body-s-regular">The four RAAPID brand colours. Click any value to copy it.</p>
+      <div class="facts">
+        <div>Primary<strong>RAAPID Violet</strong></div>
+        <div>Bases<strong>True White · Midnight Indigo</strong></div>
+        <div>Accent<strong>Signal Green</strong></div>
+      </div>
+    </section>
+
+    <div class="swatch-grid" id="swatches"></div>
+
+    <section class="pairs">
+      <div class="group-head"><h2>Accessible pairings</h2><span>Text contrast, WCAG 2.1 · AA needs 4.5 : 1 (3 : 1 for large text)</span></div>
+      <div class="pair-grid" id="pairs"></div>
+      <p class="note-box" id="colourNote"></p>
+    </section>
+
+    <section class="group" id="colour-css">
+      <div class="group-head"><h2>CSS</h2><span>Paste into your stylesheet</span></div>
+      <div class="code-block">
+        <button class="btn" id="copyColourCss" type="button">Copy CSS</button>
+        <pre id="colourCssOut"></pre>
+      </div>
+    </section>
+
+    <footer>RAAPID brand palette · Primary, Light base, Dark base, Accent</footer>
   </main>
 </div>
 
@@ -588,6 +670,53 @@ const btnCss = document.querySelector("style").textContent.split("RAAPID BUTTONS
 document.getElementById("btnCssOut").textContent = "/* RAAPID BUTTONS (component)" + btnCss.trimEnd();
 document.getElementById("copyBtnCss").addEventListener("click", () => copy(document.getElementById("btnCssOut").textContent, "Button CSS copied"));
 
+// ================= Colours tab =================
+const COLOURS = [
+  { key: "violet", cls: "sw-primary", role: "Primary colour", name: "RAAPID Violet",   hex: "#5E58E0", pantone: "Pantone 2366 C", fg: "#FFFFFF", v: "--raapid-violet" },
+  { key: "white",  cls: "sw-white",   role: "Light base",     name: "True White",      hex: "#F6F4F4", pantone: "",               fg: "#21154A", v: "--raapid-true-white" },
+  { key: "green",  cls: "sw-green",   role: "Accent colour",  name: "Signal Green",    hex: "#CEDE00", pantone: "Pantone 381 C",  fg: "#21154A", v: "--raapid-signal-green" },
+  { key: "indigo", cls: "sw-indigo",  role: "Dark base",      name: "Midnight Indigo", hex: "#21154A", pantone: "Pantone 2765 C", fg: "#FFFFFF", v: "--raapid-midnight-indigo" },
+];
+const hexRgb = h => [1, 3, 5].map(i => parseInt(h.slice(i, i + 2), 16));
+const relLum = h => { const c = hexRgb(h).map(v => { v /= 255; return v <= .03928 ? v / 12.92 : ((v + .055) / 1.055) ** 2.4; }); return .2126 * c[0] + .7152 * c[1] + .0722 * c[2]; };
+const contrast = (a, b) => { const x = relLum(a), y = relLum(b); return (Math.max(x, y) + .05) / (Math.min(x, y) + .05); };
+
+document.getElementById("swatches").innerHTML = COLOURS.map(c => {
+  const [r, g, b] = hexRgb(c.hex);
+  const rows = [["HEX", c.hex], ["RGB", `${r} ${g} ${b}`], ["CSS", `var(${c.v})`]].concat(c.pantone ? [["Pantone", c.pantone]] : []);
+  return `<article class="sw ${c.cls}" style="background:${c.hex};color:${c.fg}">
+    <div><p class="sw-role">${c.role}</p><p class="sw-name t-h3-semibold">${c.name}</p></div>
+    <div class="sw-values">${rows.map(([k, v]) => `<button type="button" class="sw-value" data-copy="${v}" title="Copy"><span>${k}</span><span>${v}</span></button>`).join("")}</div>
+  </article>`;
+}).join("");
+
+const PAIRS = [
+  ["#21154A", "#F6F4F4", "Midnight Indigo on True White", "Headings, body"],
+  ["#5E58E0", "#F6F4F4", "RAAPID Violet on True White", "Links, labels, large text"],
+  ["#F6F4F4", "#5E58E0", "True White on RAAPID Violet", "Buttons, bands"],
+  ["#F6F4F4", "#21154A", "True White on Midnight Indigo", "Footer, dark sections"],
+  ["#CEDE00", "#21154A", "Signal Green on Midnight Indigo", "Accents, icons on dark"],
+  ["#21154A", "#CEDE00", "Midnight Indigo on Signal Green", "Highlights, tags"],
+  ["#5E58E0", "#21154A", "RAAPID Violet on Midnight Indigo", "Decorative only"],
+  ["#CEDE00", "#F6F4F4", "Signal Green on True White", "Avoid for text"],
+];
+document.getElementById("pairs").innerHTML = PAIRS.map(([fg, bg, label, use]) => {
+  const r = contrast(fg, bg);
+  const grade = r >= 7 ? "AAA" : r >= 4.5 ? "AA" : r >= 3 ? "AA large" : "Fail";
+  return `<div class="pair" style="background:${bg};color:${fg}">
+    <div class="pair-sample">Aa · ${label.split(" on ")[0]}</div>
+    <div class="pair-meta"><span>${label}<br><span style="opacity:.75">${use}</span></span>
+      <span class="pair-badge ${grade === "Fail" ? "fail" : ""}">${r.toFixed(1)} : 1 · ${grade}</span></div>
+  </div>`;
+}).join("");
+document.getElementById("colourNote").textContent =
+  "Note: the home page currently uses #5553D6 for violet (sampled earlier from a screenshot) and #FFFFFF / #1A0649 in places. " +
+  "The official values above are #5E58E0, #F6F4F4 and #21154A.";
+
+const colourCss = ":root {\n" + COLOURS.map(c => `  ${c.v}: ${c.hex};${" ".repeat(Math.max(1, 28 - c.v.length - c.hex.length))}/* ${c.role} · ${c.name}${c.pantone ? " · " + c.pantone : ""} */`).join("\n") + "\n}";
+document.getElementById("colourCssOut").textContent = colourCss;
+document.getElementById("copyColourCss").addEventListener("click", () => copy(colourCss, "Colour CSS copied"));
+
 // ================= Tabs =================
 const tabBtns = [...document.querySelectorAll('.tabs [role="tab"]')];
 function showTab(id, push) {
@@ -597,17 +726,18 @@ function showTab(id, push) {
     t.tabIndex = on ? 0 : -1;
     document.getElementById(t.getAttribute("aria-controls")).hidden = !on;
   });
-  document.body.classList.toggle("on-buttons", id === "tab-buttons");
-  if (push) history.replaceState(null, "", id === "tab-buttons" ? "#buttons" : "#typography");
+  document.body.classList.toggle("on-other", id !== "tab-type");
+  if (push) history.replaceState(null, "", "#" + ({ "tab-type": "typography", "tab-colours": "colours", "tab-buttons": "buttons" })[id]);
   window.scrollTo(0, 0);
 }
 tabBtns.forEach(t => t.addEventListener("click", () => showTab(t.id, true)));
 document.querySelector(".tabs").addEventListener("keydown", e => {
   if (!["ArrowLeft", "ArrowRight"].includes(e.key)) return;
   const i = tabBtns.findIndex(t => t.getAttribute("aria-selected") === "true");
-  const n = tabBtns[(i + 1) % tabBtns.length]; showTab(n.id, true); n.focus();
+  const n = tabBtns[(i + (e.key === "ArrowRight" ? 1 : tabBtns.length - 1)) % tabBtns.length]; showTab(n.id, true); n.focus();
 });
 if (location.hash === "#buttons") showTab("tab-buttons", false);
+if (location.hash === "#colours") showTab("tab-colours", false);
 </script>
 </body>
 </html>
