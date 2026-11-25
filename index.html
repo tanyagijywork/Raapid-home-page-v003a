@@ -210,16 +210,15 @@ h1, p { margin: 0; }
 .mega-link > span:not(.mega-icon) { flex: 1; min-width: 0; }
 .mega-icon { display: block; flex: none; width: 44px; height: 44px; object-fit: contain; }   /* Figma: Menu-Icons-1606 */
 .mega-link-title { display: inline-flex; align-items: center; gap: 8px; }
-.mega-link-title img, .mega-link-row > img:not(.mega-icon), .mega-more img { width: 13px; height: auto; flex: none; transition: transform .15s ease; }
-.mega-link:hover .mega-link-title img, .mega-link-row:hover > img, .mega-more:hover img { transform: translateX(4px); }
+.mega-link-title img, .mega-link-row > img:not(.mega-icon) { width: 13px; height: auto; flex: none; transition: transform .15s ease; }
+.mega-link:hover .mega-link-title img, .mega-link-row:hover > img { transform: translateX(4px); }
 .mega-link:hover .mega-link-title { text-decoration: underline; text-underline-offset: 4px; }
 .mega-link-desc { display: block; margin-top: 4px; color: var(--ink-3); }
 
-.mega-about { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 64px; }
-.mega-news-img { display: block; width: 100%; max-width: 560px; aspect-ratio: 640 / 300; margin-top: 8px; border-radius: 0; }
-.mega-news-title { margin-top: 20px !important; max-width: 560px; }
-.mega-more { display: inline-flex; align-items: center; gap: 8px; margin-top: 16px; color: var(--ink); }
-.mega-about-list .mega-title { padding-bottom: 16px; margin-bottom: 8px; border-bottom: 1px solid var(--rule); }
+/* About: intro column like the other menus; the five pages fill the remaining three columns (3 + 2) */
+.mega-about-list { grid-column: 2 / -1; }
+.mega-about-list ul { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); column-gap: 40px; border-top: 1px solid var(--rule); }
+.mega-about-list li { border-bottom: 1px solid var(--rule); }
 .mega-link-row { align-items: center; }
 .mega-link-row .mega-link-title { flex: 1; }
 
@@ -244,7 +243,7 @@ main > section.container:first-child { padding-top: calc(var(--section-y) * 2); 
 .tagline { margin-top: var(--space-group); }
 .lede { margin-top: var(--space-close); max-width: 760px; color: var(--ink-2); }
 .hero .rb { margin-top: var(--space-group); }
-.hero-visual { width: 100%; aspect-ratio: 1 / 1; max-width: 680px; justify-self: end; border-radius: 0; }
+.hero-visual { display: block; width: 100%; height: auto; aspect-ratio: 1774 / 887; max-width: 760px; justify-self: end; border-radius: 0; }   /* wide flow illustration, shown whole */
 
 /* ---------- Stats ---------- */
 .stats {
@@ -481,6 +480,7 @@ main > section.ticker-wrap { max-width: none; padding-left: 0; padding-right: 0;
   transition: transform .6s cubic-bezier(.2, .8, .2, 1);
 }
 .serve-card:hover .serve-photo, .serve-card.open .serve-photo { transform: scale(1.04); }
+.serve-photo--low { object-position: center 60%; }   /* Providers art: keeps its top-left cube clear of the eyebrow label */
 :root { --serve-hover: #f4f4f6; }            /* light grey (same grey as the partners strip) */
 .serve-card::before {                       /* resting state: soft lavender veil behind the headline */
   content: ""; position: absolute; inset: 0; z-index: -1;
@@ -492,6 +492,11 @@ main > section.ticker-wrap { max-width: none; padding-left: 0; padding-right: 0;
   transition: opacity .35s ease;
 }
 .serve-card:hover::after, .serve-card:focus-within::after, .serve-card.open::after { opacity: 1; }
+.serves--wash .serve-card::before {          /* light-grey top wash behind the eyebrow label + the existing lavender veil at the base */
+  background:
+    linear-gradient(180deg, rgba(240, 240, 243, .92) 0%, rgba(240, 240, 243, .78) 12%, rgba(240, 240, 243, 0) 28%),   /* light grey, so the card edge never melts into the white page */
+    linear-gradient(180deg, rgba(241, 238, 252, 0) 40%, rgba(241, 238, 252, .85) 100%);
+}
 .serve-content { padding: 48px; }
 .serve-label {                              /* eyebrow tag pinned to the top-left of the card */
   position: absolute; top: 48px; left: 48px; right: 48px; margin: 0; color: var(--raapid-violet);
@@ -693,6 +698,7 @@ main > section.ticker-wrap { max-width: none; padding-left: 0; padding-right: 0;
   .utility { gap: 28px; }
   .primary-nav { gap: 32px; }
   .mega { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .mega-about-list ul { grid-template-columns: repeat(2, minmax(0, 1fr)); }   /* half-width panel: 2 + 2 + 1 */
   .footer-links { grid-template-columns: repeat(3, minmax(0, 1fr)); }
   .footer-contact { grid-column: 1 / -1; }
 }
@@ -719,13 +725,15 @@ main > section.ticker-wrap { max-width: none; padding-left: 0; padding-right: 0;
   .site-footer { --art-w: 90%; }
   :root { --section-y: 48px; --head-gap: 48px; --grid-gap: 24px; --page-x: 32px; --space-group: 40px; }
   .hero { grid-template-columns: 1fr; gap: 56px; }
-  .hero-visual { justify-self: stretch; max-width: none; aspect-ratio: 4 / 3; }
+  .hero-visual { justify-self: center; max-width: 760px; }
   .utility .text-link, .utility .sep { display: none; }
   .stats { grid-template-columns: 1fr; gap: 48px; }
   .br-desktop { display: none; }
   .platform-head br { display: none; }
   .mega, .mega-about { grid-template-columns: 1fr; gap: 24px; padding: 24px; max-height: 70vh; overflow-y: auto; }
   .mega-desc { max-width: none; }
+  .mega-about-list { grid-column: auto; }
+  .mega-about-list ul { grid-template-columns: 1fr; }
   .pillars { grid-template-columns: 1fr; gap: 56px; }
   .pillar-icon { width: 148px; height: 124px; }
 }
@@ -881,14 +889,11 @@ main > section.ticker-wrap { max-width: none; padding-left: 0; padding-right: 0;
         <div class="nav-item">
           <button class="nav-trigger t-link-s-regular" type="button" aria-expanded="false" aria-controls="mega-ab">About<i class="chev" aria-hidden="true"></i></button>
           <div class="mega mega-about" id="mega-ab" hidden>
-            <div class="mega-news">
-              <p class="mega-label t-eyebrow">Latest News</p>
-              <div class="ph ph-light mega-news-img" role="img" aria-label="Latest news image placeholder"></div>
-              <p class="mega-news-title t-body-m-bold">Lorem ipsum dolor sit amet, consectetur adipiscing elit sed do eiusmod tempor.</p>
-              <a href="#" class="mega-more t-link-s-medium">Know More <img src="arrow-right.svg" alt=""></a>
+            <div class="mega-intro">
+              <p class="mega-title t-link-xs-bold-upper">About</p>
+              <p class="mega-desc t-body-s-regular">The people, partners and purpose behind RAAPID.</p>
             </div>
             <div class="mega-group mega-about-list">
-              <p class="mega-title t-link-xs-bold-upper">About</p>
               <ul>
                 <li><a href="#" class="mega-link mega-link-row"><img class="mega-icon" src="ab-our-story.svg" alt="" width="44" height="44"><span class="mega-link-title t-link-s-medium">Our Story</span><img src="arrow-right.svg" alt=""></a></li>
                 <li><a href="#" class="mega-link mega-link-row"><img class="mega-icon" src="ab-leadership.svg" alt="" width="44" height="44"><span class="mega-link-title t-link-s-medium">Leadership</span><img src="arrow-right.svg" alt=""></a></li>
@@ -923,7 +928,7 @@ main > section.ticker-wrap { max-width: none; padding-left: 0; padding-right: 0;
         </a>
       </div>
 
-      <div class="ph ph-light hero-visual" role="img" aria-label="Hero image placeholder"></div>
+      <img class="hero-visual" src="img-banner.png" alt="Clinical records flowing through RAAPID's AI layers into validated, compliant outcomes and revenue growth" width="1774" height="887">
     </div>
   </section>
 
@@ -988,17 +993,17 @@ main > section.ticker-wrap { max-width: none; padding-left: 0; padding-right: 0;
 
     <div class="pillars">
       <article class="pillar">
-        <img class="pillar-icon" src="img-measured.png" alt="" width="198" height="164">
+        <img class="pillar-icon" src="icon-measured.png" alt="" width="199" height="164">
         <h3 class="t-h3-semibold">Measured</h3>
         <p class="pillar-text t-body-s-regular">We define success with you upfront: your baseline, performance targets and timeframe.</p>
       </article>
       <article class="pillar">
-        <img class="pillar-icon" src="img-guaranteed.png" alt="" width="199" height="164">
+        <img class="pillar-icon" src="icon-guaranteed.png" alt="" width="199" height="164">
         <h3 class="t-h3-semibold">Guaranteed</h3>
         <p class="pillar-text t-body-s-regular">We align commercial commitments to agreed performance outcomes, making accountability part of the engagement.</p>
       </article>
       <article class="pillar">
-        <img class="pillar-icon" src="img-defensible.png" alt="" width="199" height="164">
+        <img class="pillar-icon" src="icon-defensible.png" alt="" width="199" height="164">
         <h3 class="t-h3-semibold">Defensible</h3>
         <p class="pillar-text t-body-s-regular">RAAPID recommendations are linked to supporting clinical evidence and rationale, ready for clinical review, coding validation and audit.</p>
       </article>
@@ -1094,13 +1099,13 @@ main > section.ticker-wrap { max-width: none; padding-left: 0; padding-right: 0;
   </section>
 
   <!-- ---------- Who RAAPID Serves ---------- -->
-  <section class="container serves" aria-labelledby="serves-title">
+  <section class="container serves serves--wash" aria-labelledby="serves-title">
     <p class="eyebrow t-eyebrow"><img class="icon-pentagon" src="raapid-pentagon.svg" alt="">Who RAAPID Serves</p>
     <h2 id="serves-title" class="serves-title t-h1-light">Solve for your healthcare priorities,<br class="br-desktop"> <span class="t-h1-bold">we tailor to them.</span></h2>
 
     <div class="serve-cards">
       <article class="serve-card rb-white" tabindex="0" aria-labelledby="aud-plans">
-        <img class="serve-photo" src="img-health-plan-402.jpg" alt="" width="1657" height="2201">
+        <img class="serve-photo" src="final-healthplans-web.jpg" alt="" width="1307" height="1740">
         <div class="serve-content">
           <p id="aud-plans" class="serve-label t-body-l-bold-upper">Health Plans</p>
           <h3 class="t-h2-light"><span class="t-h2-bold">Capture risk accurately.</span> Protect appropriate reimbursement.</h3>
@@ -1118,9 +1123,60 @@ main > section.ticker-wrap { max-width: none; padding-left: 0; padding-right: 0;
         </div>
       </article>
       <article class="serve-card rb-white" tabindex="0" aria-labelledby="aud-providers">
-        <img class="serve-photo" src="img-health-system-provider-402.jpg" alt="" width="6249" height="9325">
+        <img class="serve-photo serve-photo--low" src="final-healthsystems-web.jpg" alt="" width="1307" height="1740">
         <div class="serve-content">
           <p id="aud-providers" class="serve-label t-body-l-bold-upper">Providers &amp; Health Systems</p>
+          <h3 class="t-h2-light"><span class="t-h2-bold">Strengthen documentation.</span> Support accurate reimbursement.</h3>
+          <p class="serve-hint t-eyebrow" aria-hidden="true">Hover to explore</p>
+          <div class="serve-reveal"><div>
+            <p class="serve-text t-body-s-regular">Identify suspected conditions for clinician review, strengthen clinical documentation and improve coding accuracy.</p>
+            <ul class="serve-list">
+            <li><a href="#" class="t-link-s-medium">Prospective Risk Adjustment <svg class="serve-arrow" viewBox="0 0 14.6165 12.7273" aria-hidden="true"><path fill="currentColor" d="M8.25284 12.7273L7.15909 11.6477L11.6619 7.14489H0V5.58239H11.6619L7.15909 1.09375L8.25284 0L14.6165 6.36364L8.25284 12.7273Z"/></svg></a></li>
+            <li><a href="#" class="t-link-s-medium">Clinical Documentation Improvement <svg class="serve-arrow" viewBox="0 0 14.6165 12.7273" aria-hidden="true"><path fill="currentColor" d="M8.25284 12.7273L7.15909 11.6477L11.6619 7.14489H0V5.58239H11.6619L7.15909 1.09375L8.25284 0L14.6165 6.36364L8.25284 12.7273Z"/></svg></a></li>
+            <li><a href="#" class="t-link-s-medium">Medical Coding (Inpatient &amp; Outpatient) <svg class="serve-arrow" viewBox="0 0 14.6165 12.7273" aria-hidden="true"><path fill="currentColor" d="M8.25284 12.7273L7.15909 11.6477L11.6619 7.14489H0V5.58239H11.6619L7.15909 1.09375L8.25284 0L14.6165 6.36364L8.25284 12.7273Z"/></svg></a></li>
+            <li><a href="#" class="t-link-s-medium">Medical Coding Services <svg class="serve-arrow" viewBox="0 0 14.6165 12.7273" aria-hidden="true"><path fill="currentColor" d="M8.25284 12.7273L7.15909 11.6477L11.6619 7.14489H0V5.58239H11.6619L7.15909 1.09375L8.25284 0L14.6165 6.36364L8.25284 12.7273Z"/></svg></a></li>
+            </ul>
+            <a href="#" class="rb rb-secondary"><span class="t-link-s-medium">Explore Providers &amp; Health Systems</span><svg class="rb-arrow" viewBox="0 0 14.6165 12.7273" aria-hidden="true"><path fill="currentColor" d="M8.25284 12.7273L7.15909 11.6477L11.6619 7.14489H0V5.58239H11.6619L7.15909 1.09375L8.25284 0L14.6165 6.36364L8.25284 12.7273Z"/></svg></a>
+          </div></div>
+        </div>
+      </article>
+    </div>
+
+    <!-- Technology partners line -->
+    <div class="partners-line">
+      <p class="t-body-s-regular"><span class="t-body-s-bold">For healthcare technology partners:</span> Embed RAAPID clinical intelligence into your solutions through APIs and AI-as-a-Service.</p>
+      <a href="#" class="rb rb-link partners-link"><span class="t-link-s-medium">Explore AI-as-a-Service</span><svg class="rb-arrow" viewBox="0 0 14.6165 12.7273" aria-hidden="true"><path fill="currentColor" d="M8.25284 12.7273L7.15909 11.6477L11.6619 7.14489H0V5.58239H11.6619L7.15909 1.09375L8.25284 0L14.6165 6.36364L8.25284 12.7273Z"/></svg></a>
+    </div>
+  </section>
+
+  <!-- COPY of Who RAAPID Serves with the earlier card images (for comparison) -->
+  <section class="container serves" aria-labelledby="serves-title-b">
+    <p class="eyebrow t-eyebrow"><img class="icon-pentagon" src="raapid-pentagon.svg" alt="">Who RAAPID Serves</p>
+    <h2 id="serves-title-b" class="serves-title-b t-h1-light">Solve for your healthcare priorities,<br class="br-desktop"> <span class="t-h1-bold">we tailor to them.</span></h2>
+
+    <div class="serve-cards">
+      <article class="serve-card rb-white" tabindex="0" aria-labelledby="aud-plans-b">
+        <img class="serve-photo" src="img-health-plan-402.jpg" alt="" width="1657" height="2201">
+        <div class="serve-content">
+          <p id="aud-plans-b" class="serve-label t-body-l-bold-upper">Health Plans</p>
+          <h3 class="t-h2-light"><span class="t-h2-bold">Capture risk accurately.</span> Protect appropriate reimbursement.</h3>
+          <p class="serve-hint t-eyebrow" aria-hidden="true">Hover to explore</p>
+          <div class="serve-reveal"><div>
+            <p class="serve-text t-body-s-regular">Capture supported conditions for risk adjustment, prepare for RADV audits, and protect payment integrity with coding decisions backed by clinical evidence.</p>
+            <ul class="serve-list">
+            <li><a href="#" class="t-link-s-medium">Retrospective Risk Adjustment <svg class="serve-arrow" viewBox="0 0 14.6165 12.7273" aria-hidden="true"><path fill="currentColor" d="M8.25284 12.7273L7.15909 11.6477L11.6619 7.14489H0V5.58239H11.6619L7.15909 1.09375L8.25284 0L14.6165 6.36364L8.25284 12.7273Z"/></svg></a></li>
+            <li><a href="#" class="t-link-s-medium">RADV &amp; Audit Readiness <svg class="serve-arrow" viewBox="0 0 14.6165 12.7273" aria-hidden="true"><path fill="currentColor" d="M8.25284 12.7273L7.15909 11.6477L11.6619 7.14489H0V5.58239H11.6619L7.15909 1.09375L8.25284 0L14.6165 6.36364L8.25284 12.7273Z"/></svg></a></li>
+            <li><a href="#" class="t-link-s-medium">Payment Integrity <svg class="serve-arrow" viewBox="0 0 14.6165 12.7273" aria-hidden="true"><path fill="currentColor" d="M8.25284 12.7273L7.15909 11.6477L11.6619 7.14489H0V5.58239H11.6619L7.15909 1.09375L8.25284 0L14.6165 6.36364L8.25284 12.7273Z"/></svg></a></li>
+            <li><a href="#" class="t-link-s-medium">Medical Coding Services <svg class="serve-arrow" viewBox="0 0 14.6165 12.7273" aria-hidden="true"><path fill="currentColor" d="M8.25284 12.7273L7.15909 11.6477L11.6619 7.14489H0V5.58239H11.6619L7.15909 1.09375L8.25284 0L14.6165 6.36364L8.25284 12.7273Z"/></svg></a></li>
+            </ul>
+            <a href="#" class="rb rb-secondary"><span class="t-link-s-medium">Explore Health Plans</span><svg class="rb-arrow" viewBox="0 0 14.6165 12.7273" aria-hidden="true"><path fill="currentColor" d="M8.25284 12.7273L7.15909 11.6477L11.6619 7.14489H0V5.58239H11.6619L7.15909 1.09375L8.25284 0L14.6165 6.36364L8.25284 12.7273Z"/></svg></a>
+          </div></div>
+        </div>
+      </article>
+      <article class="serve-card rb-white" tabindex="0" aria-labelledby="aud-providers-b">
+        <img class="serve-photo" src="img-health-system-provider-402.jpg" alt="" width="6249" height="9325">
+        <div class="serve-content">
+          <p id="aud-providers-b" class="serve-label t-body-l-bold-upper">Providers &amp; Health Systems</p>
           <h3 class="t-h2-light"><span class="t-h2-bold">Strengthen documentation.</span> Support accurate reimbursement.</h3>
           <p class="serve-hint t-eyebrow" aria-hidden="true">Hover to explore</p>
           <div class="serve-reveal"><div>
