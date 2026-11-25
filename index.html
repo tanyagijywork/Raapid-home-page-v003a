@@ -266,7 +266,14 @@ main > section.container:first-child {            /* menu → eyebrow: 40% less 
 .tagline { margin-top: var(--space-group); }
 .lede { margin-top: var(--space-close); max-width: 760px; color: var(--ink-2); }
 .hero .rb { margin-top: var(--space-group); }
-.hero-visual { display: block; width: 100%; height: auto; aspect-ratio: 2304 / 1856; max-width: 640px; justify-self: end; border-radius: 0; }   /* Figma img-banner-567: diagonal flow, near-white ground */
+.hero-visual { display: block; width: 100%; height: auto; aspect-ratio: 2304 / 1856; max-width: 640px; justify-self: end; border-radius: 0; }   /* img-banner-478: diagonal flow, near-white ground */
+.hero-visual {                                   /* soften the left edge, where the platform shadow met the image border */
+  -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 10%);
+          mask-image: linear-gradient(90deg, transparent 0, #000 10%);
+}
+@media (min-width: 1101px) {                     /* two-column hero: banner 8% larger (1.2 then −10%), growing from its right edge */
+  .hero-visual { transform: scale(1.08); transform-origin: right center; }
+}
 
 /* ---------- Stats ---------- */
 .stats {
@@ -633,12 +640,16 @@ main > section.clients { max-width: none; padding-left: 0; padding-right: 0; }
 :root { --labs-bg: var(--raapid-violet); }
 .labs {
   display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--grid-gap); align-items: start;   /* heading and copy share the same top line */
-  background: var(--labs-bg); color: #ffffff;
+  background:
+    linear-gradient(rgba(33, 21, 74, .18), rgba(33, 21, 74, .18)),        /* light navy tint: white text ≥ 4.8:1 everywhere */
+    url("translating-ai-breakthroughs.webp") center / cover no-repeat,
+    var(--labs-bg);
+  color: #ffffff;
   padding: 80px 64px;
 }
 .labs-title { grid-column: 1 / span 6; margin: 0; text-wrap: balance; }
 .labs-side { grid-column: 8 / -1; }
-.labs-text { margin: 0; color: rgba(255, 255, 255, .88); max-width: 520px; }
+.labs-text { margin: 0; color: #ffffff; max-width: 520px; }
 .labs .rb { margin-top: var(--space-item); }
 
 /* ---------- Building the next (news) ---------- */
@@ -1015,7 +1026,7 @@ main > section.clients { max-width: none; padding-left: 0; padding-right: 0; }
         </a>
       </div>
 
-      <img class="hero-visual" src="img-banner-567.jpg" alt="Clinical records flowing through RAAPID's AI layers into validated, compliant outcomes and revenue growth" width="1400" height="1128">
+      <img class="hero-visual" src="img-banner-478.jpg" alt="Clinical records flowing through RAAPID's AI layers into validated, compliant outcomes and revenue growth" width="1400" height="1128">
     </div>
   </section>
 
