@@ -271,6 +271,17 @@ main > section.container:first-child {            /* menu → eyebrow: 40% less 
   -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 10%);
           mask-image: linear-gradient(90deg, transparent 0, #000 10%);
 }
+/* Banner built from 4 layers (one per platform, cut along the empty space between them).
+   Stacked with multiply over white they reproduce the original image exactly; on load they rise in one by one. */
+.hero-layers { position: relative; }
+.hero-layers img { position: absolute; inset: 0; display: block; width: 100%; height: 100%; mix-blend-mode: multiply; }
+.js .hero-layers img { opacity: 0; translate: 0 16px; }
+.hero-layers.is-in img { animation: layer-in 800ms var(--spring-soft) both; }
+.hero-layers.is-in img:nth-child(2) { animation-delay: 350ms; }
+.hero-layers.is-in img:nth-child(3) { animation-delay: 700ms; }
+.hero-layers.is-in img:nth-child(4) { animation-delay: 1050ms; }
+@keyframes layer-in { from { opacity: 0; translate: 0 16px; } to { opacity: 1; translate: 0 0; } }
+@media (prefers-reduced-motion: reduce) { .js .hero-layers img { opacity: 1; translate: none; } .hero-layers.is-in img { animation: none; } }
 @media (min-width: 1101px) {                     /* two-column hero: banner 8% larger (1.2 then −10%), growing from its right edge */
   .hero-visual { transform: scale(1.08); transform-origin: right center; }
 }
@@ -1016,7 +1027,7 @@ main > section.clients { max-width: none; padding-left: 0; padding-right: 0; }
 
         <h1 class="t-h1-light split-head">Clinical Intelligence that <span class="t-h1-bold">drives your financial outcomes.</span></h1>
 
-        <p class="tagline t-body-m-bold">Measured. Guaranteed. Defensible</p>
+        <p class="tagline t-body-m-bold">Measured. Guaranteed. Defensible.</p>
 
         <p class="lede t-body-s-regular">RAAPID transforms complex clinical data into accurate, evidence-backed decisions across risk adjustment, coding and payment, helping capture the revenue you’re entitled to while maintaining coding accuracy and compliance.</p>
 
@@ -1026,7 +1037,12 @@ main > section.clients { max-width: none; padding-left: 0; padding-right: 0; }
         </a>
       </div>
 
-      <img class="hero-visual" src="img-banner-478.jpg" alt="Clinical records flowing through RAAPID's AI layers into validated, compliant outcomes and revenue growth" width="1400" height="1128">
+      <div class="hero-visual hero-layers" role="img" aria-label="Clinical records flowing through RAAPID's AI layers into validated, compliant outcomes and revenue growth">
+        <img src="img-banner-478-p1.webp" alt="" width="1400" height="1128">
+        <img src="img-banner-478-p2.webp" alt="" width="1400" height="1128">
+        <img src="img-banner-478-p3.webp" alt="" width="1400" height="1128">
+        <img src="img-banner-478-p4.webp" alt="" width="1400" height="1128">
+      </div>
     </div>
   </section>
 
@@ -1302,7 +1318,7 @@ main > section.clients { max-width: none; padding-left: 0; padding-right: 0; }
           <a href="#" class="rb rb-link story-link"><span class="t-link-s-medium">Explore success story</span><svg class="rb-arrow" viewBox="0 0 14.6165 12.7273" aria-hidden="true"><path fill="currentColor" d="M8.25284 12.7273L7.15909 11.6477L11.6619 7.14489H0V5.58239H11.6619L7.15909 1.09375L8.25284 0L14.6165 6.36364L8.25284 12.7273Z"/></svg></a>
         </article>
         <article class="trust-stat">
-          <p class="t-h2-bold">98%+ coding accuracy,</p>
+          <p class="t-h2-bold">98%+ coding accuracy</p>
           <p class="trust-desc t-body-s-regular">21 percentage points above benchmark for a Fortune 500 Integrated Health System</p>
           <a href="#" class="rb rb-link story-link"><span class="t-link-s-medium">Explore success story</span><svg class="rb-arrow" viewBox="0 0 14.6165 12.7273" aria-hidden="true"><path fill="currentColor" d="M8.25284 12.7273L7.15909 11.6477L11.6619 7.14489H0V5.58239H11.6619L7.15909 1.09375L8.25284 0L14.6165 6.36364L8.25284 12.7273Z"/></svg></a>
         </article>
@@ -1558,6 +1574,16 @@ main > section.clients { max-width: none; padding-left: 0; padding-right: 0; }
     if (entries.some(e => e.isIntersecting)) { start(); io.disconnect(); }
   }, { threshold: 0.35 });
   io.observe(stats);
+})();
+
+/* Hero banner: once all four platform layers have loaded, wait a beat, then bring them in one after another */
+(function () {
+  const wrap = document.querySelector('.hero-layers');
+  if (!wrap) return;
+  const imgs = [...wrap.querySelectorAll('img')];
+  const go = () => setTimeout(() => wrap.classList.add('is-in'), 400);
+  Promise.all(imgs.map(i => i.decode ? i.decode().catch(() => {}) : Promise.resolve())).then(go);
+  setTimeout(() => wrap.classList.add('is-in'), 3000);   /* safety net: never leave the banner hidden */
 })();
 
 /* Headings: split into the lines as they wrap, then reveal line by line (rise 20px + fade, soft spring).
