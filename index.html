@@ -7,6 +7,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Geist:wght@300;400;500;600;700&family=JetBrains+Mono:wght@700&display=swap" rel="stylesheet">
+<script>document.documentElement.classList.add('js');</script>
 <style>
 /* =========================================================
    RAAPID TYPOGRAPHY TOKENS — copied unchanged from RAAPID-UI-KIT.html
@@ -24,6 +25,7 @@
 .t-h2-regular       { font: var(--fw-regular)   48px/48px  var(--raapid-font); letter-spacing: -0.05em; }
 .t-h2-bold          { font: var(--fw-bold)      48px/48px  var(--raapid-font); letter-spacing: -0.05em; }
 .t-h3-semibold      { font: var(--fw-semibold)  36px/36px  var(--raapid-font); letter-spacing: -0.03em; }
+.t-h3-light         { font: var(--fw-light)     36px/36px  var(--raapid-font); letter-spacing: -0.03em; }
 .t-h4-bold-upper    { font: var(--fw-bold)      32px/32px  var(--raapid-font); letter-spacing: 0; text-transform: uppercase; }
 .t-body-l-light     { font: var(--fw-light)     24px/34px  var(--raapid-font); letter-spacing: -0.03em; }
 .t-body-l-regular   { font: var(--fw-regular)   24px/34px  var(--raapid-font); letter-spacing: 0; }
@@ -76,14 +78,16 @@ h1, p { margin: 0; }
 .ph-light { background: var(--placeholder-2); }
 
 /* ---------- Header ---------- */
+/* Row 1: utility links (right) · Row 2: logo · primary menu · search + demo */
 .header-top {
-  display: flex; align-items: center; justify-content: space-between; gap: 24px;
-  height: 103px; border-bottom: 1px solid var(--rule);
+  display: flex; align-items: center; justify-content: flex-end;
+  height: 48px; border-bottom: 1px solid var(--rule);
 }
-.logo { display: block; height: 62px; width: auto; }
-.utility { display: flex; align-items: center; gap: 44px; }
-.utility .sep { width: 2px; height: 18px; background: var(--ink); }
-.icon-search { display: block; width: 33px; height: 33px; }
+.brand { display: block; flex: none; }
+.logo { display: block; height: 44px; width: auto; }
+.utility { display: flex; align-items: center; gap: 40px; }
+.header-actions { display: flex; align-items: center; gap: 24px; flex: none; }
+.icon-search { display: block; width: 24px; height: 24px; }   /* sits in the utility row, sized to the 18px links */
 .search-link { color: var(--raapid-violet); }   /* nav icons in RAAPID violet */
 
 /* =========================================================
@@ -140,15 +144,14 @@ h1, p { margin: 0; }
 .rb:focus-visible { outline: 2px solid var(--rb-ring); outline-offset: 4px; }   /* keyboard accessibility */
 
 .header-nav {
-  display: flex; align-items: center; justify-content: space-between; gap: 24px;
-  height: 60px;
+  display: grid; grid-template-columns: auto minmax(0, 1fr) auto; grid-template-areas: "brand nav actions";
+  align-items: center; column-gap: 32px; height: 80px;
 }
-.primary-nav { display: flex; gap: 48px; overflow-x: auto; scrollbar-width: none; }
+.brand { grid-area: brand; } .primary-nav { grid-area: nav; } .header-actions { grid-area: actions; }
+.primary-nav { display: flex; gap: 24px; overflow-x: auto; scrollbar-width: none; }
 .primary-nav::-webkit-scrollbar { display: none; }
 .primary-nav a, .utility a { white-space: nowrap; }
-.primary-nav a:hover, .utility a:hover, .contact:hover { text-decoration: underline; text-underline-offset: 4px; }
-.contact { display: inline-flex; align-items: center; gap: 12px; white-space: nowrap; }
-.contact .icon-arrow { display: block; width: 15px; height: 13px; flex: none; color: var(--raapid-violet); }
+.primary-nav a:hover, .utility a:hover { text-decoration: underline; text-underline-offset: 4px; }
 
 /* ---------- Primary menu (dropdown panels) ---------- */
 /* Menu: hides while scrolling down, slides back in (as frosted glass) as soon as the user scrolls up.
@@ -178,7 +181,7 @@ h1, p { margin: 0; }
 .nav-trigger {
   display: inline-flex; align-items: center; gap: 8px;
   background: none; border: 0; padding: 0; margin: 0; color: var(--ink); cursor: pointer;
-  white-space: nowrap; height: 60px; position: relative;
+  white-space: nowrap; height: 80px; position: relative;
 }
 .nav-trigger::after {                            /* active underline */
   content: ""; position: absolute; left: 0; right: 0; bottom: -1px; height: 2px;
@@ -229,21 +232,41 @@ h1, h2, h3 { color: var(--brand-navy); }   /* all headings (light and bold words
 
 /* ---------- Section rhythm (applies to every section) ---------- */
 main > section.container { padding-top: var(--section-y); padding-bottom: var(--section-y); }
-main > section.container:first-child { padding-top: calc(var(--section-y) * 2); }
+main > section.container:first-child {            /* menu → eyebrow: 40% less than the old 2 × section-y (128 → 76 on desktop) */
+  padding-top: calc(var(--section-y) * 1.2);
+  padding-top: round(nearest, calc(var(--section-y) * 1.2), 4px);   /* snap to the 4px grid where supported */
+}
 
 /* ---------- Hero ---------- */
 .hero {
   display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
-  align-items: center; gap: 64px;
+  align-items: center; gap: 64px;    /* the wide banner is shorter than the copy, so the eyebrow stays at the top */
 }
 .eyebrow { display: flex; align-items: center; gap: 28px; color: var(--ink-3); margin-bottom: var(--space-item); }
 .eyebrow .icon-pentagon { display: block; width: 10px; height: auto; flex: none; }
 .hero h1 { max-width: 760px; }
 .hero h1 .t-h1-bold { display: block; }
+
+/* Headings: text animation (Figma: In · each Line · Position from bottom 20px + Opacity · spring) — softened to bounce 0.1, 1200ms */
+:root {
+  --spring-soft: cubic-bezier(.22, 1, .36, 1);      /* fallback where linear() isn't supported */
+  --spring-soft: linear(0, 0.0164, 0.0586, 0.1176, 0.1868, 0.261, 0.3365, 0.4106, 0.4813, 0.5474, 0.6083, 0.6636, 0.7131, 0.7571, 0.7958, 0.8295, 0.8587, 0.8837, 0.9051, 0.9231, 0.9383, 0.9509, 0.9614, 0.97, 0.977, 0.9827, 0.9873, 0.9909, 0.9938, 0.996, 0.9977, 0.9989, 0.9999, 1.0005, 1.001, 1.0013, 1.0014, 1.0015, 1.0015, 1.0015, 1);
+}
+.js .split-head:not(.is-split) { opacity: 0; }     /* hidden only until the lines are prepared (no flash) */
+.split-head .ln { display: block; }
+.split-head .ln-in { display: block; animation: line-in var(--ln-dur, 714ms) var(--spring-soft) var(--ln-delay, 0ms) both; }
+.split-head .w { display: inline !important; }      /* words stay inline while split, even bold spans that are blocks */
+/* Body text reveal: each text block rises 20px and fades in, same soft spring (CTAs, stats, infographic, ticker excluded) */
+.js .rv { opacity: 0; translate: 0 20px; }
+.js .rv.is-in { animation: rv-in 800ms var(--spring-soft) both; }
+@keyframes rv-in { from { opacity: 0; translate: 0 20px; } to { opacity: 1; translate: 0 0; } }
+@media (prefers-reduced-motion: reduce) { .js .rv { opacity: 1; translate: none; } .js .rv.is-in { animation: none; } }
+@keyframes line-in { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: none; } }
+@media (prefers-reduced-motion: reduce) { .split-head .ln-in { animation: none; } .js .split-head:not(.is-split) { opacity: 1; } }
 .tagline { margin-top: var(--space-group); }
 .lede { margin-top: var(--space-close); max-width: 760px; color: var(--ink-2); }
 .hero .rb { margin-top: var(--space-group); }
-.hero-visual { display: block; width: 100%; height: auto; aspect-ratio: 1774 / 887; max-width: 760px; justify-self: end; border-radius: 0; }   /* wide flow illustration, shown whole */
+.hero-visual { display: block; width: 100%; height: auto; aspect-ratio: 2304 / 1856; max-width: 640px; justify-self: end; border-radius: 0; }   /* Figma img-banner-567: diagonal flow, near-white ground */
 
 /* ---------- Stats ---------- */
 .stats {
@@ -308,6 +331,37 @@ main > section.ticker-wrap { max-width: none; padding-left: 0; padding-right: 0;
   .ticker-track { animation: none; }
 }
 
+/* ---------- Client logo strip (after stats) ----------
+   Heading centred in the page grid; logos scroll edge to edge, edges fade out, pauses on hover.
+   Logos are trimmed copies sized by visual weight (equal area), so wide and stacked marks read as equals. */
+main > section.clients { max-width: none; padding-left: 0; padding-right: 0; }
+.clients-head { max-width: var(--max); margin: 0 auto; padding: 0 var(--page-x); text-align: center; }
+.clients-title { margin: 0; }
+.logo-marquee {
+  --logo-gap: 96px;
+  display: flex; overflow: hidden; margin-top: var(--space-group);
+  -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 12%, #000 88%, transparent 100%);
+          mask-image: linear-gradient(90deg, transparent 0, #000 12%, #000 88%, transparent 100%);
+}
+.logo-track {
+  list-style: none; margin: 0; padding: 0 var(--logo-gap) 0 0;
+  display: flex; align-items: center; gap: var(--logo-gap); flex: none;
+  animation: logo-scroll 45s linear infinite;
+}
+.logo-marquee:hover .logo-track { animation-play-state: paused; }
+.logo-track li { flex: none; }
+.logo-track img { display: block; height: var(--h); width: auto; max-width: none; }
+@keyframes logo-scroll { from { transform: translateX(0); } to { transform: translateX(-100%); } }
+@media (max-width: 640px) {
+  .logo-marquee { --logo-gap: 56px; }
+  .logo-track img { height: calc(var(--h) * .72); }
+}
+@media (prefers-reduced-motion: reduce) {      /* no movement: one centred, wrapping row */
+  .logo-marquee { -webkit-mask-image: none; mask-image: none; justify-content: center; }
+  .logo-track { animation: none; flex-wrap: wrap; justify-content: center; flex: 1; padding: 0 var(--page-x); row-gap: 40px; }
+  .logo-track[aria-hidden="true"] { display: none; }
+}
+
 /* ---------- The RAAPID Difference ---------- */
 .difference-title { margin: 0; max-width: 1040px; }
 .pillars {
@@ -316,6 +370,20 @@ main > section.ticker-wrap { max-width: none; padding-left: 0; padding-right: 0;
 }
 .pillar h3 { margin: var(--space-item) 0 0; }
 .pillar-icon { display: block; width: 199px; height: 164px; object-fit: contain; object-position: left center; }   /* transparent 3D illustrations */
+/* Levitating icons: a slow 10px drift; the ground shadow shrinks + fades as the icon rises. Staggered so they never move in unison. */
+.pillar { position: relative; --ih: 164px; --iw: 174px; --float-delay: 0s; }
+.pillar:nth-child(2) { --iw: 197px; --float-delay: -1.5s; }   /* Guaranteed */
+.pillar:nth-child(3) { --iw: 117px; --float-delay: -3s; }     /* Defensible */
+.pillar-icon { position: relative; z-index: 1; animation: icon-float 4.5s ease-in-out var(--float-delay) infinite alternate; }
+.pillar::before {
+  content: ""; position: absolute; left: calc(var(--iw) * .15); top: calc(var(--ih) - 4px);
+  width: calc(var(--iw) * .7); height: 14px; border-radius: 50%;
+  background: radial-gradient(closest-side, rgba(33, 21, 74, .22), rgba(33, 21, 74, 0));
+  animation: icon-shadow 4.5s ease-in-out var(--float-delay) infinite alternate;
+}
+@keyframes icon-float  { from { transform: translateY(0); } to { transform: translateY(-10px); } }
+@keyframes icon-shadow { from { transform: scaleX(1); opacity: 1; } to { transform: scaleX(.8); opacity: .55; } }
+@media (prefers-reduced-motion: reduce) { .pillar-icon, .pillar::before { animation: none; } }
 .pillar-text { margin-top: var(--space-close); max-width: 580px; color: var(--ink-3); }
 .difference-note { margin-top: var(--head-gap); padding-top: var(--space-item); border-top: 1px solid var(--rule); color: var(--ink-3); }
 
@@ -334,11 +402,11 @@ main > section.ticker-wrap { max-width: none; padding-left: 0; padding-right: 0;
   --ig-head: var(--brand-navy);                            /* headings + item titles: navy, like the rest of the page */
   --iso: matrix(0.866025, -0.5, 0.866025, 0.5, 0, 0);       /* top face, edges at ±30° */
   --iso-r: matrix(0.866025, 0.5, -0.866025, 0.5, 0, 0);     /* ticks + left dot */
-  position: relative; width: 1090px; margin: var(--head-gap) auto 0;   /* height follows the foundation row */
+  position: relative; width: 1090px; height: 772px; margin: var(--head-gap) auto 0;
   color: var(--ig-ink);
 }
 .ig p { margin: 0; }
-.ig-col, .ig-stack, .ig-link, .ig-dot, .ig-fline { position: absolute; }
+.ig-col, .ig-stack, .ig-link, .ig-dot { position: absolute; }
 
 /* Side columns */
 .ig-workflows { left: 1px; top: 0; width: 225px; }
@@ -355,19 +423,39 @@ main > section.ticker-wrap { max-width: none; padding-left: 0; padding-right: 0;
 .ig-s { font: 400 16px/20px var(--raapid-font); color: var(--ig-ink-2); }
 
 /* Enterprise foundation */
-.ig-foundation { position: relative; padding-top: 552px; }   /* in flow, so the section closes up when descriptions are hidden */
-.ig-foundation { pointer-events: none; }                 /* its top padding overlaps the stack: let hovers through */
-.ig-foundation > * { pointer-events: auto; }
-.ig-fh { margin: 9.5px 0 0; font: 700 24px/23px var(--raapid-font); text-transform: uppercase; color: var(--ig-head); }
-.ig-fgrid { display: flex; gap: 52px; margin: 46px 0 0 2px; }
+/* Enterprise foundation: each pillar carries its own name on the floor at its foot (iso, like the layer labels).
+   Hovering a pillar shows its details in the caption under the stack; the list below is for small screens + screen readers. */
 .ig-fgrid > div { display: flex; flex-direction: column; gap: 5px; }
-.ig-fgrid > div:nth-child(1) { width: 284px; }
-.ig-fgrid > div:nth-child(2) { width: 217px; }
-.ig-fgrid > div:nth-child(3) { width: 245px; }
-.ig-fgrid > div:nth-child(4) { width: 187px; }
-.ig-fline { left: 0; top: 552px; width: 1089.5px; height: 57.5px; display: flex; align-items: center; justify-content: center; }
-.ig-fline > span { position: relative; flex: none; width: 57.5px; height: 1089.5px; transform: rotate(-90deg); }
-.ig-fline img { position: absolute; left: -1px; top: 0; }
+.ig-fgrid > div { position: absolute; width: 225px; }   /* beside their pillars: 2 left, 2 right */
+.ig-fgrid > [data-key="f-integration"] { left: 1px;   top: 510px; }   /* top row */   /* left pillar  */
+.ig-fgrid > [data-key="f-ready"]       { left: 1px;   top: 630px; }   /* bottom row */   /* front pillar */
+.ig-fgrid > [data-key="f-security"]    { left: 866px; top: 510px; }   /* top row */   /* back pillar  */
+.ig-fgrid > [data-key="f-analytics"]   { left: 866px; top: 630px; }   /* bottom row */   /* right pillar */
+.ig-fgrid > [data-key="f-analytics"] .ig-t { white-space: nowrap; }
+.ig .ig-fgrid > [data-key].is-active .ig-t { color: var(--ig-head); }   /* foundation titles stay navy on hover */
+.ig-frule { top: 422px; height: 0; border-top: 2px solid var(--ig-ink); }   /* rules above the foundation points, like the column heading underlines */
+.ig-frule-l { left: 1px; width: 320px; }
+.ig-frule-r { left: 845px; width: 245px; }
+.ig-plabel {
+  position: absolute; transform-origin: 0 0; transform: var(--iso);
+  display: inline-flex; align-items: center; gap: 8px; white-space: nowrap; pointer-events: none;
+  font: 700 14px/15px "JetBrains Mono", ui-monospace, monospace; text-transform: uppercase; letter-spacing: .02em;
+  color: var(--ig-head); transition: color .2s ease;
+}
+.ig-plabel::before {                               /* hotspot: a soft pulsing ring that says "hover me" */
+  content: ""; width: 9px; height: 9px; border-radius: 50%; flex: none;
+  background: var(--raapid-violet); box-shadow: 0 0 0 0 rgba(85, 83, 214, .45);
+  animation: ig-pulse 2.4s ease-out infinite;
+}
+.ig-plabel.is-active { color: var(--raapid-violet); }
+.ig-plabel.is-active::before { animation: none; box-shadow: 0 0 0 4px rgba(85, 83, 214, .25); }
+@keyframes ig-pulse { 0% { box-shadow: 0 0 0 0 rgba(85, 83, 214, .45); } 80%, 100% { box-shadow: 0 0 0 8px rgba(85, 83, 214, 0); } }
+@media (prefers-reduced-motion: reduce) { .ig-plabel::before { animation: none; } }
+.ig-cap { position: absolute; left: 285px; width: 522px; top: 748px; text-align: center; }
+.ig-cap-hint { margin: 0; color: var(--ig-ink-2); font: 400 14px/20px var(--raapid-font); text-transform: uppercase; letter-spacing: .02em; }
+.ig-hit { position: absolute; width: 109px; height: 156.8px; pointer-events: none;   /* pillar outline, for hover only */
+  clip-path: polygon(50% 0, 100% 20%, 100% 80%, 50% 100%, 0 80%, 0 20%); }
+.ig-hit-short { height: 125px; clip-path: polygon(50% 0, 100% 25.2%, 100% 74.8%, 50% 100%, 0 74.8%, 0 25.2%); }
 
 /* Connectors + dots (Figma vectors) */
 .ig-link img { position: absolute; left: 0; top: -1px; }
@@ -384,18 +472,17 @@ main > section.ticker-wrap { max-width: none; padding-left: 0; padding-right: 0;
 .ig-dot-3 { left: 741px; top: 331px; }
 
 /* The layered stack */
-.ig-stack { left: 285px; top: 0; width: 522px; height: 611px; }
+.ig-stack { left: 285px; top: 0; width: 522px; height: 710px; }   /* infographic-201: pillars reach lower */
 .ig-box { position: absolute; display: grid; place-items: center; }
 .ig-box > * { flex: none; }
 .ig-face { border-radius: 30px; }
-.ig-shadow .ig-face { width: 145.276px; height: 145.276px; transform: matrix(0.898, -0.44, 0.898, 0.439, 0, 0);
+.ig-shadow .ig-face { transform: matrix(0.898, -0.44, 0.898, 0.439, 0, 0);   /* size set per shadow (Figma: infographic-201) */
   background: rgba(64, 64, 64, .3); filter: blur(15px); }
-.ig-base .ig-face { width: 150.882px; height: 150.882px; transform: matrix(0.8648, -0.5021, 0.8663, 0.5031, 0, 0);
-  background: linear-gradient(247.74deg, rgba(82, 82, 82, .5) 16.08%, rgba(170, 170, 170, .5) 105.99%);
-  box-shadow: inset 0 -6px 1px 0 #404040, inset 0 -7px 1px 0 #f8ffe3, inset 0 4px 3px 2px #444; }
+.ig-pillars img { display: block; }                    /* four grey pillars (Figma vectors) */
 .ig-core .ig-face { width: 301.338px; height: 301.338px; transform: var(--iso);
   background: rgba(94, 88, 224, .3); -webkit-backdrop-filter: blur(15px); backdrop-filter: blur(15px);
-  box-shadow: inset 0 -11px 1px 0 rgba(255, 255, 255, .26), inset 0 -8px 0 1px #0700a5, inset 0 7px 4px 2px #373385; }
+  box-shadow: inset 0 -11px 1px 0 rgba(255, 255, 255, .26), inset 0 -8px 0 1px var(--edge, #0700a5), inset 0 7px 4px 2px #373385; }
+.ig-core[data-layer="1"]:not(.ig-label), .ig-core[data-layer="3"]:not(.ig-label) { --edge: #0900d5; }
 .ig-flow .ig-face { width: 150.548px; height: 150.548px; transform: matrix(0.8667, -0.4988, 0.862, 0.4962, 0, 0);
   background: linear-gradient(252.18deg, rgba(206, 222, 0, .6) 16.76%, rgba(111, 120, 0, .6) 108%);
   -webkit-backdrop-filter: blur(9.4px); backdrop-filter: blur(9.4px);
@@ -414,19 +501,19 @@ main > section.ticker-wrap { max-width: none; padding-left: 0; padding-right: 0;
   transition: opacity .6s ease, translate .8s cubic-bezier(.2, .8, .2, 1);
   transition-delay: calc((4 - var(--l)) * 160ms);         /* layer 4 (top) first, base last */
 }
-.ig.ig-anim .ig-link, .ig.ig-anim .ig-dot, .ig.ig-anim .ig-fline { opacity: 0; transition: opacity .6s ease 1.3s; }
+.ig.ig-anim .ig-link, .ig.ig-anim .ig-dot { opacity: 0; transition: opacity .6s ease 1.3s; }
 .ig.ig-anim.is-in [data-layer] { opacity: 1; translate: 0 0; }
-.ig.ig-anim.is-in .ig-link, .ig.ig-anim.is-in .ig-dot, .ig.ig-anim.is-in .ig-fline { opacity: 1; }
+.ig.ig-anim.is-in .ig-link, .ig.ig-anim.is-in .ig-dot { opacity: 1; }
 [data-layer="0"] { --l: 0; } [data-layer="1"] { --l: 1; } [data-layer="2"] { --l: 2; }
 [data-layer="3"] { --l: 3; } [data-layer="4"] { --l: 4; }
 @media (prefers-reduced-motion: reduce) {
-  .ig.ig-anim [data-layer], .ig.ig-anim .ig-link, .ig.ig-anim .ig-dot, .ig.ig-anim .ig-fline { opacity: 1; translate: none; transition: none; }
+  .ig.ig-anim [data-layer], .ig.ig-anim .ig-link, .ig.ig-anim .ig-dot { opacity: 1; translate: none; transition: none; }
 }
 
 /* Hover a layer → its description opens beside it (desktop with a mouse only; touch / smaller screens show all) */
 @media (min-width: 1190px) and (hover: hover) {
   .ig-stack .ig-box { pointer-events: none; }
-  .ig-stack .ig-face { pointer-events: auto; }                 /* hit area = the tile shape, not its bounding box */
+  .ig-stack .ig-face, .ig-stack .ig-hit, .ig-stack .ig-plabel { pointer-events: auto; cursor: default; }   /* hit area = the shapes, not their bounding boxes */
   .ig-shadow .ig-face { pointer-events: none; }
   .ig-s {
     max-height: 0; margin-top: -5px; opacity: 0; overflow: hidden;   /* collapsed; still read by screen readers */
@@ -444,15 +531,15 @@ main > section.ticker-wrap { max-width: none; padding-left: 0; padding-right: 0;
 @media (max-width: 1189px) {
   .ig { width: auto; height: auto; display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-group) var(--grid-gap); }
   .ig-col, .ig-stack { position: relative; left: auto; top: auto; }
-  .ig-foundation { padding-top: 0; }
   .ig-workflows, .ig-intel { width: auto; }
   .ig-workflows .ig-list li { width: auto; }
   .ig-stack { grid-column: 1 / -1; grid-row: 1; justify-self: center; }
   .ig-foundation { grid-column: 1 / -1; }
-  .ig-fh { margin: 0; padding-bottom: 24px; border-bottom: 2px solid var(--ig-ink); }
-  .ig-fgrid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-item) var(--grid-gap); margin: 27px 0 0; }
-  .ig-fgrid > div:nth-child(n) { width: auto; }
-  .ig-link, .ig-dot, .ig-fline { display: none; }
+  .ig-fgrid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-item) var(--grid-gap); margin: 0; padding-top: 27px; border-top: 2px solid var(--ig-ink); }
+  .ig-fgrid > div { position: static; width: auto; }
+  .ig-fgrid > [data-key="f-analytics"] .ig-t { white-space: normal; }
+  .ig-cap, .ig-plabel, .ig-hit { display: none; }
+  .ig-link, .ig-dot { display: none; }
 }
 @media (max-width: 640px) {
   .ig { grid-template-columns: 1fr; }
@@ -480,7 +567,6 @@ main > section.ticker-wrap { max-width: none; padding-left: 0; padding-right: 0;
   transition: transform .6s cubic-bezier(.2, .8, .2, 1);
 }
 .serve-card:hover .serve-photo, .serve-card.open .serve-photo { transform: scale(1.04); }
-.serve-photo--low { object-position: center 60%; }   /* Providers art: keeps its top-left cube clear of the eyebrow label */
 :root { --serve-hover: #f4f4f6; }            /* light grey (same grey as the partners strip) */
 .serve-card::before {                       /* resting state: soft lavender veil behind the headline */
   content: ""; position: absolute; inset: 0; z-index: -1;
@@ -492,11 +578,6 @@ main > section.ticker-wrap { max-width: none; padding-left: 0; padding-right: 0;
   transition: opacity .35s ease;
 }
 .serve-card:hover::after, .serve-card:focus-within::after, .serve-card.open::after { opacity: 1; }
-.serves--wash .serve-card::before {          /* light-grey top wash behind the eyebrow label + the existing lavender veil at the base */
-  background:
-    linear-gradient(180deg, rgba(240, 240, 243, .92) 0%, rgba(240, 240, 243, .78) 12%, rgba(240, 240, 243, 0) 28%),   /* light grey, so the card edge never melts into the white page */
-    linear-gradient(180deg, rgba(241, 238, 252, 0) 40%, rgba(241, 238, 252, .85) 100%);
-}
 .serve-content { padding: 48px; }
 .serve-label {                              /* eyebrow tag pinned to the top-left of the card */
   position: absolute; top: 48px; left: 48px; right: 48px; margin: 0; color: var(--raapid-violet);
@@ -693,10 +774,15 @@ main > section.ticker-wrap { max-width: none; padding-left: 0; padding-right: 0;
 .partners-line .t-body-s-bold { color: var(--brand-navy); }
 
 /* ---------- Responsive ---------- */
+@media (max-width: 1439px) {      /* not enough width for logo + six menu items + search + demo on one row */
+  .header-nav { height: auto; grid-template-columns: auto 1fr auto; grid-template-rows: 72px 56px;
+    grid-template-areas: "brand . actions" "nav nav nav"; }
+  .nav-trigger { height: 56px; }
+  .primary-nav { gap: 32px; }
+}
 @media (max-width: 1280px) {
   :root { --page-x: 48px; }
   .utility { gap: 28px; }
-  .primary-nav { gap: 32px; }
   .mega { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .mega-about-list ul { grid-template-columns: repeat(2, minmax(0, 1fr)); }   /* half-width panel: 2 + 2 + 1 */
   .footer-links { grid-template-columns: repeat(3, minmax(0, 1fr)); }
@@ -725,8 +811,7 @@ main > section.ticker-wrap { max-width: none; padding-left: 0; padding-right: 0;
   .site-footer { --art-w: 90%; }
   :root { --section-y: 48px; --head-gap: 48px; --grid-gap: 24px; --page-x: 32px; --space-group: 40px; }
   .hero { grid-template-columns: 1fr; gap: 56px; }
-  .hero-visual { justify-self: center; max-width: 760px; }
-  .utility .text-link, .utility .sep { display: none; }
+  .hero-visual { justify-self: center; max-width: 560px; }
   .stats { grid-template-columns: 1fr; gap: 48px; }
   .br-desktop { display: none; }
   .platform-head br { display: none; }
@@ -736,6 +821,7 @@ main > section.ticker-wrap { max-width: none; padding-left: 0; padding-right: 0;
   .mega-about-list ul { grid-template-columns: 1fr; }
   .pillars { grid-template-columns: 1fr; gap: 56px; }
   .pillar-icon { width: 148px; height: 124px; }
+  .pillar { --ih: 124px; --iw: 131px; } .pillar:nth-child(2) { --iw: 149px; } .pillar:nth-child(3) { --iw: 88px; }
 }
 @media (max-width: 640px) {
   .site-footer > .container { padding-left: 20px; padding-right: 20px; }
@@ -756,15 +842,13 @@ main > section.ticker-wrap { max-width: none; padding-left: 0; padding-right: 0;
   .news-side .news-media { order: -1; }                 /* phones: image above its text */
   .footer-links { grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 20px; }
   .footer-bottom { flex-direction: column; align-items: flex-start; }
-  .header-top { height: 80px; }
-  .logo { height: 40px; }
-  .utility { gap: 16px; }
-  .icon-search { width: 28px; height: 28px; }
-  .header-top .rb { padding: 12px 16px; gap: 8px; }
-  .header-top .rb .rb-cta { width: 20px; height: 20px; }
-  .header-top .rb .label { display: none; }
-  .header-nav { height: auto; padding: 0 0 16px; flex-direction: column; align-items: flex-start; gap: 8px; }
-  .nav-trigger { height: 52px; }
+  .header-top { height: 44px; }
+  .logo { height: 36px; }
+  .utility { gap: 20px; }
+  .header-actions { gap: 16px; }
+  .header-actions .rb .label { display: none; }          /* phones: demo button shows its icon only */
+  .header-nav { grid-template-rows: 64px 48px; padding-bottom: 8px; }
+  .nav-trigger { height: 48px; }
   .mega { padding: 20px 16px; }
   .primary-nav { gap: 24px; max-width: 100%; }
   .eyebrow { gap: 12px; }
@@ -775,21 +859,19 @@ main > section.ticker-wrap { max-width: none; padding-left: 0; padding-right: 0;
 
 <header class="site-header">
   <div class="container">
+    <!-- Row 1: utility links -->
     <div class="header-top">
-      <a href="#" aria-label="RAAPID home"><img class="logo" src="raapid-logo.svg" alt="RAAPID"></a>
       <div class="utility">
+        <a href="#" class="search-link" aria-label="Search"><svg class="icon-search" viewBox="0 0 33.2308 33.2308" fill="none" aria-hidden="true"><path d="M13.9145 23.0533C18.9616 23.0533 23.053 18.9619 23.053 13.9148C23.053 8.86779 18.9616 4.77637 13.9145 4.77637C8.86749 4.77637 4.77607 8.86779 4.77607 13.9148C4.77607 18.9619 8.86749 23.0533 13.9145 23.0533Z" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M20.7688 20.7691L29.0765 29.0768" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></a>
         <a href="#" class="text-link t-link-s-regular">News</a>
         <a href="#" class="text-link t-link-s-regular">Customer Login</a>
-        <span class="sep" aria-hidden="true"></span>
-        <a href="#" class="search-link" aria-label="Search"><svg class="icon-search" viewBox="0 0 33.2308 33.2308" fill="none" aria-hidden="true"><path d="M13.9145 23.0533C18.9616 23.0533 23.053 18.9619 23.053 13.9148C23.053 8.86779 18.9616 4.77637 13.9145 4.77637C8.86749 4.77637 4.77607 8.86779 4.77607 13.9148C4.77607 18.9619 8.86749 23.0533 13.9145 23.0533Z" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M20.7688 20.7691L29.0765 29.0768" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg></a>
-        <a href="#" class="rb rb-primary">
-          <svg class="rb-cta" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path class="cta-tl" d="M2 2L6 6"/><path class="cta-tr" d="M22 2L18 6"/><path class="cta-bl" d="M2 22L6 18"/><path class="cta-br" d="M22 22L18 18"/></svg>
-          <span class="label t-link-s-medium">Request a demo</span>
-        </a>
+        <a href="#" class="text-link t-link-s-regular">Contact</a>
       </div>
     </div>
 
+    <!-- Row 2: logo · primary menu · search + demo -->
     <div class="header-nav">
+      <a href="#" class="brand" aria-label="RAAPID home"><img class="logo" src="raapid-logo.svg" alt="RAAPID"></a>
       <nav class="primary-nav" aria-label="Primary">
 
         <!-- HEALTH PLANS -->
@@ -905,7 +987,12 @@ main > section.ticker-wrap { max-width: none; padding-left: 0; padding-right: 0;
           </div>
         </div>
       </nav>
-      <a href="#" class="contact t-link-s-regular">Contact <svg class="icon-arrow" viewBox="0 0 14.6165 12.7273" aria-hidden="true"><path fill="currentColor" d="M8.25284 12.7273L7.15909 11.6477L11.6619 7.14489H0V5.58239H11.6619L7.15909 1.09375L8.25284 0L14.6165 6.36364L8.25284 12.7273Z"/></svg></a>
+      <div class="header-actions">
+        <a href="#" class="rb rb-primary rb-compact">
+          <svg class="rb-cta" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path class="cta-tl" d="M2 2L6 6"/><path class="cta-tr" d="M22 2L18 6"/><path class="cta-bl" d="M2 22L6 18"/><path class="cta-br" d="M22 22L18 18"/></svg>
+          <span class="label t-link-s-medium">Request a demo</span>
+        </a>
+      </div>
     </div>
   </div>
 </header>
@@ -916,7 +1003,7 @@ main > section.ticker-wrap { max-width: none; padding-left: 0; padding-right: 0;
       <div class="hero-copy">
         <p class="eyebrow t-eyebrow"><img class="icon-pentagon" src="raapid-pentagon.svg" alt="">Clinical AI for Healthcare Revenue Integrity</p>
 
-        <h1 class="t-h1-light">Clinical Intelligence that <span class="t-h1-bold">drives your financial outcomes.</span></h1>
+        <h1 class="t-h1-light split-head">Clinical Intelligence that <span class="t-h1-bold">drives your financial outcomes.</span></h1>
 
         <p class="tagline t-body-m-bold">Measured. Guaranteed. Defensible</p>
 
@@ -928,7 +1015,7 @@ main > section.ticker-wrap { max-width: none; padding-left: 0; padding-right: 0;
         </a>
       </div>
 
-      <img class="hero-visual" src="img-banner.png" alt="Clinical records flowing through RAAPID's AI layers into validated, compliant outcomes and revenue growth" width="1774" height="887">
+      <img class="hero-visual" src="img-banner-567.jpg" alt="Clinical records flowing through RAAPID's AI layers into validated, compliant outcomes and revenue growth" width="1400" height="1128">
     </div>
   </section>
 
@@ -948,6 +1035,60 @@ main > section.ticker-wrap { max-width: none; padding-left: 0; padding-right: 0;
         <p class="stat-label t-body-s-regular">Members reviewed to date</p>
       </div>
     </div>
+  </section>
+
+  <!-- ---------- Client logo strip ---------- -->
+  <section class="container clients" aria-labelledby="clients-title">
+    <div class="clients-head">
+      <h2 id="clients-title" class="clients-title t-h3-light split-head">Trusted by Leading Healthcare Organizations</h2>
+    </div>
+    <div class="logo-marquee">
+      <ul class="logo-track">
+          <li><img src="logo-sentara.png" alt="Sentara" width="223" height="39" style="--h:39px" decoding="async"></li>
+          <li><img src="logo-upmc.png" alt="UPMC" width="185" height="47" style="--h:47px" decoding="async"></li>
+          <li><img src="logo-louisiana-blue.png" alt="Louisiana Blue" width="145" height="60" style="--h:60px" decoding="async"></li>
+          <li><img src="logo-bcbs-michigan.png" alt="Blue Cross Blue Shield of Michigan" width="179" height="49" style="--h:49px" decoding="async"></li>
+          <li><img src="logo-horizon.png" alt="Horizon Blue Cross Blue Shield of New Jersey" width="204" height="44" style="--h:44px" decoding="async"></li>
+          <li><img src="logo-arkansas-bcbs.png" alt="Arkansas Blue Cross Blue Shield" width="155" height="57" style="--h:57px" decoding="async"></li>
+          <li><img src="logo-bcbs-rhode-island.png" alt="Blue Cross Blue Shield of Rhode Island" width="190" height="47" style="--h:47px" decoding="async"></li>
+      </ul>
+      <ul class="logo-track" aria-hidden="true">
+          <li><img src="logo-sentara.png" alt="" width="223" height="39" style="--h:39px" decoding="async"></li>
+          <li><img src="logo-upmc.png" alt="" width="185" height="47" style="--h:47px" decoding="async"></li>
+          <li><img src="logo-louisiana-blue.png" alt="" width="145" height="60" style="--h:60px" decoding="async"></li>
+          <li><img src="logo-bcbs-michigan.png" alt="" width="179" height="49" style="--h:49px" decoding="async"></li>
+          <li><img src="logo-horizon.png" alt="" width="204" height="44" style="--h:44px" decoding="async"></li>
+          <li><img src="logo-arkansas-bcbs.png" alt="" width="155" height="57" style="--h:57px" decoding="async"></li>
+          <li><img src="logo-bcbs-rhode-island.png" alt="" width="190" height="47" style="--h:47px" decoding="async"></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ---------- The RAAPID Difference ---------- -->
+  <section class="container difference" aria-labelledby="difference-title">
+    <p class="eyebrow t-eyebrow"><img class="icon-pentagon" src="raapid-pentagon.svg" alt="">The RAAPID Difference</p>
+
+    <h2 id="difference-title" class="difference-title t-h1-light split-head">AI you can <span class="t-h1-bold">trust</span>. Outcomes<br class="br-desktop"> you can <span class="t-h1-bold">account for</span>.</h2>
+
+    <div class="pillars">
+      <article class="pillar">
+        <img class="pillar-icon" src="icon-measured.webp" alt="" width="199" height="164">
+        <h3 class="t-h3-semibold">Measured</h3>
+        <p class="pillar-text t-body-s-regular">We define success with you upfront: your baseline, performance targets and timeframe.</p>
+      </article>
+      <article class="pillar">
+        <img class="pillar-icon" src="icon-guaranteed.webp" alt="" width="199" height="164">
+        <h3 class="t-h3-semibold">Guaranteed</h3>
+        <p class="pillar-text t-body-s-regular">We align commercial commitments to agreed performance outcomes, making accountability part of the engagement.</p>
+      </article>
+      <article class="pillar">
+        <img class="pillar-icon" src="icon-defensible.webp" alt="" width="199" height="164">
+        <h3 class="t-h3-semibold">Defensible</h3>
+        <p class="pillar-text t-body-s-regular">RAAPID recommendations are linked to supporting clinical evidence and rationale, ready for clinical review, coding validation and audit.</p>
+      </article>
+    </div>
+
+    <p class="difference-note t-body-xs-regular">*Every commitment is set against measures we agree with you.</p>
   </section>
 
   <!-- ---------- Recognition ticker ---------- -->
@@ -985,38 +1126,11 @@ main > section.ticker-wrap { max-width: none; padding-left: 0; padding-right: 0;
     </div>
   </section>
 
-  <!-- ---------- The RAAPID Difference ---------- -->
-  <section class="container difference" aria-labelledby="difference-title">
-    <p class="eyebrow t-eyebrow"><img class="icon-pentagon" src="raapid-pentagon.svg" alt="">The RAAPID Difference</p>
-
-    <h2 id="difference-title" class="difference-title t-h1-light">AI you can <span class="t-h1-bold">trust</span>. Outcomes<br class="br-desktop"> you can <span class="t-h1-bold">account for</span>.</h2>
-
-    <div class="pillars">
-      <article class="pillar">
-        <img class="pillar-icon" src="icon-measured.png" alt="" width="199" height="164">
-        <h3 class="t-h3-semibold">Measured</h3>
-        <p class="pillar-text t-body-s-regular">We define success with you upfront: your baseline, performance targets and timeframe.</p>
-      </article>
-      <article class="pillar">
-        <img class="pillar-icon" src="icon-guaranteed.png" alt="" width="199" height="164">
-        <h3 class="t-h3-semibold">Guaranteed</h3>
-        <p class="pillar-text t-body-s-regular">We align commercial commitments to agreed performance outcomes, making accountability part of the engagement.</p>
-      </article>
-      <article class="pillar">
-        <img class="pillar-icon" src="icon-defensible.png" alt="" width="199" height="164">
-        <h3 class="t-h3-semibold">Defensible</h3>
-        <p class="pillar-text t-body-s-regular">RAAPID recommendations are linked to supporting clinical evidence and rationale, ready for clinical review, coding validation and audit.</p>
-      </article>
-    </div>
-
-    <p class="difference-note t-body-xs-regular">*Every commitment is set against measures we agree with you.</p>
-  </section>
-
   <!-- ---------- How RAAPID Delivers (platform) ---------- -->
   <section class="container platform" aria-labelledby="platform-title">
     <header class="platform-head">
       <p class="eyebrow t-eyebrow"><img class="icon-pentagon" src="raapid-pentagon.svg" alt="">How RAAPID Delivers</p>
-      <h2 id="platform-title" class="t-h1-light"><span class="t-h1-bold">One intelligence platform,</span><br> purpose-built for multiple workflows.</h2>
+      <h2 id="platform-title" class="t-h1-light split-head"><span class="t-h1-bold">One intelligence platform,</span><br> purpose-built for multiple workflows.</h2>
       <p class="platform-lede t-body-s-regular">RAAPID’s AI-native decision intelligence platform brings together healthcare workflows, clinical evidence, and enterprise capabilities your organization needs.</p>
     </header>
 
@@ -1034,14 +1148,20 @@ main > section.ticker-wrap { max-width: none; padding-left: 0; padding-right: 0;
 
       <!-- Layered platform illustration (decorative; the lists carry the content) -->
       <div class="ig-stack" aria-hidden="true">
-        <div class="ig-box ig-shadow" data-key="foundation" data-layer="0" style="left:130.28px;top:363px;width:260.966px;height:127.738px"><span class="ig-face"></span></div>
-        <div class="ig-box ig-shadow" data-key="foundation" data-layer="0" style="left:0px;top:421.13px;width:260.966px;height:127.738px"><span class="ig-face"></span></div>
-        <div class="ig-box ig-shadow" data-key="foundation" data-layer="0" style="left:260.79px;top:421.03px;width:260.966px;height:127.738px"><span class="ig-face"></span></div>
-        <div class="ig-box ig-shadow" data-key="foundation" data-layer="0" style="left:130.64px;top:482.27px;width:260.966px;height:127.738px"><span class="ig-face"></span></div>
-        <div class="ig-box ig-base" data-key="foundation" data-layer="0" style="left:130.28px;top:298px;width:260.966px;height:151.521px"><span class="ig-face"></span></div>
-        <div class="ig-box ig-base" data-key="foundation" data-layer="0" style="left:0px;top:366.96px;width:260.966px;height:151.521px"><span class="ig-face"></span></div>
-        <div class="ig-box ig-base" data-key="foundation" data-layer="0" style="left:260.79px;top:366.83px;width:260.966px;height:151.521px"><span class="ig-face"></span></div>
-        <div class="ig-box ig-base" data-key="foundation" data-layer="0" style="left:130.64px;top:439.48px;width:260.966px;height:151.521px"><span class="ig-face"></span></div>
+        <div class="ig-box ig-shadow" data-layer="0" style="left:349.0px;top:526.1px;width:126.665px;height:62px"><span class="ig-face" style="width:70.891px;height:70.134px"></span></div>
+        <div class="ig-box ig-shadow" data-layer="0" style="left:185.1px;top:494.8px;width:151.36px;height:74.088px"><span class="ig-face" style="width:84.26px;height:84.26px"></span></div>
+        <div class="ig-box ig-shadow" data-layer="0" style="left:54.8px;top:552.9px;width:151.36px;height:74.088px"><span class="ig-face" style="width:84.26px;height:84.26px"></span></div>
+        <div class="ig-box ig-shadow" data-layer="0" style="left:185.4px;top:614.0px;width:151.36px;height:74.088px"><span class="ig-face" style="width:84.26px;height:84.26px"></span></div>
+        <div class="ig-box ig-pillars" data-layer="0" style="left:42px;top:379px;width:277px;height:330.826px"><img src="ig-pillars-3.svg" alt="" width="277" height="330.826"></div>
+        <div class="ig-box ig-pillars" data-layer="0" style="left:377px;top:442px;width:109px;height:156.826px"><img src="ig-pillar-right.svg" alt="" width="109" height="156.826"></div>
+        <span class="ig-hit ig-hit-short" data-key="f-integration" data-layer="0" style="left:42px;top:468.8px"></span>
+        <span class="ig-hit ig-hit-short" data-key="f-ready" data-layer="0" style="left:207px;top:584.8px"></span>
+        <span class="ig-hit" data-key="f-security" data-layer="0" style="left:210px;top:379px"></span>
+        <span class="ig-hit" data-key="f-analytics" data-layer="0" style="left:377px;top:442px"></span>
+        <span class="ig-plabel" data-key="f-integration" data-layer="0" style="left:102px;top:599.8px">Integration</span>
+        <span class="ig-plabel" data-key="f-ready" data-layer="0" style="left:267px;top:715.8px">Enterprise</span>
+        <span class="ig-plabel" data-key="f-security" data-layer="0" style="left:270px;top:541.8px">Security</span>
+        <span class="ig-plabel" data-key="f-analytics" data-layer="0" style="left:437px;top:604.8px">Analytics</span>
         <div class="ig-box ig-core" data-key="doc-ai" data-layer="1" style="left:0.2px;top:185.33px;width:521.932px;height:301.338px"><span class="ig-face"></span></div>
         <div class="ig-box ig-core" data-key="neuro" data-layer="2" style="left:0.2px;top:128.9px;width:521.932px;height:301.338px"><span class="ig-face"></span></div>
         <div class="ig-box ig-core" data-key="automation" data-layer="3" style="left:0.2px;top:71.93px;width:521.932px;height:301.338px"><span class="ig-face"></span></div>
@@ -1070,7 +1190,7 @@ main > section.ticker-wrap { max-width: none; padding-left: 0; padding-right: 0;
         <ul class="ig-list">
           <li data-key="automation"><p class="ig-t">Workflow automation</p><p class="ig-s">Routes evidence-backed recommendations into review and coding workflows.</p></li>
           <li data-key="neuro"><p class="ig-t">Neuro-Symbolic AI</p><p class="ig-s">Combines clinical pattern recognition with rule-based reasoning to evaluate supporting evidence and make recommendations traceable.</p></li>
-          <li data-key="doc-ai"><p class="ig-t">Document AI</p><p class="ig-s">Extracts and structures relevant clinical information from unstructured records while preserving context and relationships. The RAAPID Platform combines this intelligence with structured data from supported sources.</p></li>
+          <li data-key="doc-ai"><p class="ig-t">Document AI</p><p class="ig-s">Extracts and structures clinical information from unstructured records, preserving context and relationships.</p></li>
         </ul>
       </div>
 
@@ -1083,29 +1203,34 @@ main > section.ticker-wrap { max-width: none; padding-left: 0; padding-right: 0;
       <span class="ig-dot ig-dot-1" aria-hidden="true"><img src="ig-dot-right.svg" alt="" width="10" height="10"></span>
       <span class="ig-dot ig-dot-2" aria-hidden="true"><img src="ig-dot-right.svg" alt="" width="10" height="10"></span>
       <span class="ig-dot ig-dot-3" aria-hidden="true"><img src="ig-dot-right.svg" alt="" width="10" height="10"></span>
-      <span class="ig-fline" aria-hidden="true"><span><img src="ig-foundation-line.svg" alt="" width="58.4999" height="1089.5"></span></span>
 
       <!-- Enterprise foundation -->
-      <div class="ig-foundation">
-        <h3 class="ig-fh">Enterprise Foundation</h3>
+      <span class="ig-link ig-frule ig-frule-l" aria-hidden="true"></span>
+      <span class="ig-link ig-frule ig-frule-r" aria-hidden="true"></span>
+      <div class="ig-cap" aria-hidden="true">
+        <p class="ig-cap-hint">Hover any layer to explore</p>
+      </div>
+
+      <div class="ig-foundation" role="group" aria-label="Enterprise foundation">
         <div class="ig-fgrid">
-          <div data-key="foundation"><p class="ig-t">Security and compliance</p><p class="ig-s">HITRUST r2 certified • SOC 2<br>Type II • HIPAA safeguards</p></div>
-          <div data-key="foundation"><p class="ig-t">Integration</p><p class="ig-s">EHR embedding • APIs • cloud-native</p></div>
-          <div data-key="foundation"><p class="ig-t">Analytics and reporting</p><p class="ig-s">Program and enterprise performance</p></div>
-          <div data-key="foundation"><p class="ig-t">Enterprise ready</p><p class="ig-s">Single-tenant. No training on your data</p></div>
+          <div data-key="f-security"><p class="ig-t">Security and compliance</p><p class="ig-s">HITRUST r2 certified • SOC 2<br>Type II • HIPAA safeguards</p></div>
+          <div data-key="f-integration"><p class="ig-t">Integration</p><p class="ig-s">EHR embedding • APIs • cloud-native</p></div>
+          <div data-key="f-analytics"><p class="ig-t">Analytics and reporting</p><p class="ig-s">Program and enterprise performance</p></div>
+          <div data-key="f-ready"><p class="ig-t">Enterprise ready</p><p class="ig-s">Single-tenant. No training on your data</p></div>
         </div>
       </div>
     </div>
   </section>
 
   <!-- ---------- Who RAAPID Serves ---------- -->
-  <section class="container serves serves--wash" aria-labelledby="serves-title">
+
+  <section class="container serves" aria-labelledby="serves-title">
     <p class="eyebrow t-eyebrow"><img class="icon-pentagon" src="raapid-pentagon.svg" alt="">Who RAAPID Serves</p>
-    <h2 id="serves-title" class="serves-title t-h1-light">Solve for your healthcare priorities,<br class="br-desktop"> <span class="t-h1-bold">we tailor to them.</span></h2>
+    <h2 id="serves-title" class="serves-title t-h1-light split-head">Solve for your healthcare priorities,<br class="br-desktop"> <span class="t-h1-bold">we tailor to them.</span></h2>
 
     <div class="serve-cards">
       <article class="serve-card rb-white" tabindex="0" aria-labelledby="aud-plans">
-        <img class="serve-photo" src="final-healthplans-web.jpg" alt="" width="1307" height="1740">
+        <img class="serve-photo" src="img-health-plan-402.jpg" alt="" width="1657" height="2201">
         <div class="serve-content">
           <p id="aud-plans" class="serve-label t-body-l-bold-upper">Health Plans</p>
           <h3 class="t-h2-light"><span class="t-h2-bold">Capture risk accurately.</span> Protect appropriate reimbursement.</h3>
@@ -1123,60 +1248,9 @@ main > section.ticker-wrap { max-width: none; padding-left: 0; padding-right: 0;
         </div>
       </article>
       <article class="serve-card rb-white" tabindex="0" aria-labelledby="aud-providers">
-        <img class="serve-photo serve-photo--low" src="final-healthsystems-web.jpg" alt="" width="1307" height="1740">
+        <img class="serve-photo" src="img-health-system-provider-403.jpg" alt="" width="6249" height="9325">
         <div class="serve-content">
           <p id="aud-providers" class="serve-label t-body-l-bold-upper">Providers &amp; Health Systems</p>
-          <h3 class="t-h2-light"><span class="t-h2-bold">Strengthen documentation.</span> Support accurate reimbursement.</h3>
-          <p class="serve-hint t-eyebrow" aria-hidden="true">Hover to explore</p>
-          <div class="serve-reveal"><div>
-            <p class="serve-text t-body-s-regular">Identify suspected conditions for clinician review, strengthen clinical documentation and improve coding accuracy.</p>
-            <ul class="serve-list">
-            <li><a href="#" class="t-link-s-medium">Prospective Risk Adjustment <svg class="serve-arrow" viewBox="0 0 14.6165 12.7273" aria-hidden="true"><path fill="currentColor" d="M8.25284 12.7273L7.15909 11.6477L11.6619 7.14489H0V5.58239H11.6619L7.15909 1.09375L8.25284 0L14.6165 6.36364L8.25284 12.7273Z"/></svg></a></li>
-            <li><a href="#" class="t-link-s-medium">Clinical Documentation Improvement <svg class="serve-arrow" viewBox="0 0 14.6165 12.7273" aria-hidden="true"><path fill="currentColor" d="M8.25284 12.7273L7.15909 11.6477L11.6619 7.14489H0V5.58239H11.6619L7.15909 1.09375L8.25284 0L14.6165 6.36364L8.25284 12.7273Z"/></svg></a></li>
-            <li><a href="#" class="t-link-s-medium">Medical Coding (Inpatient &amp; Outpatient) <svg class="serve-arrow" viewBox="0 0 14.6165 12.7273" aria-hidden="true"><path fill="currentColor" d="M8.25284 12.7273L7.15909 11.6477L11.6619 7.14489H0V5.58239H11.6619L7.15909 1.09375L8.25284 0L14.6165 6.36364L8.25284 12.7273Z"/></svg></a></li>
-            <li><a href="#" class="t-link-s-medium">Medical Coding Services <svg class="serve-arrow" viewBox="0 0 14.6165 12.7273" aria-hidden="true"><path fill="currentColor" d="M8.25284 12.7273L7.15909 11.6477L11.6619 7.14489H0V5.58239H11.6619L7.15909 1.09375L8.25284 0L14.6165 6.36364L8.25284 12.7273Z"/></svg></a></li>
-            </ul>
-            <a href="#" class="rb rb-secondary"><span class="t-link-s-medium">Explore Providers &amp; Health Systems</span><svg class="rb-arrow" viewBox="0 0 14.6165 12.7273" aria-hidden="true"><path fill="currentColor" d="M8.25284 12.7273L7.15909 11.6477L11.6619 7.14489H0V5.58239H11.6619L7.15909 1.09375L8.25284 0L14.6165 6.36364L8.25284 12.7273Z"/></svg></a>
-          </div></div>
-        </div>
-      </article>
-    </div>
-
-    <!-- Technology partners line -->
-    <div class="partners-line">
-      <p class="t-body-s-regular"><span class="t-body-s-bold">For healthcare technology partners:</span> Embed RAAPID clinical intelligence into your solutions through APIs and AI-as-a-Service.</p>
-      <a href="#" class="rb rb-link partners-link"><span class="t-link-s-medium">Explore AI-as-a-Service</span><svg class="rb-arrow" viewBox="0 0 14.6165 12.7273" aria-hidden="true"><path fill="currentColor" d="M8.25284 12.7273L7.15909 11.6477L11.6619 7.14489H0V5.58239H11.6619L7.15909 1.09375L8.25284 0L14.6165 6.36364L8.25284 12.7273Z"/></svg></a>
-    </div>
-  </section>
-
-  <!-- COPY of Who RAAPID Serves with the earlier card images (for comparison) -->
-  <section class="container serves" aria-labelledby="serves-title-b">
-    <p class="eyebrow t-eyebrow"><img class="icon-pentagon" src="raapid-pentagon.svg" alt="">Who RAAPID Serves</p>
-    <h2 id="serves-title-b" class="serves-title-b t-h1-light">Solve for your healthcare priorities,<br class="br-desktop"> <span class="t-h1-bold">we tailor to them.</span></h2>
-
-    <div class="serve-cards">
-      <article class="serve-card rb-white" tabindex="0" aria-labelledby="aud-plans-b">
-        <img class="serve-photo" src="img-health-plan-402.jpg" alt="" width="1657" height="2201">
-        <div class="serve-content">
-          <p id="aud-plans-b" class="serve-label t-body-l-bold-upper">Health Plans</p>
-          <h3 class="t-h2-light"><span class="t-h2-bold">Capture risk accurately.</span> Protect appropriate reimbursement.</h3>
-          <p class="serve-hint t-eyebrow" aria-hidden="true">Hover to explore</p>
-          <div class="serve-reveal"><div>
-            <p class="serve-text t-body-s-regular">Capture supported conditions for risk adjustment, prepare for RADV audits, and protect payment integrity with coding decisions backed by clinical evidence.</p>
-            <ul class="serve-list">
-            <li><a href="#" class="t-link-s-medium">Retrospective Risk Adjustment <svg class="serve-arrow" viewBox="0 0 14.6165 12.7273" aria-hidden="true"><path fill="currentColor" d="M8.25284 12.7273L7.15909 11.6477L11.6619 7.14489H0V5.58239H11.6619L7.15909 1.09375L8.25284 0L14.6165 6.36364L8.25284 12.7273Z"/></svg></a></li>
-            <li><a href="#" class="t-link-s-medium">RADV &amp; Audit Readiness <svg class="serve-arrow" viewBox="0 0 14.6165 12.7273" aria-hidden="true"><path fill="currentColor" d="M8.25284 12.7273L7.15909 11.6477L11.6619 7.14489H0V5.58239H11.6619L7.15909 1.09375L8.25284 0L14.6165 6.36364L8.25284 12.7273Z"/></svg></a></li>
-            <li><a href="#" class="t-link-s-medium">Payment Integrity <svg class="serve-arrow" viewBox="0 0 14.6165 12.7273" aria-hidden="true"><path fill="currentColor" d="M8.25284 12.7273L7.15909 11.6477L11.6619 7.14489H0V5.58239H11.6619L7.15909 1.09375L8.25284 0L14.6165 6.36364L8.25284 12.7273Z"/></svg></a></li>
-            <li><a href="#" class="t-link-s-medium">Medical Coding Services <svg class="serve-arrow" viewBox="0 0 14.6165 12.7273" aria-hidden="true"><path fill="currentColor" d="M8.25284 12.7273L7.15909 11.6477L11.6619 7.14489H0V5.58239H11.6619L7.15909 1.09375L8.25284 0L14.6165 6.36364L8.25284 12.7273Z"/></svg></a></li>
-            </ul>
-            <a href="#" class="rb rb-secondary"><span class="t-link-s-medium">Explore Health Plans</span><svg class="rb-arrow" viewBox="0 0 14.6165 12.7273" aria-hidden="true"><path fill="currentColor" d="M8.25284 12.7273L7.15909 11.6477L11.6619 7.14489H0V5.58239H11.6619L7.15909 1.09375L8.25284 0L14.6165 6.36364L8.25284 12.7273Z"/></svg></a>
-          </div></div>
-        </div>
-      </article>
-      <article class="serve-card rb-white" tabindex="0" aria-labelledby="aud-providers-b">
-        <img class="serve-photo" src="img-health-system-provider-402.jpg" alt="" width="6249" height="9325">
-        <div class="serve-content">
-          <p id="aud-providers-b" class="serve-label t-body-l-bold-upper">Providers &amp; Health Systems</p>
           <h3 class="t-h2-light"><span class="t-h2-bold">Strengthen documentation.</span> Support accurate reimbursement.</h3>
           <p class="serve-hint t-eyebrow" aria-hidden="true">Hover to explore</p>
           <div class="serve-reveal"><div>
@@ -1205,7 +1279,7 @@ main > section.ticker-wrap { max-width: none; padding-left: 0; padding-right: 0;
     <div class="trust-grid">
       <div class="trust-head">
         <p class="eyebrow t-eyebrow"><img class="icon-pentagon" src="raapid-pentagon.svg" alt="">Why Trust RAAPID</p>
-        <h2 id="trust-title" class="t-h1-light">Advancing healthcare<br class="br-desktop"> revenue integrity, <span class="t-h1-bold">proven in practice.</span></h2>
+        <h2 id="trust-title" class="t-h1-light split-head">Advancing healthcare<br class="br-desktop"> revenue integrity, <span class="t-h1-bold">proven in practice.</span></h2>
       </div>
 
       <img class="trust-image" src="img-why-trust-raapid.png" alt="Glowing violet and blue data cubes moving along a glass track" width="510" height="667">
@@ -1228,7 +1302,7 @@ main > section.ticker-wrap { max-width: none; padding-left: 0; padding-right: 0;
   <!-- ---------- RAAPID Labs ---------- -->
   <section class="container labs-wrap" aria-labelledby="labs-title">
     <div class="labs rb-violet">
-      <h2 id="labs-title" class="labs-title t-h2-light"><span class="t-h2-bold">Translating AI break&shy;throughs</span> into better healthcare decisions.</h2>
+      <h2 id="labs-title" class="labs-title t-h2-light split-head"><span class="t-h2-bold">Translating AI break&shy;throughs</span> into better healthcare decisions.</h2>
       <div class="labs-side">
         <p class="labs-text t-body-s-regular">Explore our impact center in advanced AI research, benchmark performance studies and specialized model development, in collaboration with global Healthcare AI research institutions and communities.</p>
         <a href="#" class="rb rb-primary">
@@ -1241,7 +1315,7 @@ main > section.ticker-wrap { max-width: none; padding-left: 0; padding-right: 0;
 
   <!-- ---------- Building the next (news) ---------- -->
   <section class="container news" aria-labelledby="news-title">
-    <h2 id="news-title" class="t-h1-light">Building the <span class="t-h1-bold">next in healthcare.</span></h2>
+    <h2 id="news-title" class="t-h1-light split-head">Building the <span class="t-h1-bold">next in healthcare.</span></h2>
 
     <div class="news-grid">
       <!-- Lead story -->
@@ -1281,7 +1355,7 @@ main > section.ticker-wrap { max-width: none; padding-left: 0; padding-right: 0;
   <div class="footer-top">
     <div class="footer-intro">
       <a href="#" class="footer-logo" aria-label="RAAPID home"><img src="raapid-logo-white.svg" alt="RAAPID"></a>
-      <p class="footer-title t-h2-light">Put clinical intelligence to work&nbsp;<span class="t-h2-bold">for your revenue integrity.</span></p>
+      <p class="footer-title t-h2-light split-head">Put clinical intelligence to work&nbsp;<span class="t-h2-bold">for your revenue integrity.</span></p>
       <a href="#" class="rb rb-primary footer-cta">
         <svg class="rb-cta" viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path class="cta-tl" d="M2 2L6 6"/><path class="cta-tr" d="M22 2L18 6"/><path class="cta-bl" d="M2 22L6 18"/><path class="cta-br" d="M22 22L18 18"/></svg>
         <span class="t-link-s-medium">Request a demo</span>
@@ -1475,6 +1549,89 @@ main > section.ticker-wrap { max-width: none; padding-left: 0; padding-right: 0;
   io.observe(stats);
 })();
 
+/* Headings: split into the lines as they wrap, then reveal line by line (rise 20px + fade, soft spring).
+   Timing follows Figma's "each line" model: 1200ms total, each line = 1200 / (1 + 0.2·(n−1)), staggered by 20% of that.
+   The hero plays on load; every other heading plays the first time it scrolls into view. */
+(function () {
+  const heads = [...document.querySelectorAll('.split-head')];
+  if (!heads.length) return;
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (reduce || !('IntersectionObserver' in window)) { heads.forEach(h => h.classList.add('is-split')); return; }
+
+  const TOTAL = 1200;
+  function play(h) {
+    const original = h.innerHTML;
+    // 1. flatten into word spans, keeping each word's style class, real spaces, and visible line breaks
+    const frag = document.createDocumentFragment();
+    const addText = (text, cls) => text.split(/([ \t\n]+)/).forEach(part => {
+      if (!part) return;
+      if (/^[ \t\n]+$/.test(part)) { frag.appendChild(document.createTextNode(' ')); return; }
+      const w = document.createElement('span'); w.className = ('w ' + cls).trim(); w.textContent = part; frag.appendChild(w);
+    });
+    h.childNodes.forEach(n => {
+      if (n.nodeType === 3) return addText(n.textContent, '');
+      if (n.nodeType !== 1) return;
+      const disp = getComputedStyle(n).display;
+      if (n.tagName === 'BR') { if (disp !== 'none') frag.appendChild(document.createElement('br')); return; }
+      if (disp === 'block') frag.appendChild(document.createElement('br'));          // e.g. a bold phrase set on its own line
+      addText(n.textContent, n.className);
+    });
+    h.textContent = ''; h.appendChild(frag);
+    // 2. group nodes by the line they landed on (spaces travel with their words, so "trust" + "." stay joined)
+    const lines = []; let top = null;
+    [...h.childNodes].forEach(node => {
+      if (node.nodeName === 'BR') return;                                   // line blocks replace the breaks
+      if (node.nodeType === 1 && node.offsetTop !== top) {
+        const prev = lines[lines.length - 1];
+        if (prev && prev.length && prev[prev.length - 1].nodeType === 3) prev.pop();   // drop the space at the line end
+        lines.push([]); top = node.offsetTop;
+      }
+      if (lines.length) lines[lines.length - 1].push(node);
+    });
+    // 3. rebuild as line blocks with Figma timing
+    const n = lines.length, dur = TOTAL / (1 + 0.2 * (n - 1)), step = dur * 0.2;
+    h.setAttribute('aria-label', h.textContent.replace(/\s+/g, ' ').trim());
+    h.textContent = '';
+    lines.forEach((ws, i) => {
+      const ln = document.createElement('span'); ln.className = 'ln';
+      const inner = document.createElement('span'); inner.className = 'ln-in';
+      inner.style.setProperty('--ln-dur', dur.toFixed(0) + 'ms');
+      inner.style.setProperty('--ln-delay', (i * step).toFixed(0) + 'ms');
+      ws.forEach(node => inner.appendChild(node));
+      ln.appendChild(inner); h.appendChild(ln);
+    });
+    h.classList.add('is-split');
+    // 4. hand back the original markup so the heading re-wraps normally on resize
+    setTimeout(() => { h.innerHTML = original; h.removeAttribute('aria-label'); }, TOTAL + 200);
+  }
+
+  const hero = document.querySelector('.hero .split-head');
+  if (hero) play(hero);
+  const io = new IntersectionObserver(entries => entries.forEach(e => {
+    if (e.isIntersecting) { io.unobserve(e.target); play(e.target); }
+  }), { threshold: 0.4 });
+  heads.filter(h => h !== hero).forEach(h => io.observe(h));
+})();
+
+/* Body text: every text block in the page sections rises and fades in as one block when it scrolls into view.
+   Blocks visible together start together. Classes are removed afterwards so hover styles work as before. */
+(function () {
+  const main = document.querySelector('main');
+  if (!main || matchMedia('(prefers-reduced-motion: reduce)').matches || !('IntersectionObserver' in window)) return;
+  const SKIP = '.rb, section[aria-label="RAAPID by the numbers"], .ticker-wrap, .ig, .serve-reveal, .split-head';
+  const all = [...main.querySelectorAll('p, h3, h4, li, blockquote, figcaption')]
+    .filter(el => !el.closest(SKIP) && el.textContent.trim());
+  const blocks = all.filter(el => !all.some(o => o !== el && el.contains(o)));   // innermost text blocks only
+  const done = el => el.addEventListener('animationend', () => el.classList.remove('rv', 'is-in'), { once: true });
+  const show = el => { el.classList.add('is-in'); done(el); };
+  const hero = main.querySelector('.hero');
+  blocks.forEach(el => el.classList.add('rv'));
+  const io = new IntersectionObserver(entries => entries.forEach(e => {
+    if (e.isIntersecting) { io.unobserve(e.target); show(e.target); }
+  }), { threshold: 0.2, rootMargin: '0px 0px -8% 0px' });
+  blocks.forEach(el => (hero && hero.contains(el)) ? show(el) : io.observe(el));
+})();
+
 /* Platform infographic: layers drop into place, top first, when the diagram scrolls into view */
 (function () {
   const ig = document.querySelector('.ig');
@@ -1502,7 +1659,7 @@ main > section.ticker-wrap { max-width: none; padding-left: 0; padding-right: 0;
     if (key) ig.querySelectorAll(`[data-key="${key}"]`).forEach(el => el.classList.add('is-active'));
   };
   ig.addEventListener('pointerover', e => {
-    const el = e.target.closest('.ig-face, .ig-col li, .ig-fgrid > div');
+    const el = e.target.closest('.ig-face, .ig-hit, .ig-plabel, .ig-col li, .ig-fgrid > div');
     set(el ? el.closest('[data-key]').dataset.key : null);
   });
   ig.addEventListener('pointerleave', () => set(null));
